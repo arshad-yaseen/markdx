@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
@@ -80,6 +81,7 @@ export default function RootLayout({
           fontHeading.variable
         )}
       >
+        <Header />
         {children}
       </body>
     </html>
