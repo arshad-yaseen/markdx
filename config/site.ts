@@ -10,4 +10,11 @@ export const siteConfig: SiteConfig = {
     twitter: "https://twitter.com/arshadyaseeen",
     github: "https://github.com/arshad-yaseen/markdx",
   },
+  author: {
+    name: "Arshad Yaseen",
+    twitter: "https://twitter.com/arshadyaseeen",
+    github: "https://github.com/arshad-yaseen",
+  },
 };
+
+export const githubRepo: string = "https://github.com/arshad-yaseen/markdx";

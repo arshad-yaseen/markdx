@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 
 function Header() {
   return (
-    <header className="w-full py-6 h-20 flex px-12">
+    <header className="w-full py-6 h-20 flex lg:px-12 px-6">
       <div className="flex h-full w-1/2 items-center">
         <Link href="/" className="flex items-center">
           <Image

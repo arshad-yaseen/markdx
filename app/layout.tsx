@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -82,9 +83,11 @@ export default function RootLayout({
           fontHeading.variable
         )}
       >
-        <Header />
-        {children}
-        <Analytics />
+        <ThemeProvider attribute="class" defaultTheme="light">
+          <Header />
+          {children}
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
