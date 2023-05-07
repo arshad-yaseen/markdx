@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -83,6 +84,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Analytics />
       </body>
     </html>
   );
