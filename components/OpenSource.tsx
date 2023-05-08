@@ -1,6 +1,6 @@
 import { github } from "@/api/github";
 import { githubRepo } from "@/config/site";
-import { Github } from "lucide-react";
+import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -39,7 +39,7 @@ function OpenSource() {
           href={githubRepo}
         >
           <div className="flex h-10 w-10 items-center justify-center space-x-2 rounded-md border border-muted bg-muted">
-            <Github className="h-5 w-5" />
+            <GithubIcon className="h-5 w-5" />
           </div>
           <div className="flex items-center">
             <div className="h-4 w-4 border-y-8 border-l-0 border-r-8 border-solid border-muted border-y-transparent"></div>

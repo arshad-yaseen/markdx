@@ -1,4 +1,4 @@
-import { Code, Languages, Share, Sparkles, Star, Timer } from "lucide-react";
+import {CodeIcon, LanguagesIcon, ShareIcon, SparklesIcon, StarIcon, TimerIcon } from "lucide-react";
 import React from "react";
 
 function Features() {
@@ -18,7 +18,7 @@ function Features() {
       <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <Code />
+            <CodeIcon />
             <div className="space-y-2">
               <h3 className="font-bold">Generate or Document codes</h3>
               <p className="text-sm text-muted-foreground">
@@ -29,7 +29,7 @@ function Features() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <Share />
+            <ShareIcon />
             <div className="space-y-2">
               <h3 className="font-bold">Export to any format</h3>
               <p className="text-sm text-muted-foreground">
@@ -40,7 +40,7 @@ function Features() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <Languages />
+            <LanguagesIcon />
             <div className="space-y-2">
               <h3 className="font-bold">Translate</h3>
               <p className="text-sm text-muted-foreground">
@@ -51,7 +51,7 @@ function Features() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <Star />
+            <StarIcon />
             <div className="space-y-2">
               <h3 className="font-bold">AI suggessions and corrections</h3>
               <p className="text-sm text-muted-foreground">
@@ -62,7 +62,7 @@ function Features() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <Sparkles />
+            <SparklesIcon />
             <div className="space-y-2">
               <h3 className="font-bold">Ask AI playground</h3>
               <p className="text-sm text-muted-foreground">
@@ -73,7 +73,7 @@ function Features() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <Timer />
+            <TimerIcon />
             <div className="space-y-2">
               <h3 className="font-bold">Realtime collaboration</h3>
               <p className="text-sm text-muted-foreground">

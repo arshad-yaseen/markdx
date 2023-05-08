@@ -6,20 +6,22 @@ import React from "react";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
+import EditorToolsPanel from "./editor/EditorToolsPanel";
 
 function Header() {
   const { theme } = useTheme();
   const pathname = usePathname();
-  const isEditor =
-    pathname.includes("/dashboard") || pathname.includes("/edit");
+  const isEditor = pathname.includes("/edit");
 
   return (
     <header
       className={`w-full ${
-        isEditor ? "border-b h-14" : "h-20"
-      } py-6  flex lg:px-12 px-6`}
+        isEditor ? "border-b h-[8vh] lg:px-7 px-3" : "h-20 px-6 lg:px-12"
+      }  flex  `}
     >
-      <div className="flex h-full w-1/2 items-center">
+      <div
+        className={`flex h-full ${isEditor ? "w-[20%]" : "w-1/2"} items-center`}
+      >
         <Link href="/" className="flex items-center">
           <Image
             src={
@@ -38,7 +40,12 @@ function Header() {
           </h4>
         </Link>
       </div>
-      <div className="flex h-full w-1/2 items-center justify-end">
+      {isEditor && <EditorToolsPanel />}
+      <div
+        className={`flex h-full ${
+          isEditor ? "w-[25%]" : "w-1/2"
+        }  items-center justify-end`}
+      >
         <Button variant="secondary">Login</Button>
       </div>
     </header>

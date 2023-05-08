@@ -1,12 +1,14 @@
-import React, { Suspense } from "react";
 import { Button } from "./ui/button";
-import { Github } from "lucide-react";
+import { GithubIcon } from "lucide-react";
 import Image from "next/image";
 import HeroImage from "../public/markdx-editor-frame.png";
 import Link from "next/link";
 import { githubRepo } from "@/config/site";
 
 function Hero() {
+  const randomId =
+    Math.random().toString(36).substring(2, 15)
+
   return (
     <section className="w-full flex flex-col items-center ">
       <h1 className="lg:text-6xl sm:text-5xl text-3xl px-6 mt-12 font-heading text-center">
@@ -16,12 +18,14 @@ function Hero() {
         MarkDX is a Markdown editor that uses AI to make your Markdown standard.
       </p>
       <div className="flex items-center space-x-4">
-        <Button size="lg" className="mt-12">
-          Start writing
-        </Button>
+        <Link href={`/edit/${randomId}`}>
+          <Button size="lg" className="mt-12">
+            Start writing
+          </Button>
+        </Link>
         <Link href={githubRepo} target="_blank">
           <Button variant="outline" size="lg" className="mt-12">
-            <Github className="h-4 w-4 mr-1" /> Github
+            <GithubIcon className="h-4 w-4 mr-1" /> Github
           </Button>
         </Link>
       </div>
