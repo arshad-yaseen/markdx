@@ -1,0 +1,12 @@
+.monaco-editor span {
+  color: black !important;
+}
+
+.monaco-editor,
+.monaco-editor-background {
+  background-color: transparent !important;
+}
+
+.monaco-editor .mtk6 {
+  color: #777777 !important;
+}
