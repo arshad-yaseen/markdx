@@ -1,28 +1,30 @@
-"use client";
+"use client"
 
-import { monacoConfig } from "@/config/editor";
-import Editor from "@monaco-editor/react";
-import { useTheme } from "next-themes";
-import { useState } from "react";
-import "@/styles/editor.css";
+import { useState } from "react"
+import Editor from "@monaco-editor/react"
+import { useTheme } from "next-themes"
+
+import { monacoConfig } from "@/config/editor"
+
+import "@/styles/editor.css"
 
 function EditorSection({
   markdown,
   onCodeChange,
 }: {
-  markdown: string;
-  onCodeChange: (value: string) => void;
+  markdown: string
+  onCodeChange: (value: string) => void
 }) {
-  const [code, setCode] = useState(markdown);
-  const { theme } = useTheme();
+  const [code, setCode] = useState(markdown)
+  const { theme } = useTheme()
 
   const handleEditorChange = (value: string | undefined) => {
-    setCode(value || "");
-    onCodeChange(value || "");
-  };
+    setCode(value || "")
+    onCodeChange(value || "")
+  }
 
   return (
-    <div className="w-[45%] h-full flex flex-col items-center py-12 px-16">
+    <div className="flex h-full w-[45%] flex-col items-center px-16 py-12">
       <Editor
         language={monacoConfig.language}
         value={code}
@@ -31,7 +33,7 @@ function EditorSection({
         options={monacoConfig.options}
       />
     </div>
-  );
+  )
 }
 
-export default EditorSection;
+export default EditorSection

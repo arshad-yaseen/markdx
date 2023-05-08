@@ -1,22 +1,23 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { Button } from "./ui/button";
-import { useTheme } from "next-themes";
-import { usePathname } from "next/navigation";
-import EditorToolsPanel from "./editor/EditorToolsPanel";
+import React from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
+
+import EditorToolsPanel from "./editor/EditorToolsPanel"
+import { Button } from "./ui/button"
 
 function Header() {
-  const { theme } = useTheme();
-  const pathname = usePathname();
-  const isEditor = pathname.includes("/edit");
+  const { theme } = useTheme()
+  const pathname = usePathname()
+  const isEditor = pathname.includes("/edit")
 
   return (
     <header
       className={`w-full ${
-        isEditor ? "border-b h-[8vh] lg:px-7 px-3" : "h-20 px-6 lg:px-12"
+        isEditor ? "h-[8vh] border-b px-3 lg:px-7" : "h-20 px-6 lg:px-12"
       }  flex  `}
     >
       <div
@@ -31,11 +32,11 @@ function Header() {
             }
             priority
             alt="logo"
-            className="w-auto h-8"
+            className="h-8 w-auto"
             width={"0"}
             height={"0"}
           />
-          <h4 className="font-bold font-heading text-xl ml-2">
+          <h4 className="ml-2 font-heading text-xl font-bold">
             {isEditor ? "Editor" : "MarkDX"}
           </h4>
         </Link>
@@ -49,7 +50,7 @@ function Header() {
         <Button variant="secondary">Login</Button>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header

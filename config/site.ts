@@ -1,4 +1,4 @@
-import { SiteConfig } from "types";
+import { SiteConfig } from "types"
 
 export const siteConfig: SiteConfig = {
   name: "MarkDX - AI Markdown Editor",
@@ -14,8 +14,8 @@ export const siteConfig: SiteConfig = {
     name: "Arshad Yaseen",
     twitter: "https://twitter.com/arshadyaseeen",
     github: "https://github.com/arshad-yaseen",
-    website: "https://arshadd.site"
+    website: "https://arshadd.site",
   },
-};
+}
 
-export const githubRepo: string = "https://github.com/arshad-yaseen/markdx";
+export const githubRepo: string = "https://github.com/arshad-yaseen/markdx"

@@ -1,7 +1,7 @@
-import Features from "@/components/Features";
-import Hero from "@/components/Hero";
-import OpenSource from "@/components/OpenSource";
-import SiteFooter from "@/components/SiteFooter";
+import Features from "@/components/Features"
+import Hero from "@/components/Hero"
+import OpenSource from "@/components/OpenSource"
+import SiteFooter from "@/components/SiteFooter"
 
 export default function Home() {
   return (
@@ -11,5 +11,5 @@ export default function Home() {
       <OpenSource />
       <SiteFooter />
     </main>
-  );
+  )
 }

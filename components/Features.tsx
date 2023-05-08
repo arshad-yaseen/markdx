@@ -1,5 +1,12 @@
-import {CodeIcon, LanguagesIcon, ShareIcon, SparklesIcon, StarIcon, TimerIcon } from "lucide-react";
-import React from "react";
+import React from "react"
+import {
+  CodeIcon,
+  LanguagesIcon,
+  ShareIcon,
+  SparklesIcon,
+  StarIcon,
+  TimerIcon,
+} from "lucide-react"
 
 function Features() {
   return (
@@ -84,7 +91,7 @@ function Features() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default Features;
+export default Features

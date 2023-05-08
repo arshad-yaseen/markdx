@@ -1,21 +1,23 @@
-import Header from "@/components/Header";
-import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
-import "@/styles/globals.css";
-import { Inter as FontSans } from "next/font/google";
-import localFont from "next/font/local";
-import { Analytics } from "@vercel/analytics/react";
-import { ThemeProvider } from "@/components/theme-provider";
+import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
+import Header from "@/components/Header"
+
+import "@/styles/globals.css"
+import { Inter as FontSans } from "next/font/google"
+import localFont from "next/font/local"
+import { Analytics } from "@vercel/analytics/react"
+
+import { ThemeProvider } from "@/components/theme-provider"
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
-});
+})
 
 const fontHeading = localFont({
   src: "../assets/fonts/CalSans-SemiBold.woff2",
   variable: "--font-heading",
-});
+})
 
 export const metadata = {
   title: {
@@ -67,12 +69,12 @@ export const metadata = {
     icon: "/favicon.ico",
     apple: "/apple-icon.png",
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -90,5 +92,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

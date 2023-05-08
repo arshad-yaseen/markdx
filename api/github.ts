@@ -4,9 +4,9 @@ export const github = {
       headers: {
         Authorization: process.env.GITHUB_ACCESS_TOKEN!,
       },
-    });
-    const data = await res.json();
+    })
+    const data = await res.json()
 
-    return data;
+    return data
   },
-};
+}

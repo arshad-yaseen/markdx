@@ -1,11 +1,13 @@
-import { cn } from "@/lib/utils";
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import CodeBlock from "./CodeBlock";
+import React from "react"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+
+import { cn } from "@/lib/utils"
+
+import CodeBlock from "./CodeBlock"
 
 interface ComponentTypes {
-  className?: string;
+  className?: string
 }
 
 function ParseMarkdown({ code }: { code: string }) {
@@ -40,7 +42,7 @@ function ParseMarkdown({ code }: { code: string }) {
     h4: ({ className, ...props }: ComponentTypes) => (
       <h4
         className={cn(
-          "mt-8 scroll-m-20 text-md font-medium tracking-tight",
+          "text-md mt-8 scroll-m-20 font-medium tracking-tight",
           className
         )}
         {...props}
@@ -49,7 +51,7 @@ function ParseMarkdown({ code }: { code: string }) {
     h5: ({ className, ...props }: ComponentTypes) => (
       <h5
         className={cn(
-          "mt-8 scroll-m-20 text-md font-medium tracking-tight",
+          "text-md mt-8 scroll-m-20 font-medium tracking-tight",
           className
         )}
         {...props}
@@ -67,7 +69,7 @@ function ParseMarkdown({ code }: { code: string }) {
     a: ({ className, ...props }: ComponentTypes) => (
       <a
         className={cn(
-          "font-medium hover:underline underline-offset-4 text-[#3181F6]",
+          "font-medium text-[#3181F6] underline-offset-4 hover:underline",
           className
         )}
         {...props}
@@ -149,17 +151,17 @@ function ParseMarkdown({ code }: { code: string }) {
       />
     ),
     pre: ({ className, ...props }: ComponentTypes) => (
-      <pre className={cn("w-full  flex mt-6", className)} {...props} />
+      <pre className={cn("mt-6  flex w-full", className)} {...props} />
     ),
-  };
+  }
 
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       components={{
         ...components,
-        code({ node, inline, className, children, ...props }) {
-          const match = /language-(\w+)/.exec(className || "");
+        code({ inline, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(className || "")
           return !inline && match ? (
             <CodeBlock
               value={String(children).replace(/\n$/, "")}
@@ -169,16 +171,17 @@ function ParseMarkdown({ code }: { code: string }) {
           ) : (
             <code
               {...props}
-              className={cn("bg-muted py-0.5 px-1.5 rounded-sm", className)}
+              className={cn("rounded-sm bg-muted px-1.5 py-0.5", className)}
             >
               {children}
             </code>
-          );
+          )
         },
       }}
-      children={code}
-    />
-  );
+    >
+      {code}
+    </ReactMarkdown>
+  )
 }
 
-export default ParseMarkdown;
+export default ParseMarkdown

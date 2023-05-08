@@ -1,9 +1,10 @@
-import React from "react";
-import { Button } from "../ui/button";
+import React from "react"
+
+import { Button } from "../ui/button"
 
 function EditorLeft() {
   return (
-    <div className="w-[20%] h-full border-r flex flex-col items-center py-6 px-6 ">
+    <div className="flex h-full w-[20%] flex-col items-center border-r p-6 ">
       <div className="space-y-4">
         <Button variant="outline" className="w-full ">
           Standardize or Format
@@ -29,7 +30,7 @@ function EditorLeft() {
         <Button className="w-full ">Ask AI to write</Button>
       </div>
       <hr />
-      <div className="flex-1 w-full flex flex-col space-y-4 justify-end py-6">
+      <div className="flex w-full flex-1 flex-col justify-end space-y-4 py-6">
         <Button variant="outline" className="w flex">
           Download
         </Button>
@@ -38,7 +39,7 @@ function EditorLeft() {
         </Button>
       </div>
     </div>
-  );
+  )
 }
 
-export default EditorLeft;
+export default EditorLeft

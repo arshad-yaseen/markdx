@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { githubRepo, siteConfig } from "@/config/site";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import ModeToggle from "@/components/mode-toggle";
-import { useTheme } from "next-themes";
+import React from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { useTheme } from "next-themes"
+
+import { githubRepo, siteConfig } from "@/config/site"
+import ModeToggle from "@/components/mode-toggle"
 
 function SiteFooter() {
-
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
@@ -66,7 +66,7 @@ function SiteFooter() {
       </div>
       <ModeToggle />
     </div>
-  );
+  )
 }
 
-export default SiteFooter;
+export default SiteFooter

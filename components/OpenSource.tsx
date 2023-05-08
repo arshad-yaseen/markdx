@@ -1,20 +1,21 @@
-import { github } from "@/api/github";
-import { githubRepo } from "@/config/site";
-import { GithubIcon } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+import React from "react"
+import Link from "next/link"
+import { github } from "@/api/github"
+import { GithubIcon } from "lucide-react"
+
+import { githubRepo } from "@/config/site"
 
 export async function getStars() {
-  console.log(process.env.GITHUB_ACCESS_TOKEN);
+  console.log(process.env.GITHUB_ACCESS_TOKEN)
 
-  const repo = await github.getRepo("arshad-yaseen", "markdx");
+  const repo = await github.getRepo("arshad-yaseen", "markdx")
 
-  return repo.stargazers_count;
+  return repo.stargazers_count
 }
 
 function OpenSource() {
   return (
-    <section id="open-source" className="container py-8 md:pyb-12 lg:py-24">
+    <section id="open-source" className="md:pyb-12 container py-8 lg:py-24">
       <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
         <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
           Proudly Open Source
@@ -50,9 +51,9 @@ function OpenSource() {
         </Link>
       </div>
     </section>
-  );
+  )
 }
 
-export default OpenSource;
+export default OpenSource
 
-export const revalidate = 60;
+export const revalidate = 60

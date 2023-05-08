@@ -21,4 +21,4 @@ export const monacoConfig = {
     renderLineHighlight: "none",
     fontSize: 14,
   },
-};
+}
