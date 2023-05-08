@@ -5,15 +5,16 @@ export const siteConfig: SiteConfig = {
   description:
     "MarkDX is an open source AI markdown editor, which can help you write markdown documents more efficiently.",
   url: "https://markdx.site",
-  ogImage: "https://markdx.site/og.jpg",
+  ogImage: "https://markdx.site/og.png",
   links: {
     twitter: "https://twitter.com/arshadyaseeen",
     github: "https://github.com/arshad-yaseen/markdx",
   },
-  author: {
+  creator: {
     name: "Arshad Yaseen",
     twitter: "https://twitter.com/arshadyaseeen",
     github: "https://github.com/arshad-yaseen",
+    website: "https://arshadd.site"
   },
 };
 

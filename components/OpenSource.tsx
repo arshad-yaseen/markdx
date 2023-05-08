@@ -5,6 +5,8 @@ import Link from "next/link";
 import React from "react";
 
 export async function getStars() {
+  console.log(process.env.GITHUB_ACCESS_TOKEN);
+
   const repo = await github.getRepo("arshad-yaseen", "markdx");
 
   return repo.stargazers_count;
@@ -18,8 +20,8 @@ function OpenSource() {
           Proudly Open Source
         </h2>
         <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          MarkDX is an open source project. You can find the source code on{" "}
-          <br /> and contribute to it on{" "}
+          MarkDX is an open source project. You can find the <br /> source code
+          on{" "}
           <Link
             target="_blank"
             rel="noreferrer"
@@ -28,7 +30,7 @@ function OpenSource() {
           >
             GitHub
           </Link>
-          .
+          . Feel free to contribute to the project.
         </p>
         <Link
           target="_blank"

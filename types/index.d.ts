@@ -7,9 +7,10 @@ export type SiteConfig = {
     twitter: string;
     github: string;
   };
-  author: {
+  creator: {
     name: string;
     twitter: string;
     github: string;
+    website: string;
   }
 };
