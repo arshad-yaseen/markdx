@@ -26,6 +26,7 @@
     "highlight.js": "^11.8.0",
     "install": "^0.13.0",
     "lucide-react": "^0.214.0",
+    "monaco-editor": "^0.38.0",
     "next": "13.4.1",
     "next-themes": "^0.2.1",
     "npm": "^9.6.6",

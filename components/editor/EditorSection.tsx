@@ -30,7 +30,24 @@ function EditorSection({
         value={code}
         theme={theme === "dark" ? "vs-dark" : "vs-light"}
         onChange={handleEditorChange}
-        options={monacoConfig.options}
+        options={{
+          minimap: {
+            enabled: false,
+          },
+          wordWrap: "on",
+          wrappingIndent: "indent",
+          scrollBeyondLastLine: false,
+          scrollbar: {
+            vertical: "hidden",
+            horizontal: "hidden",
+          },
+          overviewRulerLanes: 0,
+          lineDecorationsWidth: 0,
+          glyphMargin: false,
+          folding: false,
+          renderLineHighlight: "none",
+          fontSize: 14,
+        }}
       />
     </div>
   )
