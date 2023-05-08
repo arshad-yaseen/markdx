@@ -1,15 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
+import { useTheme } from "next-themes";
 
 function Header() {
+  const { theme } = useTheme();
+
   return (
     <header className="w-full py-6 h-20 flex lg:px-12 px-6">
       <div className="flex h-full w-1/2 items-center">
         <Link href="/" className="flex items-center">
           <Image
-            src="/logos/markdx-black.svg"
+            src={
+              theme === "dark"
+                ? "/logos/markdx-white.svg"
+                : "/logos/markdx-black.svg"
+            }
             priority
             alt="logo"
             className="w-auto h-8"

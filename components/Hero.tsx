@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Button } from "./ui/button";
 import { Github } from "lucide-react";
 import Image from "next/image";

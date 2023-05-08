@@ -54,3 +54,5 @@ function OpenSource() {
 }
 
 export default OpenSource;
+
+export const revalidate = 60;
