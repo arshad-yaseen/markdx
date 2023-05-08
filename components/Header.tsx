@@ -43,7 +43,7 @@ function Header() {
       {isEditor && <EditorToolsPanel />}
       <div
         className={`flex h-full ${
-          isEditor ? "w-[25%]" : "w-1/2"
+          isEditor ? "w-[35%]" : "w-1/2"
         }  items-center justify-end`}
       >
         <Button variant="secondary">Login</Button>

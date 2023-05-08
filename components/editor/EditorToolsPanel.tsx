@@ -17,7 +17,7 @@ import {
 
 function EditorToolsPanel() {
   return (
-    <div className="min-h-full w-[55%] flex justify-center space-x-3 items-center">
+    <div className="min-h-full w-[45%] flex justify-center space-x-3 items-center">
       <Button
         variant="outline"
         className="flex justify-center h-fit items-center w-fit p-1.5"
