@@ -4,8 +4,6 @@ import { useState } from "react"
 import Editor from "@monaco-editor/react"
 import { useTheme } from "next-themes"
 
-import { monacoConfig } from "@/config/editor"
-
 import "@/styles/editor.css"
 
 function EditorSection({
@@ -26,7 +24,7 @@ function EditorSection({
   return (
     <div className="flex h-full w-[45%] flex-col items-center px-16 py-12">
       <Editor
-        language={monacoConfig.language}
+        language="markdown"
         value={code}
         theme={theme === "dark" ? "vs-dark" : "vs-light"}
         onChange={handleEditorChange}
@@ -41,8 +39,10 @@ function EditorSection({
             vertical: "hidden",
             horizontal: "hidden",
           },
+          lineNumbers: "off",
           overviewRulerLanes: 0,
           lineDecorationsWidth: 0,
+          lineNumbersMinChars: 0,
           glyphMargin: false,
           folding: false,
           renderLineHighlight: "none",
