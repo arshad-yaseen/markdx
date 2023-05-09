@@ -5,7 +5,7 @@ import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 import "../styles/editor.css"
 
 export default function CopyButton({ value }: { value: string }) {
-  if (!value) return <></>
+  if (!value && value !== "`" && value !== "``" && value !== "```") return <></>
 
   const [copying, setCopying] = useState<number>(0)
 
