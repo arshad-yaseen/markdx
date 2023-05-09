@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 
+import EditorNav from "./editor/EditorNav"
 import EditorToolsPanel from "./editor/EditorToolsPanel"
 import { Button } from "./ui/button"
 
@@ -42,12 +43,13 @@ function Header() {
         </Link>
       </div>
       {isEditor && <EditorToolsPanel />}
+
       <div
         className={`flex h-full ${
           isEditor ? "w-[35%]" : "w-1/2"
         }  items-center justify-end`}
       >
-        <Button variant="secondary">Login</Button>
+        {isEditor ? <EditorNav /> : <Button variant="secondary">Login</Button>}
       </div>
     </header>
   )

@@ -1,9 +1,9 @@
 import React from "react"
 import Link from "next/link"
-import { getRepo } from "@/utils/apiClient/github"
 import { GithubIcon } from "lucide-react"
 
 import { githubRepo } from "@/config/site"
+import { getRepo } from "@/lib/apiClient/github"
 
 export async function getStars() {
   const repo = await getRepo("arshad-yaseen", "markdx")
