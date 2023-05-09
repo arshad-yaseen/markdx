@@ -1,11 +1,12 @@
-import React from "react"
 import { useCallback, useState } from "react"
 import copy from "copy-to-clipboard"
 import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 
 import "../styles/editor.css"
 
-export default function CopyButton({ value }: { value: string}) {
+export default function CopyButton({ value }: { value: string }) {
+  if (!value) return <></>
+
   const [copying, setCopying] = useState<number>(0)
 
   const onCopy = useCallback(() => {
@@ -14,7 +15,7 @@ export default function CopyButton({ value }: { value: string}) {
     setTimeout(() => {
       setCopying((c) => c - 1)
     }, 2000)
-  }, [])
+  }, [value])
 
   const variants = {
     visible: { opacity: 1, scale: 1 },
