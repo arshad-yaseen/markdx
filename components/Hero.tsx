@@ -36,7 +36,7 @@ function Hero() {
       <div className="relative flex  h-[50vh] w-full justify-center overflow-hidden">
         <Image
           src={`/markdx-editor-frame-${
-            theme === "dark" ? "dark" : "light"
+            theme === "dark" || theme === "system" ? "dark" : "light"
           }.png`}
           priority
           alt="hero"

@@ -16,7 +16,7 @@ function SiteFooter() {
       <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
         <Image
           src={
-            theme === "dark"
+            theme === "dark" || theme === "system"
               ? "/logos/markdx-white.svg"
               : "/logos/markdx-black.svg"
           }

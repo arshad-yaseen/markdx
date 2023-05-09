@@ -18,7 +18,7 @@ import { Button } from "../ui/button"
 
 function EditorToolsPanel() {
   return (
-    <div className="flex min-h-full w-[45%] items-center justify-center space-x-3">
+    <div className="flex min-h-full w-[42%] items-center justify-center space-x-3">
       <Button
         variant="outline"
         className="flex h-fit w-fit items-center justify-center p-1.5"
