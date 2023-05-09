@@ -22,7 +22,7 @@ function EditorSection({
   }
 
   return (
-    <div className="flex h-full w-[45%] flex-col items-center px-16 py-12">
+    <div className="flex h-full w-[45%] flex-col items-center">
       <Editor
         language="markdown"
         value={code}
@@ -47,7 +47,12 @@ function EditorSection({
           folding: false,
           renderLineHighlight: "none",
           fontSize: 14,
+          padding: {
+            top: 48,
+            bottom: 650,
+          },
         }}
+        className="px-10"
       />
     </div>
   )

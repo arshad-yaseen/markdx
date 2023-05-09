@@ -1,3 +1,6 @@
+.dark .monaco-editor span {
+  color: white !important;
+}
 .monaco-editor span {
   color: black !important;
 }
@@ -9,4 +12,12 @@
 
 .monaco-editor .mtk6 {
   color: #777777 !important;
+}
+
+.dark .monaco-editor .mtk5 {
+  color: #777777 !important;
+}
+
+.copy-button {
+  transition: background 200ms, box-shadow 200ms, opacity 200ms;
 }

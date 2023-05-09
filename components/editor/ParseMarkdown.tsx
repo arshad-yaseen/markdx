@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm"
 
 import { cn } from "@/lib/utils"
 
-import CodeBlock from "./CodeBlock"
+import CodeBlock from "../CodeBlock"
 
 interface ComponentTypes {
   className?: string
@@ -119,7 +119,7 @@ function ParseMarkdown({ code }: { code: string }) {
       className,
       ...props
     }: React.HTMLAttributes<HTMLTableElement>) => (
-      <div className="my-6 w-full overflow-y-auto">
+      <div className="my-6 w-full rounded-lg">
         <table className={cn("w-full", className)} {...props} />
       </div>
     ),
@@ -135,7 +135,7 @@ function ParseMarkdown({ code }: { code: string }) {
     th: ({ className, ...props }: ComponentTypes) => (
       <th
         className={cn(
-          "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
+          "border px-4 py-2 text-left font-bold  [&[align=center]]:text-center [&[align=right]]:text-right",
           className
         )}
         {...props}
