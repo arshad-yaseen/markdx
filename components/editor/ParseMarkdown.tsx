@@ -1,5 +1,6 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
+import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
 
 import { cn } from "@/lib/utils"
@@ -107,7 +108,7 @@ function ParseMarkdown({ code }: { code: string }) {
     }: React.ImgHTMLAttributes<HTMLImageElement>) => (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        className={cn("rounded-md border", className)}
+        className={cn("my-2 inline-flex rounded-md  border", className)}
         alt={alt}
         {...props}
       />
@@ -158,6 +159,7 @@ function ParseMarkdown({ code }: { code: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw]}
       components={{
         ...components,
         code({ inline, className, children, ...props }) {
@@ -167,6 +169,7 @@ function ParseMarkdown({ code }: { code: string }) {
               value={String(children).replace(/\n$/, "")}
               language={match[1]}
               {...props}
+              copyable={false}
             />
           ) : (
             <code

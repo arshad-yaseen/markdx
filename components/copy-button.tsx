@@ -4,8 +4,14 @@ import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 
 import "../styles/editor.css"
 
-export default function CopyButton({ value }: { value: string }) {
-  if (!value && value !== "`" && value !== "``" && value !== "```") return <></>
+export default function CopyButton({
+  value,
+  copyable = true,
+}: {
+  value: string
+  copyable?: boolean
+}) {
+  if (!value || !copyable) return <></>
 
   const [copying, setCopying] = useState<number>(0)
 
@@ -25,7 +31,7 @@ export default function CopyButton({ value }: { value: string }) {
     <button
       onClick={onCopy}
       aria-label="Copy code"
-      className="copy-button absolute right-4 top-3 flex h-6 w-6 items-center justify-center rounded-md border bg-white"
+      className="copy-button absolute right-4 top-3 flex h-6 w-6 items-center justify-center rounded-md border bg-background"
     >
       <MotionConfig transition={{ duration: 0.15 }}>
         <AnimatePresence initial={false} mode="wait">

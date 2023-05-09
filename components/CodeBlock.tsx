@@ -9,11 +9,13 @@ function CodeBlock({
   value,
   preClass,
   codeClass,
+  copyable,
 }: {
   language: string
   value: string
   preClass?: string
   codeClass?: string
+  copyable?: boolean
 }) {
   value = value || ""
   hljs.getLanguage(language) ? (language = language) : (language = "plaintext")
@@ -21,11 +23,11 @@ function CodeBlock({
 
   return (
     <pre className={cn("relative flex w-full", preClass)}>
-      <CopyButton value={value} />
+      <CopyButton value={value} copyable={copyable} />
       <code
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
         className={cn(
-          `hljs ${language} max-h-[600px] min-w-full overflow-scroll rounded-lg border bg-gray-50/20 px-4 py-3 text-sm`,
+          `hljs ${language} max-h-[600px] min-w-full overflow-scroll rounded-lg border px-4 py-3 text-sm`,
           codeClass
         )}
       ></code>

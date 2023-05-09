@@ -1,14 +1,17 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { GithubIcon } from "lucide-react"
+import { useTheme } from "next-themes"
 
 import { githubRepo } from "@/config/site"
 
-import HeroImage from "../public/markdx-editor-frame.png"
 import { Button } from "./ui/button"
 
 function Hero() {
   const randomId = Math.random().toString(36).substring(2, 15)
+  const { theme } = useTheme()
 
   return (
     <section className="flex w-full flex-col items-center ">
@@ -30,9 +33,11 @@ function Hero() {
           </Button>
         </Link>
       </div>
-      <div className="relative flex  h-[45vh] w-full justify-center overflow-hidden">
+      <div className="relative flex  h-[50vh] w-full justify-center overflow-hidden">
         <Image
-          src={HeroImage}
+          src={`/markdx-editor-frame-${
+            theme === "dark" ? "dark" : "light"
+          }.png`}
           priority
           alt="hero"
           className="absolute h-auto  w-auto lg:-top-24"
