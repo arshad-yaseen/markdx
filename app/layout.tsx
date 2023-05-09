@@ -7,6 +7,7 @@ import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
+import Recoil from "@/components/recoil-root"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const fontSans = FontSans({
@@ -85,11 +86,13 @@ export default function RootLayout({
           fontHeading.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <Header />
-          {children}
-          <Analytics />
-        </ThemeProvider>
+        <Recoil>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <Header />
+            {children}
+            <Analytics />
+          </ThemeProvider>
+        </Recoil>
       </body>
     </html>
   )

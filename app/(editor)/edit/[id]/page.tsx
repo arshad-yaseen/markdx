@@ -1,20 +1,20 @@
 "use client"
 
-import React, { useState } from "react"
+import { editorCodeState } from "@/atoms/editor"
+import { useRecoilState } from "recoil"
 
 import EditorLeft from "@/components/editor/EditorLeft"
 import EditorSection from "@/components/editor/EditorSection"
 import Preview from "@/components/editor/Preview"
 
 function page() {
-  const markdown = `# Project title\n\nStart writing your markdown here`
-  const [editorCode, setEditorCode] = useState(markdown)
+  const [editorCode, setEditorCode] = useRecoilState(editorCodeState)
 
   return (
     <div className="flex h-[92vh] w-full">
       <EditorLeft />
       <EditorSection
-        markdown={markdown}
+        markdown={editorCode}
         onCodeChange={(code) => {
           setEditorCode(code)
         }}

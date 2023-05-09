@@ -5,10 +5,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
+    "turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "preview": "next build && next start"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.1",
@@ -37,6 +39,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.7",
+    "recoil": "^0.7.7",
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
     "sharp": "^0.32.1",

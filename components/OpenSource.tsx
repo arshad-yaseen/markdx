@@ -1,15 +1,12 @@
 import React from "react"
 import Link from "next/link"
-import { github } from "@/api/github"
+import { getRepo } from "@/utils/apiClient/github"
 import { GithubIcon } from "lucide-react"
 
 import { githubRepo } from "@/config/site"
 
 export async function getStars() {
-  console.log(process.env.GITHUB_ACCESS_TOKEN)
-
-  const repo = await github.getRepo("arshad-yaseen", "markdx")
-
+  const repo = await getRepo("arshad-yaseen", "markdx")
   return repo.stargazers_count
 }
 
