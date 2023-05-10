@@ -1,27 +1,51 @@
 "use client"
 
-import { editorCodeState } from "@/atoms/editor"
-import { useRecoilState } from "recoil"
+import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
+import { editorCodeType } from "types"
+import { useTheme } from "next-themes"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { Toaster } from "sonner"
 
 import EditorLeft from "@/components/editor/EditorLeft"
 import EditorSection from "@/components/editor/EditorSection"
 import Preview from "@/components/editor/Preview"
-import { Toaster } from "sonner"
+
+type prevCodeType = {
+  id: number
+  section: string
+  content: string
+}
 
 function page() {
-  const [editorCode, setEditorCode] = useRecoilState(editorCodeState)
+  const [editorCodes, setEditorCodes] = useRecoilState(editorCodesState)
+  const editorActiveSection = useRecoilValue(editorActiveSectionState)
+  const { theme } = useTheme()
 
   return (
     <div className="flex h-[92vh] w-full">
-      <Toaster position="bottom-center" />
+      <Toaster theme={theme === "dark" ? "dark" : "light"} />
       <EditorLeft />
       <EditorSection
-        markdown={editorCode}
+        markdown={editorCodes[editorActiveSection].content}
         onCodeChange={(code) => {
-          setEditorCode(code)
+          setEditorCodes((prev) => {
+            return prev.map((prevCode: prevCodeType) => {
+              if (prevCode.id === editorActiveSection) {
+                return {
+                  ...prevCode,
+                  content: code,
+                }
+              }
+              return prevCode
+            })
+          })
         }}
       />
-      <Preview code={editorCode} />
+      <Preview
+        code={editorCodes
+          .map((code: editorCodeType) => code.content)
+          .join("\n\n")}
+      />
     </div>
   )
 }

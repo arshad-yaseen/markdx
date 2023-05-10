@@ -14,3 +14,27 @@ export type SiteConfig = {
     website: string
   }
 }
+
+export type editorCodesType = [
+  {
+    id: number
+    section: string
+    content: string
+  }
+]
+
+export type editorCodeType = {
+  id: number
+  section: string
+  content: string
+}
+
+export type statePrevType = [
+  {
+    o: string
+    sdkn: string
+    sdkv: string
+    sv: string
+    ts: number
+  }
+]

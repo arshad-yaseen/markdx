@@ -1,6 +1,7 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
+import remarkEmoji from "remark-emoji"
 import remarkGfm from "remark-gfm"
 
 import { cn } from "@/lib/utils"
@@ -158,7 +159,7 @@ function ParseMarkdown({ code }: { code: string }) {
 
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
+      remarkPlugins={[remarkGfm, remarkEmoji]}
       rehypePlugins={[rehypeRaw]}
       components={{
         ...components,

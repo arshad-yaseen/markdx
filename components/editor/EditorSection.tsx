@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Editor from "@monaco-editor/react"
 import { useTheme } from "next-themes"
 
@@ -13,8 +13,12 @@ function EditorSection({
   markdown: string
   onCodeChange: (value: string) => void
 }) {
-  const [code, setCode] = useState(markdown)
+  const [code, setCode] = useState("")
   const { theme } = useTheme()
+
+  useEffect(() => {
+    setCode(markdown)
+  }, [markdown])
 
   const handleEditorChange = (value: string | undefined) => {
     setCode(value || "")
