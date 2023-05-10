@@ -5,7 +5,7 @@ import copy from "copy-to-clipboard"
 import { useRecoilValue } from "recoil"
 import { toast } from "sonner"
 
-import { editorCodeType, editorCodesType } from "types"
+import { editorCodeType } from "types"
 import { markdownto } from "@/lib/editor"
 
 import ModeToggle from "../mode-toggle"
@@ -18,8 +18,10 @@ import {
 } from "../ui/dropdown-menu"
 
 function EditorNav() {
-  const editorCodes = useRecoilValue(editorCodesState) as editorCodesType
-  const fullCode = editorCodes.map((code: editorCodeType) => code.content).join("\n\n") as string
+  const editorCodes = useRecoilValue(editorCodesState) as editorCodeType[]
+  const fullCode = editorCodes
+    .map((code: editorCodeType) => code.content)
+    .join("\n\n") as string
 
   const handleExport = {
     markdown: () => {

@@ -1,11 +1,11 @@
 "use client"
 
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
-import { editorCodeType } from "types"
 import { useTheme } from "next-themes"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { Toaster } from "sonner"
 
+import { editorCodeType } from "types"
 import EditorLeft from "@/components/editor/EditorLeft"
 import EditorSection from "@/components/editor/EditorSection"
 import Preview from "@/components/editor/Preview"
