@@ -2,7 +2,6 @@
 
 import { editorCodesState } from "@/atoms/editor"
 import copy from "copy-to-clipboard"
-import { useRecoilValue } from "recoil"
 import { toast } from "sonner"
 
 import { editorCodeType } from "types"
@@ -16,9 +15,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import { useAtomValue } from "jotai"
 
 function EditorNav() {
-  const editorCodes = useRecoilValue(editorCodesState) as editorCodeType[]
+  const editorCodes = useAtomValue(editorCodesState) as editorCodeType[]
   const fullCode = editorCodes
     .map((code: editorCodeType) => code.content)
     .join("\n\n") as string

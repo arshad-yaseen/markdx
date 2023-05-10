@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
-import { useRecoilState } from "recoil"
+import { useAtom } from "jotai"
 
 import { editorCodeType } from "types"
 
@@ -24,8 +24,8 @@ import {
 } from "../ui/select"
 
 function EditorToolsPanel() {
-  const [editorCodes, setEditorCodes] = useRecoilState(editorCodesState)
-  const [editorActiveSection, setEditorActiveSection] = useRecoilState(
+  const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
+  const [editorActiveSection, setEditorActiveSection] = useAtom(
     editorActiveSectionState
   )
   const [sectionTitleInputFilled, setSectionTitleInputFilled] = useState(false)

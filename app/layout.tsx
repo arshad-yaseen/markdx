@@ -8,7 +8,6 @@ import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
 import { ThemeProvider } from "@/components/theme-provider"
-import RecoilRoot from "@/components/recoil-root"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -86,13 +85,13 @@ export default function RootLayout({
           fontHeading.variable
         )}
       >
-        <RecoilRoot>
+
           <ThemeProvider attribute="class" defaultTheme="light">
             <Header />
             {children}
             <Analytics />
           </ThemeProvider>
-        </RecoilRoot>
+
       </body>
     </html>
   )

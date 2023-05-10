@@ -1,8 +1,8 @@
 "use client"
 
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
+import { useAtom, useAtomValue } from "jotai"
 import { useTheme } from "next-themes"
-import { useRecoilState, useRecoilValue } from "recoil"
 import { Toaster } from "sonner"
 
 import { editorCodeType } from "types"
@@ -17,8 +17,8 @@ type prevCodeType = {
 }
 
 function page() {
-  const [editorCodes, setEditorCodes] = useRecoilState(editorCodesState)
-  const editorActiveSection = useRecoilValue(editorActiveSectionState)
+  const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
+  const editorActiveSection = useAtomValue(editorActiveSectionState)
   const { theme } = useTheme()
 
   return (
