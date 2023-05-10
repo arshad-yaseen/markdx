@@ -2,6 +2,7 @@
 
 import { editorCodesState } from "@/atoms/editor"
 import copy from "copy-to-clipboard"
+import { useAtomValue } from "jotai"
 import { toast } from "sonner"
 
 import { editorCodeType } from "types"
@@ -15,7 +16,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import { useAtomValue } from "jotai"
 
 function EditorNav() {
   const editorCodes = useAtomValue(editorCodesState) as editorCodeType[]

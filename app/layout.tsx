@@ -1,11 +1,11 @@
+import Header from "@/components/Header"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import Header from "@/components/Header"
 
 import "@/styles/globals.css"
+import { Analytics } from "@vercel/analytics/react"
 import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
-import { Analytics } from "@vercel/analytics/react"
 
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -85,13 +85,11 @@ export default function RootLayout({
           fontHeading.variable
         )}
       >
-
-          <ThemeProvider attribute="class" defaultTheme="light">
-            <Header />
-            {children}
-            <Analytics />
-          </ThemeProvider>
-
+        <ThemeProvider attribute="class" defaultTheme="light">
+          <Header />
+          {children}
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )
