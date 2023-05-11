@@ -23,7 +23,7 @@ function page() {
 
   return (
     <div className="flex h-[92vh] w-full">
-      <Toaster theme={theme === "dark" ? "dark" : "light"} />
+      <Toaster theme={theme === "dark" ? "dark" : "light"} closeButton />
       <EditorLeft />
       <EditorSection
         markdown={editorCodes[editorActiveSection].content}
