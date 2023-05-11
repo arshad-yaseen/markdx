@@ -77,7 +77,7 @@
 
 pre code,
 .monaco-editor span {
-  font-family: "JetBrains-Regular";
+  font-family: "JetBrains-Regular", ui-monospace, monospace;
 }
 
 @layer base {
