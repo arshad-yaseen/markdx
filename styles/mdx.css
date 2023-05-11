@@ -1,7 +1,14 @@
+.dark .hljs-keyword,
+.dark .hljs-comment,
+.dark .hljs-title,
+.dark .hljs-function,
+.dark .hljs-attr {
+  color: #aab2bd;
+}
 .hljs-keyword,
 .hljs-comment,
 .hljs-title,
 .hljs-function,
 .hljs-attr {
-  color: #64758a;
+  color: #546478;
 }

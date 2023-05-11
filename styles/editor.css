@@ -12,12 +12,12 @@
 
 .monaco-editor .mtk6,
 .monaco-editor .mtk20 {
-  color: #64758a !important;
+  color: #546478 !important;
 }
 
 .dark .monaco-editor .mtk5,
 .dark .monaco-editor .mtk8 {
-  color: #64758a !important;
+  color: #aab2bd !important;
 }
 
 .copy-button {

@@ -92,7 +92,7 @@ function EditorToolsPanel() {
       setEditorCodes(
         editorCodes.filter((item) => item.id !== editorActiveSection)
       )
-      setEditorActiveSection(editorActiveSection - 1)
+      setEditorActiveSection(editorCodes[0].id)
     }, 1000) as unknown as number
     setHoldTimerId(id)
   }

@@ -3,9 +3,9 @@ import Link from "next/link"
 import { GithubIcon } from "lucide-react"
 
 import { githubRepo } from "@/config/site"
-import { getRepo } from "@/lib/apiClient/github"
+import { getRepo } from "@/lib/apiClient"
 
-export async function getStars() {
+async function getStars() {
   const repo = await getRepo("arshad-yaseen", "markdx")
   return repo.stargazers_count
 }
