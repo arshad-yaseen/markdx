@@ -39,7 +39,6 @@ function EditorToolsPanel() {
   // Handle the add section
   const handleAddSection = (e: FormEvent) => {
     e.preventDefault()
-    setEditorActiveSection(editorCodes.length)
     const target = e.target as typeof e.target & {
       0: { value: string }
     }
@@ -50,10 +49,11 @@ function EditorToolsPanel() {
         {
           id: editorCodes.length,
           section: title,
-          content: "",
+          content: `## ${title}`,
         },
       ]
     })
+    setEditorActiveSection(editorCodes.length)
     setDialogOpen(false)
   }
 
@@ -113,7 +113,15 @@ function EditorToolsPanel() {
         }}
       >
         <SelectTrigger className="w-[220px]">
-          <SelectValue placeholder={editorCodes[editorActiveSection].section} />
+          <SelectValue
+            placeholder={editorCodes
+              .filter((code) => {
+                return code.id === editorActiveSection
+              })
+              .map((code) => {
+                return code.section || ""
+              })}
+          />
         </SelectTrigger>
         <SelectContent>
           {editorCodes.map(

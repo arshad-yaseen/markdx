@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
 import { useAtom, useAtomValue } from "jotai"
 import { useTheme } from "next-themes"
@@ -20,13 +21,24 @@ function page() {
   const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
   const editorActiveSection = useAtomValue(editorActiveSectionState)
   const { theme } = useTheme()
+  const [markdownCode, setMarkdownCode] = useState("")
+
+  useEffect(() => {
+    editorCodes
+      .filter((code) => {
+        return code.id === editorActiveSection
+      })
+      .map((code) => {
+        setMarkdownCode(code.content)
+      })
+  }, [editorCodes, editorActiveSection])
 
   return (
     <div className="flex h-[92vh] w-full">
       <Toaster theme={theme === "dark" ? "dark" : "light"} closeButton />
       <EditorLeft />
       <EditorSection
-        markdown={editorCodes[editorActiveSection].content}
+        markdown={markdownCode}
         onCodeChange={(code) => {
           setEditorCodes((prev) => {
             return prev.map((prevCode: prevCodeType) => {

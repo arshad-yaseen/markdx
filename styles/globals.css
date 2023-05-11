@@ -70,6 +70,16 @@
   }
 }
 
+@font-face {
+  font-family: "JetBrains-Regular";
+  src: url("../assets/fonts/JetBrainsMono-Regular.ttf");
+}
+
+pre code,
+.monaco-editor span {
+  font-family: "JetBrains-Regular";
+}
+
 @layer base {
   * {
     @apply border-border;
