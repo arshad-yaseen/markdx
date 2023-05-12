@@ -42,7 +42,7 @@ function EditorLeft() {
           <AITools />
           <hr className="my-4" />
           <div className="flex w-full flex-1 flex-col justify-end space-y-4 py-6">
-            <div className="relative flex h-10 w-full items-center justify-center rounded-md border border-input px-6 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ">
+            <Button variant="outline" className="relative">
               {isUploadingFile && (
                 <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
               )}{" "}
@@ -50,10 +50,10 @@ function EditorLeft() {
               <Input
                 onChange={handleUploadFile}
                 type="file"
-                className="absolute h-full w-full opacity-0"
+                className="absolute h-fit w-fit opacity-0"
                 accept="image/*,video/*"
               />
-            </div>
+            </Button>
             <Button
               variant="outline"
               className="relative flex w-full justify-center px-6 "

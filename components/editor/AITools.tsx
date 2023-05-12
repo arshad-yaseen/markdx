@@ -1,7 +1,6 @@
 import { Button } from "../ui/button"
 
 function AITools() {
-
   return (
     <>
       <div className="space-y-4">

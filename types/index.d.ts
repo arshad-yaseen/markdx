@@ -19,3 +19,21 @@ export type editorCodeType = {
   section: string
   content: string
 }
+
+export type CloudinaryUploadResponse = {
+  full_short_link: string
+  full_short_link2: string
+  full_short_link3: string
+  full_share_link: string
+}
+
+export type UploadResponse = {
+  markdown: string;
+  fileName: string;
+  urls: {
+    short_link: string;
+    short_link_2: string;
+    shiny_link: string;
+  };
+  message: string;
+};
