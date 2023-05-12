@@ -1,9 +1,10 @@
 import { CloudinaryUploadResponse } from "types"
+import { env } from "@/env.mjs"
 
 export const getRepo = async (owner: string, repo: string) => {
   const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
     headers: {
-      Authorization: process.env.GITHUB_ACCESS_TOKEN!,
+      Authorization: env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN!,
     },
     next: {
       revalidate: 60,
@@ -23,16 +24,12 @@ export const cloudinaryUpload = async (
 
   const formData = new FormData()
   formData.append("file", file, file.name)
-  formData.append(
-    "upload_preset",
-    process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
-  )
-  formData.append("cloud_name", process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!)
+  formData.append("upload_preset", env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!)
+  formData.append("cloud_name", env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!)
 
   try {
     const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env
-        .NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}/${
+      `https://api.cloudinary.com/v1_1/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}/${
         file.type.includes("image") ? "image" : "video"
       }/upload`,
       {

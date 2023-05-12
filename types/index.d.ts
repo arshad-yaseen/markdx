@@ -28,12 +28,12 @@ export type CloudinaryUploadResponse = {
 }
 
 export type UploadResponse = {
-  markdown: string;
-  fileName: string;
+  markdown: string
+  fileName: string
   urls: {
-    short_link: string;
-    short_link_2: string;
-    shiny_link: string;
-  };
-  message: string;
-};
+    short_link: string
+    short_link_2: string
+    shiny_link: string
+  }
+  message: string
+}
