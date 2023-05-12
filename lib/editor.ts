@@ -58,7 +58,7 @@ export async function uploadFile(
             },
             message: isImage
               ? "Images copied to clipboard"
-              : "Videos copied to clipboard",
+              : "Video copied to clipboard",
           })
         }
       })

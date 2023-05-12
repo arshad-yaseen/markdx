@@ -43,6 +43,7 @@
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-loading-skeleton": "^3.3.1",
     "react-markdown": "^8.0.7",
     "rehype-raw": "^6.1.1",
     "remark-emoji": "^3.1.1",

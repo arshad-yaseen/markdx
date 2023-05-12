@@ -37,3 +37,17 @@ export type UploadResponse = {
   }
   message: string
 }
+
+export type UnsplashImageResponse = {
+  id: string
+  width: number
+  height: number
+  alt_description: string
+  urls: {
+    raw: string
+    full: string
+    regular: string
+    small: string
+    thumb: string
+  }
+}
