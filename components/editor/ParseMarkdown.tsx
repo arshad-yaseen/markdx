@@ -157,7 +157,7 @@ function ParseMarkdown({ code }: { code: string }) {
     ),
     video: ({ className, ...props }: ComponentTypes) => (
       <video
-        className={cn("mt-6  flex w-full", className)}
+        className={cn("my-4  inline-flex rounded-md  border", className)}
         {...props}
         controls
       />
