@@ -1,3 +1,3 @@
 export const editorConfig = {
-    uploadMaxVideoSize: 30 //MB
+  uploadMaxVideoSize: 30, //MB
 }
