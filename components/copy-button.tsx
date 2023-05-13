@@ -31,7 +31,7 @@ export default function CopyButton({
     <button
       onClick={onCopy}
       aria-label="Copy code"
-      className="copy-button absolute right-4 top-3 flex h-6 w-6 items-center justify-center rounded-md border bg-background"
+      className="copy-button absolute right-4 top-2.5 flex h-6 w-6 items-center justify-center rounded-md border bg-background"
     >
       <MotionConfig transition={{ duration: 0.15 }}>
         <AnimatePresence initial={false} mode="wait">

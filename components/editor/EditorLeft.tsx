@@ -163,7 +163,7 @@ function EditorLeft() {
                       width={image.width}
                       height={image.height}
                       onClick={() => {
-                       // Insert to editor
+                        // Insert to editor
                         setUnsplashDialogOpen(false)
                         toast.success("Image url copied!")
                       }}

@@ -67,15 +67,11 @@ export type OpenAIBody = {
 
 export type AIConfigType = {
   prompts: Array<{
-    for: number
     system: {
       regular?: string
       common?: string
       detailed?: string
       simple?: string
-      convert?: string
-      generate?: string
-      dynamic?: (content: string) => void
     }
   }>
 }

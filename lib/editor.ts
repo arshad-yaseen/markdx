@@ -97,6 +97,6 @@ export const OpenAICreateChat = async (body: OpenAIBody) => {
   }
 
   return {
-    data
+    data,
   }
 }
