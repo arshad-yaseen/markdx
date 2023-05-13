@@ -163,7 +163,10 @@ function EditorLeft() {
                       width={image.width}
                       height={image.height}
                       onClick={() => {
-                        // Insert to editor
+                        // Copy to clipboard
+                        copy(
+                          `![${image.alt_description}](${image.urls.regular})`
+                        )
                         setUnsplashDialogOpen(false)
                         toast.success("Image url copied!")
                       }}

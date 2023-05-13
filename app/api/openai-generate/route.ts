@@ -1,4 +1,4 @@
-import { OpenAIBody } from "@/types"
+import { OpenAIBody } from "types"
 
 import { env } from "@/env.mjs"
 

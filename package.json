@@ -27,6 +27,7 @@
     "@types/react-dom": "18.2.4",
     "@vercel/analytics": "^1.0.1",
     "autoprefixer": "10.4.14",
+    "circular-to-json": "^1.1.2",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "copy-to-clipboard": "^3.3.3",

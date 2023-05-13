@@ -21,6 +21,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-    RAPID_API_KEY: process.env.RAPID_API_KEY
+    RAPID_API_KEY: process.env.RAPID_API_KEY,
   },
 })
