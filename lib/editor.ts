@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react"
 import { marked } from "marked"
 
-import { UploadResponse } from "types"
+import { OpenAIBody, UploadResponse } from "types"
 import { editorConfig } from "@/config/editor"
 import { cloudinaryUpload } from "@/lib/apiClient"
 
@@ -66,4 +66,37 @@ export async function uploadFile(
         reject(error)
       })
   })
+}
+
+export const OpenAICreateChat = async (body: OpenAIBody) => {
+  const response = await fetch("/api/openai-generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...body,
+    }),
+  })
+
+  if (!response.ok) {
+    console.error(response.statusText)
+    return {
+      err: true,
+      message: "Can't do this action. Try again!",
+    }
+  }
+
+  // This data is a ReadableStream
+  const data = response.body
+  if (!data) {
+    return {
+      err: true,
+      message: "Something went wrong!",
+    }
+  }
+
+  return {
+    data
+  }
 }

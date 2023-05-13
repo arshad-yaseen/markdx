@@ -5,6 +5,8 @@ import Editor from "@monaco-editor/react"
 import { useTheme } from "next-themes"
 
 import "@/styles/editor.css"
+import { editorState } from "@/atoms/editor"
+import { useAtom } from "jotai"
 
 function EditorSection({
   markdown,
@@ -15,6 +17,7 @@ function EditorSection({
 }) {
   const [code, setCode] = useState("")
   const { theme } = useTheme()
+  const [, setEditor] = useAtom(editorState)
 
   useEffect(() => {
     setCode(markdown)
@@ -25,6 +28,10 @@ function EditorSection({
     onCodeChange(value || "")
   }
 
+  function handleEditorDidMount(editor: any) {
+    setEditor(editor)
+  }
+
   return (
     <div className="flex h-full w-[42%] flex-col items-center">
       <Editor
@@ -32,6 +39,7 @@ function EditorSection({
         value={code}
         theme={theme === "dark" ? "vs-dark" : "vs-light"}
         onChange={handleEditorChange}
+        onMount={handleEditorDidMount}
         options={{
           minimap: {
             enabled: false,

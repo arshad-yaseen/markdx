@@ -27,7 +27,7 @@ const ImageWithSkeleton = ({
     <div className={`relative ${className}`}>
       {isLoading && (
         <div
-          className="absolute inset-0 animate-pulse rounded-md bg-gray-200"
+          className="absolute inset-0 animate-pulse rounded-md bg-muted"
           style={{ zIndex: 1 }}
         >
           <Skeleton height="100%" />

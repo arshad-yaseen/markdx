@@ -4,6 +4,7 @@ import { z } from "zod"
 export const env = createEnv({
   server: {
     UNSPLASH_ACCESS_KEY: z.string().min(1),
+    OPENAI_API_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_GITHUB_ACCESS_TOKEN: z.string().min(1),
@@ -18,5 +19,6 @@ export const env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET:
       process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY
   },
 })

@@ -9,3 +9,5 @@ export const editorCodesState = atom([
 ])
 
 export const editorActiveSectionState = atom(0)
+
+export const editorState = atom({})

@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react"
+import { UnsplashImageResponse } from "@/types"
 import copy from "copy-to-clipboard"
 import { ImageIcon, Loader2Icon, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
@@ -18,7 +19,6 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import AITools from "./AITools"
-import { UnsplashImageResponse } from "@/types"
 
 interface UnsplashSearchFormData {
   unsplash_image_query: string
@@ -31,7 +31,9 @@ function EditorLeft() {
   let imageQueries = ["minimalism", "nature", "mountains", "sky", "city"]
   let unsplashRandomQuery =
     imageQueries[Math.floor(Math.random() * imageQueries.length)]
-  let [unsplashImages, setUnsplashImages] = useState<UnsplashImageResponse[]>([])
+  let [unsplashImages, setUnsplashImages] = useState<UnsplashImageResponse[]>(
+    []
+  )
 
   async function handleUploadFile(event: ChangeEvent<HTMLInputElement>) {
     setIsUploadingFile(true)
@@ -161,10 +163,7 @@ function EditorLeft() {
                       width={image.width}
                       height={image.height}
                       onClick={() => {
-                        // copy image url to clipboard
-                        copy(
-                          `![${image.alt_description}](${image.urls.regular})`
-                        )
+                       // Insert to editor
                         setUnsplashDialogOpen(false)
                         toast.success("Image url copied!")
                       }}

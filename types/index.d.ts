@@ -51,3 +51,31 @@ export type UnsplashImageResponse = {
     thumb: string
   }
 }
+
+export type OpenAIBody = {
+  prompt: {
+    system: string
+    user: string
+  }
+  max_tokens?: number
+  temperature?: number
+  top_p?: number
+  frequency_penalty?: number
+  presence_penalty?: number
+  n?: 1
+}
+
+export type AIConfigType = {
+  prompts: Array<{
+    for: number
+    system: {
+      regular?: string
+      common?: string
+      detailed?: string
+      simple?: string
+      convert?: string
+      generate?: string
+      dynamic?: (content: string) => void
+    }
+  }>
+}
