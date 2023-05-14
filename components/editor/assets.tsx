@@ -254,7 +254,7 @@ function Assets() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>{shield.name}</DialogTitle>
+                    <DialogTitle className="px-2">{shield.name}</DialogTitle>
                   </DialogHeader>
                   <form
                     id="shield-form"
@@ -301,7 +301,7 @@ function Assets() {
                       handleShieldChange(e, shield)
                     }}
                   >
-                    <div className="grid max-h-[370px] gap-4 overflow-auto  py-4 pb-6">
+                    <div className="grid max-h-[370px] gap-4 overflow-auto  px-2 py-4 pb-6">
                       {shield.placeholders?.map((placeholder, index) => (
                         <div key={index} className="flex flex-col py-2">
                           <Label htmlFor="name" className="mb-3 text-left">
