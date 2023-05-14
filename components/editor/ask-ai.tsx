@@ -107,11 +107,11 @@ function AskAI() {
         <DialogContent className="h-[600px] px-8 pb-32 text-sm">
           <div
             ref={chatWrapper}
-            className="ask-ai-chats-wrapper w-full flex-1 flex-col overflow-scroll"
+            className="no-scrollbar w-full flex-1 flex-col overflow-scroll"
           >
-            {chats.map((chat) => {
+            {chats.map((chat, index) => {
               return (
-                <>
+                <div key={index}>
                   <div className="mt-5 flex w-full items-center border-b py-3">
                     {chat.user}
                   </div>
@@ -120,7 +120,7 @@ function AskAI() {
                     <MoreHorizontalIcon className="mt-6 h-4 w-4 animate-pulse" />
                   )}
                   {/* Typing animation */}
-                </>
+                </div>
               )
             })}
           </div>
@@ -132,7 +132,7 @@ function AskAI() {
               autoComplete="off"
               spellCheck={false}
               className="h-12 w-full"
-              placeholder="Ask something else..."
+              placeholder="Ask something..."
               autoFocus
               name="user_prompt"
             />
