@@ -1,5 +1,5 @@
 import React, { FormEvent, useRef, useState } from "react"
-import { SendIcon } from "lucide-react"
+import { MoreHorizontalIcon, SendIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { ChatType, OpenAIBody } from "types"
@@ -13,6 +13,8 @@ import ParseMarkdown from "./parse-markdown"
 function AskAI() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [previousAnswers, setPreviousAnswers] = useState("")
+  const [requestingToAPI, setRequestingToAPI] = useState(false)
+  const [AIThinking, setAIThinking] = useState(false)
   const chatWrapper = useRef(null)
   const [chats, setChats] = useState<ChatType[]>([
     {
@@ -28,70 +30,75 @@ function AskAI() {
     if (!form) return
     const formData = new FormData(form)
     const { user_prompt } = Object.fromEntries(formData.entries())
-    chats.pop()
-    const prompt_input = form.querySelector("input")
-    if (prompt_input) {
-      prompt_input.value = ""
-    }
-    // Use functional updates to set the state of chats array and currentId
-    setChats((prevChats) => [
-      ...prevChats,
-      {
-        id: prevChats.length + 1,
-        user: user_prompt.toString(),
-        ai: "",
-      },
-    ])
-
-    // Create the request body for OpenAI's API
-    const body = {
-      prompt: {
-        system: `Answer to the following prompt.All codes must have language.based on this previous answers: ${previousAnswers}`,
-        user: user_prompt.toString(),
-      },
-      max_tokens: 1000,
-    } as OpenAIBody
-
-    try {
-      // Call the OpenAI API with the request body
-      const res = await OpenAICreateChat(body)
-
-      // Handle any errors returned by the API
-      if (res?.err) {
-        toast.error(res?.message)
-        return
+    if (!requestingToAPI && user_prompt) {
+      setRequestingToAPI(true)
+      chats.pop()
+      const prompt_input = form.querySelector("input")
+      setAIThinking(true)
+      if (prompt_input) {
+        prompt_input.value = ""
       }
+      // Use functional updates to set the state of chats array and currentId
+      setChats((prevChats) => [
+        ...prevChats,
+        {
+          id: prevChats.length + 1,
+          user: user_prompt.toString(),
+          ai: "",
+        },
+      ])
 
-      // Parse the response data
-      const data = res.data
-      const reader = data?.getReader()
-      const decoder = new TextDecoder()
-      let done = false
-      let aiResponse = ""
+      // Create the request body for OpenAI's API
+      const body = {
+        prompt: {
+          system: `Please provide a response to the following prompt using a programming language of your choice. Your answer should be of a high level and adhere to industry standards for code quality and documentation. Please reference previous answers for guidance: ${previousAnswers}`,
+          user: user_prompt.toString(),
+        },
+        max_tokens: 1000,
+      } as OpenAIBody
 
-      // Read the response data stream and update the chats state as chunks arrive
-      while (!done) {
-        const { value, done: doneReading } = (await reader?.read()) as any
-        done = doneReading
-        const chunkValue = decoder.decode(value)
-        aiResponse += chunkValue
-        setChats((prevChats) =>
-          prevChats.map((chat) =>
-            chat.id === chats.length + 1 ? { ...chat, ai: aiResponse } : chat
+      try {
+        // Call the OpenAI API with the request body
+        const res = await OpenAICreateChat(body)
+        setAIThinking(false)
+
+        // Handle any errors returned by the API
+        if (res?.err) {
+          toast.error(res?.message)
+          return
+        }
+
+        // Parse the response data
+        const data = res.data
+        const reader = data?.getReader()
+        const decoder = new TextDecoder()
+        let done = false
+        let aiResponse = ""
+
+        // Read the response data stream and update the chats state as chunks arrive
+        while (!done) {
+          const { value, done: doneReading } = (await reader?.read()) as any
+          done = doneReading
+          const chunkValue = decoder.decode(value)
+          aiResponse += chunkValue
+          setChats((prevChats) =>
+            prevChats.map((chat) =>
+              chat.id === chats.length + 1 ? { ...chat, ai: aiResponse } : chat
+            )
           )
-        )
-        const chat = chatWrapper.current as any
-        chat.scrollTop = chat.scrollHeight
+          const chat = chatWrapper.current as any
+          chat.scrollTop = chat.scrollHeight
+        }
+        setRequestingToAPI(false)
+        setPreviousAnswers(`${previousAnswers},${aiResponse}`)
+      } catch (error) {
+        // Handle any other errors that may occur
+        console.error(error)
+        setRequestingToAPI(false)
+        toast.error("Something went wrong")
       }
-      setPreviousAnswers(`${previousAnswers},${aiResponse}`)
-    } catch (error) {
-      // Handle any other errors that may occur
-      console.error(error)
-      toast.error("Something went wrong")
     }
   }
-
-  console.log(chats.length, chats)
 
   return (
     <div>
@@ -109,6 +116,10 @@ function AskAI() {
                     {chat.user}
                   </div>
                   <ParseMarkdown codeCopyable code={chat.ai} />
+                  {AIThinking && (
+                    <MoreHorizontalIcon className="mt-6 h-4 w-4 animate-pulse" />
+                  )}
+                  {/* Typing animation */}
                 </>
               )
             })}
