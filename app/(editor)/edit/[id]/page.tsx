@@ -7,7 +7,7 @@ import { useTheme } from "next-themes"
 import { Toaster } from "sonner"
 
 import { editorCodeType } from "types"
-import Preview from "@/components/editor/Preview"
+import Preview from "@/components/editor/preview"
 import EditorLeft from "@/components/editor/editor-left"
 import EditorSection from "@/components/editor/editor-section"
 
