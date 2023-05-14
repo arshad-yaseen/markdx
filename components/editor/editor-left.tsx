@@ -89,7 +89,7 @@ function EditorLeft() {
             AI tools
           </TabsTrigger>
           <TabsTrigger value="assets" className="w-full">
-            Assets
+            Assets - ok
           </TabsTrigger>
         </TabsList>
         <TabsContent value="tools">
