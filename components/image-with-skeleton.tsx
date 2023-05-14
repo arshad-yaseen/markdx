@@ -9,12 +9,14 @@ const ImageWithSkeleton = ({
   width,
   height,
   onClick,
+  normalImg = false,
 }: {
   src: string
-  alt: string
+  alt?: string
   className?: string
   width: number
   height: number
+  normalImg?: boolean
   onClick?: () => void
 }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -33,15 +35,27 @@ const ImageWithSkeleton = ({
           <Skeleton height="100%" />
         </div>
       )}
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className={`rounded-md ${isLoading ? "invisible" : ""}`}
-        onLoad={handleLoad}
-        onClick={onClick}
-      />
+      {normalImg ? (
+        <img
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className={`rounded-md ${isLoading ? "invisible" : ""}`}
+          onLoad={handleLoad}
+          onClick={onClick}
+        />
+      ) : (
+        <Image
+          src={src}
+          alt={alt || ""}
+          width={width}
+          height={height}
+          className={`rounded-md ${isLoading ? "invisible" : ""}`}
+          onLoad={handleLoad}
+          onClick={onClick}
+        />
+      )}
     </div>
   )
 }

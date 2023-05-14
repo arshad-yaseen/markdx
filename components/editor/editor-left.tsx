@@ -19,6 +19,7 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import AITools from "./ai-tools"
+import Assets from "./assets"
 
 interface UnsplashSearchFormData {
   unsplash_image_query: string
@@ -89,7 +90,7 @@ function EditorLeft() {
             AI tools
           </TabsTrigger>
           <TabsTrigger value="assets" className="w-full">
-            Assets - ok
+            Assets
           </TabsTrigger>
         </TabsList>
         <TabsContent value="tools">
@@ -177,7 +178,9 @@ function EditorLeft() {
             </Dialog>
           </div>
         </TabsContent>
-        <TabsContent value="assets"></TabsContent>
+        <TabsContent value="assets">
+          <Assets />
+        </TabsContent>
       </Tabs>
     </div>
   )

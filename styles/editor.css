@@ -25,6 +25,6 @@
   transition: background 200ms, box-shadow 200ms, opacity 200ms;
 }
 
-.ask-ai-chats-wrapper::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
