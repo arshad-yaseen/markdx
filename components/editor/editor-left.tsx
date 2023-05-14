@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react"
-import { UnsplashImageResponse } from "@/types"
+import { UnsplashImageResponse } from "types"
 import copy from "copy-to-clipboard"
 import { ImageIcon, Loader2Icon, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
