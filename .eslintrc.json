@@ -14,8 +14,7 @@
     "tailwindcss/classnames-order": "error",
     "prefer-const": "off",
     "@typescript-eslint/no-unused-vars": "error",
-    "react-hooks/rules-of-hooks": "off",
-    "@next/next/no-img-element": "off"
+    "react-hooks/rules-of-hooks": "off"
   },
   "settings": {
     "tailwindcss": {
