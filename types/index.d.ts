@@ -75,3 +75,9 @@ export type AIConfigType = {
     }
   }>
 }
+
+export type ChatType = {
+  id: number
+  user: string
+  ai: string
+}

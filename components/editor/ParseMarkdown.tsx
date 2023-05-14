@@ -12,7 +12,13 @@ interface ComponentTypes {
   className?: string
 }
 
-function ParseMarkdown({ code }: { code: string }) {
+function ParseMarkdown({
+  code,
+  codeCopyable = false,
+}: {
+  code: string
+  codeCopyable?: boolean
+}) {
   const components = {
     h1: ({ className, ...props }: ComponentTypes) => (
       <h1
@@ -177,7 +183,7 @@ function ParseMarkdown({ code }: { code: string }) {
               value={String(children).replace(/\n$/, "")}
               language={match[1]}
               {...props}
-              copyable={false}
+              copyable={codeCopyable}
             />
           ) : (
             <code

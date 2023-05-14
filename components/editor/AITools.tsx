@@ -7,6 +7,7 @@ import { useAtomValue } from "jotai"
 import { MoreHorizontalIcon } from "lucide-react"
 import { toast } from "sonner"
 
+import "@/styles/mdx.css"
 import { OpenAIBody } from "types"
 import { AIConfig } from "@/config/editor"
 import { OpenAICreateChat } from "@/lib/editor"
@@ -26,6 +27,7 @@ import {
 import CodeBlock from "../CodeBlock"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
+import AskAI from "./AskAI"
 
 function AITools() {
   const editor = useAtomValue(editorState)
@@ -109,7 +111,11 @@ function AITools() {
                     ? editorSelectedCode
                     : (editor as any).getValue(),
                 },
-                max_tokens: 500,
+                max_tokens: editorSelectedCode
+                  ? editorSelectedCode.length * 2
+                  : (editor as any).getValue().split(" ").length * 3 < 4000
+                  ? (editor as any).getValue().split(" ").length * 3
+                  : 1000,
               }
               handleClick(options)
               setIsDialogOpen(true)
@@ -238,7 +244,7 @@ function AITools() {
             >
               <Input
                 spellCheck={false}
-                autoCapitalize="off"
+                autoComplete="off"
                 name="to"
                 defaultValue="To "
                 autoFocus
@@ -327,9 +333,7 @@ function AITools() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button className="flex w-full justify-center px-6 ">
-          Ask AI to write
-        </Button>
+        <AskAI />
       </div>
     </>
   )

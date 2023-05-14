@@ -46,7 +46,7 @@ function Header() {
 
       <div
         className={`flex h-full ${
-          isEditor ? "w-[38%]" : "w-1/2"
+          isEditor ? "w-[35%]" : "w-1/2"
         }  items-center justify-end`}
       >
         {isEditor ? <EditorNav /> : <Button variant="secondary">Login</Button>}

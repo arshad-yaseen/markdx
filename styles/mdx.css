@@ -2,13 +2,15 @@
 .dark .hljs-comment,
 .dark .hljs-title,
 .dark .hljs-function,
-.dark .hljs-attr {
+.dark .hljs-attr,
+.dark .hljs-section {
   color: #aab2bd;
 }
 .hljs-keyword,
 .hljs-comment,
 .hljs-title,
 .hljs-function,
-.hljs-attr {
+.hljs-attr,
+.hljs-section {
   color: #546478;
 }
