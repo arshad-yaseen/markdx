@@ -1,4 +1,4 @@
-import ParseMarkdown from "./ParseMarkdown"
+import ParseMarkdown from "./parse-markdown"
 import "@/styles/mdx.css"
 
 function Preview({ code }: { code: string }) {

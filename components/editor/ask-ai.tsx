@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import ParseMarkdown from "./ParseMarkdown"
+import ParseMarkdown from "./parse-markdown"
 
 function AskAI() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)

@@ -24,10 +24,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import CodeBlock from "../CodeBlock"
+import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import AskAI from "./AskAI"
+import AskAI from "./ask-ai"
 
 function AITools() {
   const editor = useAtomValue(editorState)

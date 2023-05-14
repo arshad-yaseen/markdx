@@ -18,7 +18,7 @@ import ImageWithSkeleton from "../image-with-skeleton"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
-import AITools from "./AITools"
+import AITools from "./ai-tools"
 
 interface UnsplashSearchFormData {
   unsplash_image_query: string

@@ -6,8 +6,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 
-import EditorNav from "./editor/EditorNav"
-import EditorSectionsPanel from "./editor/EditorSectionsPanel"
+import EditorNav from "./editor/editor-nav"
+import EditorSectionsPanel from "./editor/editor-sections-panel"
 import { Button } from "./ui/button"
 
 function Header() {

@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm"
 
 import { cn } from "@/lib/utils"
 
-import CodeBlock from "../CodeBlock"
+import CodeBlock from "../code-block"
 
 interface ComponentTypes {
   className?: string

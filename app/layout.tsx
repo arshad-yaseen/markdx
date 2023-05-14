@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import Header from "@/components/Header"
+import Header from "@/components/header"
 
 import "@/styles/globals.css"
 import { Inter as FontSans } from "next/font/google"
