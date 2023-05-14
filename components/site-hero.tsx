@@ -9,7 +9,7 @@ import { githubRepo } from "@/config/site"
 
 import { Button } from "./ui/button"
 
-function Hero() {
+function SiteHero() {
   const randomId = Math.random().toString(36).substring(2, 15)
   const { theme } = useTheme()
 
@@ -49,4 +49,4 @@ function Hero() {
   )
 }
 
-export default Hero
+export default SiteHero

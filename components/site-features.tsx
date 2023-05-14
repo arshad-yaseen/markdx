@@ -8,7 +8,7 @@ import {
   TimerIcon,
 } from "lucide-react"
 
-function Features() {
+function SiteFeatures() {
   return (
     <section
       id="features"
@@ -94,4 +94,4 @@ function Features() {
   )
 }
 
-export default Features
+export default SiteFeatures

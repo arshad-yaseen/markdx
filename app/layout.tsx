@@ -1,12 +1,12 @@
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import Header from "@/components/header"
 
 import "@/styles/globals.css"
 import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
+import SiteHeader from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const fontSans = FontSans({
@@ -86,7 +86,7 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light">
-          <Header />
+          <SiteHeader />
           {children}
           <Analytics />
         </ThemeProvider>

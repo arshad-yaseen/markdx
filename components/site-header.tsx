@@ -10,7 +10,7 @@ import EditorNav from "./editor/editor-nav"
 import EditorSectionsPanel from "./editor/editor-sections-panel"
 import { Button } from "./ui/button"
 
-function Header() {
+function SiteHeader() {
   const { theme } = useTheme()
   const pathname = usePathname()
   const isEditor = pathname.includes("/edit")
@@ -55,4 +55,4 @@ function Header() {
   )
 }
 
-export default Header
+export default SiteHeader
