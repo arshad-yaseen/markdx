@@ -1,7 +1,7 @@
 import ParseMarkdown from "./parse-markdown"
 import "@/styles/mdx.css"
 
-function Preview({ code }: { code: string }) {
+function PreviewSection({ code }: { code: string }) {
   return (
     <div className="flex h-full  w-[35%] flex-col overflow-scroll border-l px-12 py-8">
       <ParseMarkdown code={code} />
@@ -9,4 +9,4 @@ function Preview({ code }: { code: string }) {
   )
 }
 
-export default Preview
+export default PreviewSection

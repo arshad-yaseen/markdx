@@ -9,7 +9,7 @@ import { Toaster } from "sonner"
 import { editorCodeType } from "types"
 import EditorLeft from "@/components/editor/editor-left"
 import EditorSection from "@/components/editor/editor-section"
-import Preview from "@/components/editor/preview"
+import PreviewSection from "@/components/editor/preview-section"
 
 type prevCodeType = {
   id: number
@@ -53,7 +53,7 @@ function page() {
           })
         }}
       />
-      <Preview
+      <PreviewSection
         code={editorCodes
           .map((code: editorCodeType) => code.content)
           .join("\n\n")}
