@@ -6,7 +6,6 @@ import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
-import SiteHeader from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const fontSans = FontSans({
@@ -77,20 +76,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontHeading.variable
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <SiteHeader />
-          {children}
-          <Analytics />
-        </ThemeProvider>
-      </body>
-    </html>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable,
+            fontHeading.variable
+          )}
+        >
+          <ThemeProvider attribute="class" defaultTheme="light">
+            {children}
+            <Analytics />
+          </ThemeProvider>
+        </body>
+      </html>
   )
 }

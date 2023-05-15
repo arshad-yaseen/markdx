@@ -1,9 +1,10 @@
 import React from "react"
 import Link from "next/link"
-import { GithubIcon } from "lucide-react"
 
 import { githubRepo } from "@/config/site"
 import { getRepo } from "@/lib/apiClient"
+
+import { Icons } from "./icons"
 
 async function getStars() {
   const repo = await getRepo("arshad-yaseen", "markdx")
@@ -17,7 +18,7 @@ function OpenSource() {
         <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
           Proudly Open Source
         </h2>
-        <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+        <p className="my-6 max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
           MarkDX is an open source project. You can find the <br /> source code
           on{" "}
           <Link
@@ -37,7 +38,7 @@ function OpenSource() {
           href={githubRepo}
         >
           <div className="flex h-10 w-10 items-center justify-center space-x-2 rounded-md border border-muted bg-muted">
-            <GithubIcon className="h-5 w-5" />
+            <Icons.gitHub className="h-5 w-5" />
           </div>
           <div className="flex items-center">
             <div className="h-4 w-4 border-y-8 border-l-0 border-r-8 border-solid border-muted border-y-transparent"></div>

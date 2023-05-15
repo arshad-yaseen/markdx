@@ -167,9 +167,7 @@ function AITools() {
                       : monacoInstance?.getValue()
                   }\``,
                 },
-                max_tokens: editorSelectedCode
-                  ? editorSelectedCode.split(" ").length! * 5
-                  : monacoInstance?.getValue().split(" ").length! * 5,
+                max_tokens: 1000,
               }
               handleClick(options)
               setIsDialogOpen(true)

@@ -6,8 +6,8 @@ import { useTheme } from "next-themes"
 
 import "@/styles/editor.css"
 import { monacoInstanceState } from "@/atoms/editor"
-import { useAtom } from "jotai"
 import { monacoInstanceType } from "@/types"
+import { useAtom } from "jotai"
 
 function EditorSection({
   markdown,

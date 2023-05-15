@@ -14,7 +14,7 @@ interface ComponentTypes {
 
 function ParseMarkdown({
   code,
-  codeCopyable = false,
+  codeCopyable = true,
 }: {
   code: string
   codeCopyable?: boolean

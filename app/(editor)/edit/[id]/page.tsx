@@ -43,7 +43,7 @@ function page() {
   return (
     <div
       onKeyDown={(event) => {
-        handleShortCut(event,monacoInstance! )
+        handleShortCut(event, monacoInstance!)
       }}
       className="flex h-[92vh] w-full"
     >

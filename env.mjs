@@ -6,6 +6,7 @@ export const env = createEnv({
     UNSPLASH_ACCESS_KEY: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1),
     RAPID_API_KEY: z.string().min(1),
+    DATABASE_URL: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_GITHUB_ACCESS_TOKEN: z.string().min(1),
@@ -22,5 +23,6 @@ export const env = createEnv({
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     RAPID_API_KEY: process.env.RAPID_API_KEY,
+    DATABASE_URL: process.env.DATABASE_URL,
   },
 })

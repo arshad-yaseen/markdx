@@ -1,17 +1,13 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
-import { GithubIcon } from "lucide-react"
-import { useTheme } from "next-themes"
 
 import { githubRepo } from "@/config/site"
 
+import { Icons } from "./icons"
 import { Button } from "./ui/button"
 
 function SiteHero() {
   const randomId = Math.random().toString(36).substring(2, 15)
-  const { theme } = useTheme()
 
   return (
     <section className="flex w-full flex-col items-center ">
@@ -29,20 +25,19 @@ function SiteHero() {
         </Link>
         <Link href={githubRepo} target="_blank">
           <Button variant="outline" size="lg" className="mt-12">
-            <GithubIcon className="mr-1 h-4 w-4" /> Github
+            <Icons.gitHub className="mr-2 h-4 w-4" /> Github
           </Button>
         </Link>
       </div>
       <div className="relative flex  h-[50vh] w-full justify-center overflow-hidden">
         <Image
-          src={`/markdx-editor-frame-${
-            theme === "dark" || theme === "system" ? "dark" : "light"
-          }.png`}
+          src={`/markdx-editor-frame-light.png`}
           priority
           alt="hero"
           className="absolute h-auto  w-auto lg:-top-24"
           width={1000}
           height={1000}
+          loading="eager"
         />
       </div>
     </section>

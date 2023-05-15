@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "../ui/select"
 
-function EditorToolsPanel() {
+function EditorSectionsPanel() {
   const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
   const [editorActiveSection, setEditorActiveSection] = useAtom(
     editorActiveSectionState
@@ -107,7 +107,7 @@ function EditorToolsPanel() {
   }
 
   return (
-    <div className="flex min-h-full w-[45%] items-center justify-center space-x-3">
+    <div className="flex min-h-full w-full items-center justify-center space-x-3">
       <Select
         onValueChange={(value) => {
           setEditorActiveSection(Number(value))
@@ -261,4 +261,4 @@ function EditorToolsPanel() {
   )
 }
 
-export default EditorToolsPanel
+export default EditorSectionsPanel

@@ -3,27 +3,18 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
 
-import EditorNav from "./editor/editor-nav"
-import EditorSectionsPanel from "./editor/editor-sections-panel"
 import { Button } from "./ui/button"
 
 function SiteHeader() {
   const { theme } = useTheme()
-  const pathname = usePathname()
-  const isEditor = pathname.includes("/edit")
+  const router = useRouter()
 
   return (
-    <header
-      className={`w-full ${
-        isEditor ? "h-[8vh] border-b px-3 lg:px-7" : "h-20 px-6 lg:px-12"
-      }  flex  `}
-    >
-      <div
-        className={`flex h-full ${isEditor ? "w-[20%]" : "w-1/2"} items-center`}
-      >
+    <header className={`flex h-20 w-full px-6 lg:px-12`}>
+      <div className={`flex h-full w-1/2 items-center`}>
         <Link href="/" className="flex items-center">
           <Image
             src={
@@ -37,19 +28,14 @@ function SiteHeader() {
             width={"0"}
             height={"0"}
           />
-          <h4 className="ml-2 font-heading text-xl font-bold">
-            {isEditor ? "Editor" : "MarkDX"}
-          </h4>
+          <h4 className="ml-2 font-heading text-xl font-bold">MarkDX</h4>
         </Link>
       </div>
-      {isEditor && <EditorSectionsPanel />}
 
-      <div
-        className={`flex h-full ${
-          isEditor ? "w-[35%]" : "w-1/2"
-        }  items-center justify-end`}
-      >
-        {isEditor ? <EditorNav /> : <Button variant="secondary">Login</Button>}
+      <div className={`flex h-full w-1/2 items-center justify-end`}>
+        <Button variant="secondary" onClick={() => router.push("/login")}>
+          Login
+        </Button>
       </div>
     </header>
   )
