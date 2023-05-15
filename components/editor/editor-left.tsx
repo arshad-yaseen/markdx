@@ -1,10 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react"
-import copy from "copy-to-clipboard"
+import { monacoInstanceState } from "@/atoms/editor"
+import { useAtomValue } from "jotai"
 import { ImageIcon, Loader2Icon, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { UnsplashImageResponse } from "types"
-import { uploadFile } from "@/lib/editor"
+import { editorAction, uploadFile } from "@/lib/editor"
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 import {
   Select,
@@ -27,6 +28,7 @@ interface UnsplashSearchFormData {
 }
 
 function EditorLeft() {
+  const monacoInstance = useAtomValue(monacoInstanceState)
   const [isUploadingFile, setIsUploadingFile] = useState(false)
   const [unsplashDialogOpen, setUnsplashDialogOpen] = useState(false)
   let imageQueries = ["minimalism", "nature", "mountains", "sky", "city"]
@@ -40,9 +42,9 @@ function EditorLeft() {
     setIsUploadingFile(true)
     uploadFile(event)
       .then((res) => {
-        copy(res.markdown)
+        // insert to the editor
+        editorAction.insertText(res.markdown, monacoInstance)
         setIsUploadingFile(false)
-        toast.success(res.message)
       })
       .catch((err) => {
         setIsUploadingFile(false)
@@ -164,12 +166,12 @@ function EditorLeft() {
                       width={image.width}
                       height={image.height}
                       onClick={() => {
-                        // Copy to clipboard
-                        copy(
-                          `![${image.alt_description}](${image.urls.regular})`
+                        // Insert to the editor
+                        editorAction.insertText(
+                          `![${image.alt_description}](${image.urls.regular})`,
+                          monacoInstance
                         )
                         setUnsplashDialogOpen(false)
-                        toast.success("Image url copied!")
                       }}
                     />
                   ))}

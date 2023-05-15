@@ -63,3 +63,26 @@ export const AIConfig: AIConfigType = {
     },
   ],
 }
+
+// export const shortcuts = {
+//   table: {
+//     shortcut: "/t/",
+//     output: ""
+//   },
+//   image: {
+//     shortcut: "/i/",
+//     output: ""
+//   },
+//   video: {
+//     shortcut: "/v/",
+//     output: ""
+//   },
+//   link: {
+//     shortcut: "/l/",
+//     output: ""
+//   },
+//   image: {
+//     shortcut: "/i/",
+//     output: ""
+//   },
+// }

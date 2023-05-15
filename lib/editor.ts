@@ -100,3 +100,29 @@ export const OpenAICreateChat = async (body: OpenAIBody) => {
     data,
   }
 }
+
+export const editorAction = {
+  insertText: (text: string, monacoInstance: any) => {
+    if (monacoInstance) {
+      const selection = monacoInstance.getSelection()
+      const id = { major: 1, minor: 1 }
+      const op = {
+        identifier: id,
+        range: {
+          startLineNumber: selection?.selectionStartLineNumber || 1,
+          startColumn: selection?.selectionStartColumn || 1,
+          endLineNumber: selection?.endLineNumber || 1,
+          endColumn: selection?.endColumn || 1,
+        },
+        text,
+        forceMoveMarkers: true,
+      }
+      monacoInstance.executeEdits("my-source", [op])
+    }
+  },
+  setText: (text: string, monacoInstance: any) => {
+    monacoInstance.setValue(text)
+  },
+}
+
+// export const handleShortCut = (code: string) => {}

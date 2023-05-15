@@ -1,11 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Editor from "@monaco-editor/react"
+import Editor, { OnMount } from "@monaco-editor/react"
+import { editor } from "monaco-editor"
 import { useTheme } from "next-themes"
 
 import "@/styles/editor.css"
-import { editorState } from "@/atoms/editor"
+import { monacoInstanceState } from "@/atoms/editor"
 import { useAtom } from "jotai"
 
 function EditorSection({
@@ -17,7 +18,11 @@ function EditorSection({
 }) {
   const [code, setCode] = useState("")
   const { theme } = useTheme()
-  const [, setEditor] = useAtom(editorState)
+  const [, setMonacoInstance] = useAtom(monacoInstanceState)
+
+  const editorMount: OnMount = (editorL: editor.IStandaloneCodeEditor) => {
+    setMonacoInstance(editorL)
+  }
 
   useEffect(() => {
     setCode(markdown)
@@ -28,18 +33,14 @@ function EditorSection({
     onCodeChange(value || "")
   }
 
-  function handleEditorDidMount(editor: any) {
-    setEditor(editor)
-  }
-
   return (
     <div className="flex h-full w-[45%] flex-col items-center">
       <Editor
         language="markdown"
         value={code}
+        onMount={editorMount}
         theme={theme === "dark" ? "vs-dark" : "vs-light"}
         onChange={handleEditorChange}
-        onMount={handleEditorDidMount}
         options={{
           minimap: {
             enabled: false,

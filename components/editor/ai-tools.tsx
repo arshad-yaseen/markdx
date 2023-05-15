@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { editorState } from "@/atoms/editor"
+import { monacoInstanceState } from "@/atoms/editor"
 import { listLanguages } from "@/utils/world-languages"
 import { useAtomValue } from "jotai"
 import { MoreHorizontalIcon } from "lucide-react"
@@ -30,12 +30,12 @@ import { Input } from "../ui/input"
 import AskAI from "./ask-ai"
 
 function AITools() {
-  const editor = useAtomValue(editorState)
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [generatedText, setGeneratedText] = useState("")
   const [windowSelection, setWindowSelection] = useState("")
   const [worldlanguages, setWorldLanguages] = useState([])
+  const monacoInstance = useAtomValue(monacoInstanceState)
 
   const getLanguages = async () => {
     const languages = await listLanguages()
@@ -109,12 +109,12 @@ function AITools() {
                   system: AIConfig.prompts[0].system.regular || "",
                   user: editorSelectedCode
                     ? editorSelectedCode
-                    : (editor as any).getValue(),
+                    : monacoInstance?.getValue()!,
                 },
                 max_tokens: editorSelectedCode
                   ? editorSelectedCode.length * 2
-                  : (editor as any).getValue().split(" ").length * 3 < 4000
-                  ? (editor as any).getValue().split(" ").length * 3
+                  : monacoInstance?.getValue().split(" ").length! * 3 < 4000
+                  ? monacoInstance?.getValue().split(" ").length! * 3
                   : 1000,
               }
               handleClick(options)
@@ -139,12 +139,12 @@ function AITools() {
                   user: `This is the text or markdown to make short => \`${
                     editorSelectedCode
                       ? editorSelectedCode
-                      : (editor as any).getValue()
+                      : monacoInstance?.getValue()
                   }\``,
                 },
                 max_tokens: editorSelectedCode
                   ? editorSelectedCode.split(" ").length! * 2
-                  : (editor as any).getValue().split(" ").length! * 2,
+                  : monacoInstance?.getValue().split(" ").length! * 2,
               }
               handleClick(options)
               setIsDialogOpen(true)
@@ -168,12 +168,12 @@ function AITools() {
                   user: `This is the text or markdown to explain => \`${
                     editorSelectedCode
                       ? editorSelectedCode
-                      : (editor as any).getValue()
+                      : monacoInstance?.getValue()
                   }\``,
                 },
                 max_tokens: editorSelectedCode
                   ? editorSelectedCode.split(" ").length! * 5
-                  : (editor as any).getValue().split(" ").length! * 5,
+                  : monacoInstance?.getValue().split(" ").length! * 5,
               }
               handleClick(options)
               setIsDialogOpen(true)
@@ -268,7 +268,7 @@ function AITools() {
                   user: `This is the text or markdown to correct grammar => \`${
                     editorSelectedCode
                       ? editorSelectedCode
-                      : (editor as any).getValue()
+                      : monacoInstance?.getValue()
                   }\``,
                 },
                 max_tokens: 500,

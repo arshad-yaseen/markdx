@@ -1,4 +1,5 @@
 import { atom } from "jotai"
+import { editor } from "monaco-editor"
 
 export const editorCodesState = atom([
   {
@@ -10,4 +11,6 @@ export const editorCodesState = atom([
 
 export const editorActiveSectionState = atom(0)
 
-export const editorState = atom({})
+export const monacoInstanceState = atom<editor.IStandaloneCodeEditor | null>(
+  null
+)

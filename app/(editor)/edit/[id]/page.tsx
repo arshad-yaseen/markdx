@@ -7,6 +7,7 @@ import { useTheme } from "next-themes"
 import { Toaster } from "sonner"
 
 import { editorCodeType } from "types"
+// import { handleShortCut } from "@/lib/editor"
 import EditorLeft from "@/components/editor/editor-left"
 import EditorSection from "@/components/editor/editor-section"
 import PreviewSection from "@/components/editor/preview-section"
@@ -40,6 +41,7 @@ function page() {
       <EditorSection
         markdown={markdownCode}
         onCodeChange={(code) => {
+          // handleShortCut(code)
           setEditorCodes((prev) => {
             return prev.map((prevCode: prevCodeType) => {
               if (prevCode.id === editorActiveSection) {
