@@ -41,7 +41,7 @@ export default function Assets() {
             return (
               <div
                 onClick={() => {
-                  editorAction.insertText(asset.code, monacoInstance)
+                  editorAction.insertText(asset.code, monacoInstance!)
                 }}
               >
                 <CodeBlock

@@ -16,6 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import EditorKbdShortcuts from "./editor-kbd-shortcuts"
 
 function EditorNav() {
   const editorCodes = useAtomValue(editorCodesState) as editorCodeType[]
@@ -72,6 +73,7 @@ function EditorNav() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <EditorKbdShortcuts />
       <ModeToggle />
     </>
   )

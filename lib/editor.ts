@@ -1,8 +1,8 @@
-import { ChangeEvent } from "react"
+import { ChangeEvent, KeyboardEvent } from "react"
 import { marked } from "marked"
 
-import { OpenAIBody, UploadResponse } from "types"
-import { editorConfig } from "@/config/editor"
+import { OpenAIBody, UploadResponse, monacoInstanceType } from "types"
+import { editorConfig, shortcuts } from "@/config/editor"
 import { cloudinaryUpload } from "@/lib/apiClient"
 
 export const markdownto = {
@@ -102,7 +102,7 @@ export const OpenAICreateChat = async (body: OpenAIBody) => {
 }
 
 export const editorAction = {
-  insertText: (text: string, monacoInstance: any) => {
+  insertText: (text: string, monacoInstance: monacoInstanceType) => {
     if (monacoInstance) {
       const selection = monacoInstance.getSelection()
       const id = { major: 1, minor: 1 }
@@ -117,12 +117,38 @@ export const editorAction = {
         text,
         forceMoveMarkers: true,
       }
-      monacoInstance.executeEdits("my-source", [op])
+      monacoInstance.executeEdits("", [op])
     }
   },
-  setText: (text: string, monacoInstance: any) => {
+  setText: (text: string, monacoInstance: monacoInstanceType) => {
     monacoInstance.setValue(text)
   },
 }
 
-// export const handleShortCut = (code: string) => {}
+export const handleShortCut = (
+  event: KeyboardEvent<HTMLDivElement>,
+  monacoInstance: monacoInstanceType
+) => {
+  if (event.metaKey && event.ctrlKey && event.key === "c") {
+    event.preventDefault()
+    editorAction.insertText(shortcuts.codeBlock.output, monacoInstance)
+  } else if (event.metaKey && event.ctrlKey && event.key === "t") {
+    event.preventDefault()
+    editorAction.insertText(shortcuts.table.output, monacoInstance)
+  } else if (event.metaKey && event.ctrlKey && event.key === "i") {
+    event.preventDefault()
+    editorAction.insertText(shortcuts.image.output, monacoInstance)
+  } else if (event.metaKey && event.ctrlKey && event.key === "l") {
+    event.preventDefault()
+    editorAction.insertText(shortcuts.link.output, monacoInstance)
+  } else if (event.metaKey && event.ctrlKey && event.key === "n") {
+    event.preventDefault()
+    editorAction.insertText(shortcuts.linkWithImage.output, monacoInstance)
+  } else if (event.metaKey && event.ctrlKey && event.key === "v") {
+    event.preventDefault()
+    editorAction.insertText(shortcuts.video.output, monacoInstance)
+  } else if (event.metaKey && event.ctrlKey && event.key === "p") {
+    event.preventDefault()
+    editorAction.insertText(shortcuts.alignCenter.output, monacoInstance)
+  }
+}

@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react"
 import Editor, { OnMount } from "@monaco-editor/react"
-import { editor } from "monaco-editor"
 import { useTheme } from "next-themes"
 
 import "@/styles/editor.css"
 import { monacoInstanceState } from "@/atoms/editor"
 import { useAtom } from "jotai"
+import { monacoInstanceType } from "@/types"
 
 function EditorSection({
   markdown,
@@ -20,7 +20,7 @@ function EditorSection({
   const { theme } = useTheme()
   const [, setMonacoInstance] = useAtom(monacoInstanceState)
 
-  const editorMount: OnMount = (editorL: editor.IStandaloneCodeEditor) => {
+  const editorMount: OnMount = (editorL: monacoInstanceType) => {
     setMonacoInstance(editorL)
   }
 

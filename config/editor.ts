@@ -64,25 +64,27 @@ export const AIConfig: AIConfigType = {
   ],
 }
 
-// export const shortcuts = {
-//   table: {
-//     shortcut: "/t/",
-//     output: ""
-//   },
-//   image: {
-//     shortcut: "/i/",
-//     output: ""
-//   },
-//   video: {
-//     shortcut: "/v/",
-//     output: ""
-//   },
-//   link: {
-//     shortcut: "/l/",
-//     output: ""
-//   },
-//   image: {
-//     shortcut: "/i/",
-//     output: ""
-//   },
-// }
+export const shortcuts = {
+  table: {
+    output: `| C1 | C2 | C3 |\n| -- | -- | -- |\n| R1C1 | R1C2 | R1C3 |\n| R2C1 | R2C2 | R2C3 |\n| R3C1 | R3C2 | R3C3 |`,
+  },
+  image: {
+    output: "![Placeholder image](https://via.placeholder.com/450x250)",
+  },
+  video: {
+    output: `<video controls preload="auto" src="https://shiny.link/NStj7" />`,
+  },
+  link: {
+    output: "[Link text](https://www.example.com)",
+  },
+  linkWithImage: {
+    output:
+      "[![Image alt text](https://via.placeholder.com/450x250)](link-url)",
+  },
+  codeBlock: {
+    output: "```language\ncode\n```",
+  },
+  alignCenter: {
+    output: `<p align="center" >This will be centered</p>`,
+  },
+}

@@ -43,7 +43,7 @@ function EditorLeft() {
     uploadFile(event)
       .then((res) => {
         // insert to the editor
-        editorAction.insertText(res.markdown, monacoInstance)
+        editorAction.insertText(res.markdown, monacoInstance!)
         setIsUploadingFile(false)
       })
       .catch((err) => {
@@ -169,7 +169,7 @@ function EditorLeft() {
                         // Insert to the editor
                         editorAction.insertText(
                           `![${image.alt_description}](${image.urls.regular})`,
-                          monacoInstance
+                          monacoInstance!
                         )
                         setUnsplashDialogOpen(false)
                       }}

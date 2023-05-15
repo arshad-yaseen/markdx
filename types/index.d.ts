@@ -1,3 +1,5 @@
+import { editor } from "monaco-editor"
+
 export type SiteConfig = {
   name: string
   description: string
@@ -81,3 +83,5 @@ export type ChatType = {
   user: string
   ai: string
 }
+
+export type monacoInstanceType = editor.IStandaloneCodeEditor
