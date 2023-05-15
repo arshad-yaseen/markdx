@@ -1,3 +1,4 @@
+import { useState } from "react"
 import hljs from "highlight.js"
 
 import { cn } from "@/lib/utils"
@@ -9,8 +10,9 @@ function CodeBlock({
   value,
   preClass,
   codeClass,
-  copyable,
-  textWrap,
+  copyable = true,
+  textWrap = false,
+  copyOnHover = false,
 }: {
   language: string
   value: string
@@ -18,25 +20,39 @@ function CodeBlock({
   codeClass?: string
   copyable?: boolean
   textWrap?: boolean
+  copyOnHover?: boolean
 }) {
   value = value || ""
   hljs.getLanguage(language) ? (language = language) : (language = "plaintext")
   const highlightedCode = hljs.highlight(value, { language }).value
+  const [isBlockHovered, setIsBlockHovered] = useState(false)
 
   return (
     <pre
       className={cn(
-        `relative flex w-full ${textWrap ? "whitespace-pre-wrap" : null} `,
+        `relative flex w-full overflow-hidden rounded-lg ${
+          value ? "border" : null
+        } ${textWrap ? "whitespace-pre-wrap" : null} `,
         preClass
       )}
+      onMouseEnter={() => {
+        setIsBlockHovered(true)
+      }}
+      onMouseLeave={() => {
+        setIsBlockHovered(false)
+      }}
     >
-      <CopyButton value={value} copyable={copyable} />
+      <CopyButton
+        value={value}
+        copyable={copyable}
+        isBlockHovered={copyOnHover ? isBlockHovered : true}
+      />
+
+      <div className="absolute -right-4 top-0 h-full w-12 bg-background blur"></div>
       <code
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
         className={cn(
-          `hljs ${language} max-h-[600px] min-w-full overflow-scroll rounded-lg ${
-            value ? "border" : null
-          }  px-4 py-3 text-sm`,
+          `hljs ${language} max-h-[600px] min-w-full overflow-scroll  px-4 py-3 text-sm`,
           codeClass
         )}
       ></code>

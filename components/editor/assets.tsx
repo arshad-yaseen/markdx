@@ -39,6 +39,7 @@ export default function Assets() {
                 language="markdown"
                 value={asset.code || ""}
                 codeClass="text-xs no-scrollbar"
+                copyOnHover
               />
             )
           })}
