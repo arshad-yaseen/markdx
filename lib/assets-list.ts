@@ -14,7 +14,7 @@ export const assets = [
   },
   {
     name: "Heroku deploy button",
-    code: `[![Deploy with heroku](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy/?template=[template-url])]`,
+    code: `[![Deploy with heroku](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy/?template=[template-url])`,
     keywords: [
       "heroku",
       "deploy",
@@ -27,7 +27,7 @@ export const assets = [
   },
   {
     name: "Netlify deploy button",
-    code: `[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=[repo-url])]`,
+    code: `[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=[repo-url])`,
     keywords: [
       "netlify",
       "deploy",
@@ -66,7 +66,7 @@ export const assets = [
   },
   {
     name: "Made with repl.it button",
-    code: `[![Made with Repl.it](https://repl.it/badge/github/[user-name]/[repo-name])]([repl-url])`,
+    code: `[![Made with Repl.it](https://repl.it/badge/github/[user-name]/[repo-name])([repl-url])`,
     keywords: [
       "repl.it",
       "run",

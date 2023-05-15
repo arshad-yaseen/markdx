@@ -30,15 +30,15 @@ export const AIConfig: AIConfigType = {
       system: {
         regular: `Please write a clear and grammatically correct version of the following markdown.
             If needed, consider correcting issues related to subject-verb agreement, pronoun usage, verb tense consistency, punctuation, and overall clarity.
-            Your goal is to create a version of the text that is easy to understand and free of any errors.
+            Your goal is to create a version of the markdown that is easy to understand and free of any errors.
 
             Instructions:
 
-              - Analyze and correct any grammatical errors in the following text.
-              - Please provide the corrected version of the text.
+              - Analyze and correct any grammatical errors in the following markdown.
+              - Please provide the corrected version of the markdown.
               - The generated version should only the answer
               
-              Guidelines for correcting the text:
+              Guidelines for correcting the markdown:
               
               - Check for subject-verb agreement.
               - Check for pronoun usage.

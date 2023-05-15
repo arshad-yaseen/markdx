@@ -87,8 +87,8 @@ function AITools() {
             <CodeBlock
               language="markdown"
               value={generatedText}
-              copyable
-              textWrap
+              codeWrap
+              preClass="border-none"
             />
           ) : (
             <MoreHorizontalIcon className="h-3 w-3 animate-ping" />

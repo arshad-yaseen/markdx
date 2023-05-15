@@ -11,7 +11,7 @@ function CodeBlock({
   preClass,
   codeClass,
   copyable = true,
-  textWrap = false,
+  codeWrap = false,
   copyOnHover = false,
 }: {
   language: string
@@ -19,7 +19,7 @@ function CodeBlock({
   preClass?: string
   codeClass?: string
   copyable?: boolean
-  textWrap?: boolean
+  codeWrap?: boolean
   copyOnHover?: boolean
 }) {
   value = value || ""
@@ -32,7 +32,7 @@ function CodeBlock({
       className={cn(
         `relative flex w-full overflow-hidden rounded-lg ${
           value ? "border" : null
-        } ${textWrap ? "whitespace-pre-wrap" : null} `,
+        } ${codeWrap ? "whitespace-pre-wrap" : null} `,
         preClass
       )}
       onMouseEnter={() => {

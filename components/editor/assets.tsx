@@ -3,12 +3,17 @@ import { assets } from "@/lib/assets-list"
 import CodeBlock from "../code-block"
 import "@/styles/mdx.css"
 import { useState } from "react"
+import { monacoInstanceState } from "@/atoms/editor"
+import { useAtomValue } from "jotai"
 import { SearchIcon } from "lucide-react"
+
+import { editorAction } from "@/lib/editor"
 
 import { Input } from "../ui/input"
 
 export default function Assets() {
   const [searchValue, setSearchValue] = useState("")
+  const monacoInstance = useAtomValue(monacoInstanceState)
 
   return (
     <div className=" relative flex h-[80vh] w-full flex-col">
@@ -34,13 +39,20 @@ export default function Assets() {
           )
           .map((asset, index) => {
             return (
-              <CodeBlock
-                key={index}
-                language="markdown"
-                value={asset.code || ""}
-                codeClass="text-xs no-scrollbar"
-                copyOnHover
-              />
+              <div
+                onClick={() => {
+                  editorAction.insertText(asset.code, monacoInstance)
+                }}
+              >
+                <CodeBlock
+                  key={index}
+                  language="markdown"
+                  value={asset.code || ""}
+                  codeClass="text-xs no-scrollbar"
+                  copyable={false}
+                  preClass="hover:border-foreground cursor-pointer transition-all duration-200"
+                />
+              </div>
             )
           })}
       </div>
