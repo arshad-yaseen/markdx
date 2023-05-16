@@ -5,7 +5,7 @@ import { ImageIcon, Loader2Icon, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { UnsplashImageResponse } from "types"
-import { editorAction, uploadFile } from "@/lib/editor"
+import { editorAction, uploadFile } from "@/utils/editor"
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 import {
   Select,

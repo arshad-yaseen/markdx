@@ -15,6 +15,7 @@ export const siteConfig: SiteConfig = {
     twitter: "https://twitter.com/arshadyaseeen",
     github: "https://github.com/arshad-yaseen",
     website: "https://arshadd.site",
+    mail: "arshadpyaseen@gmail.com"
   },
 }
 

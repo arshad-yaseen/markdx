@@ -14,6 +14,7 @@ export type SiteConfig = {
     twitter: string
     github: string
     website: string
+    mail: string
   }
 }
 export type editorCodeType = {

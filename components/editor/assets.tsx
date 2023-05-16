@@ -1,4 +1,4 @@
-import { assets } from "@/lib/assets-list"
+import { assets } from "@/utils/assets-list"
 
 import CodeBlock from "../code-block"
 import "@/styles/mdx.css"
@@ -7,7 +7,7 @@ import { monacoInstanceState } from "@/atoms/editor"
 import { useAtomValue } from "jotai"
 import { SearchIcon } from "lucide-react"
 
-import { editorAction } from "@/lib/editor"
+import { editorAction } from "@/utils/editor"
 
 import { Input } from "../ui/input"
 

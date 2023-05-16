@@ -8,8 +8,8 @@ import { buttonVariants } from "@/components/ui/button"
 import UserAuthForm from "@/components/user-auth-form"
 
 export const metadata = {
-    title: "Login",
-    description: "Login to your account"
+  title: "Login",
+  description: "Login to your account",
 }
 
 function LoginPage() {

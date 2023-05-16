@@ -6,7 +6,7 @@ import { useAtomValue } from "jotai"
 import { toast } from "sonner"
 
 import { editorCodeType } from "types"
-import { markdownto } from "@/lib/editor"
+import { markdownto } from "@/utils/editor"
 
 import ModeToggle from "../mode-toggle"
 import { Button } from "../ui/button"
