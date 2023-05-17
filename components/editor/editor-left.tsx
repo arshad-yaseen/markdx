@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { monacoInstanceState } from "@/atoms/editor"
+import { editorAction, uploadFile } from "@/utils/editor"
 import { useAtomValue } from "jotai"
 import { ImageIcon, Loader2Icon, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { UnsplashImageResponse } from "types"
-import { editorAction, uploadFile } from "@/utils/editor"
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 import {
   Select,

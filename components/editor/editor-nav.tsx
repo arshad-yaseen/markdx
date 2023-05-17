@@ -1,12 +1,12 @@
 "use client"
 
 import { editorCodesState } from "@/atoms/editor"
+import { markdownto } from "@/utils/editor"
 import copy from "copy-to-clipboard"
 import { useAtomValue } from "jotai"
 import { toast } from "sonner"
 
 import { editorCodeType } from "types"
-import { markdownto } from "@/utils/editor"
 
 import ModeToggle from "../mode-toggle"
 import { Button } from "../ui/button"

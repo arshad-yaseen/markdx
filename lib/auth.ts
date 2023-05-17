@@ -25,9 +25,18 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+        } 
+      },
     }),
+
     EmailProvider({
-      from: siteConfig.creator.mail,
+      from: env.SMTP_FROM,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
         const user = await db.user.findUnique({
           where: {
@@ -51,7 +60,7 @@ export const authOptions: NextAuthOptions = {
           From: provider.from as string,
           TemplateModel: {
             action_url: url,
-            product_name: siteConfig.name,
+            product_name: siteConfig.short_name,
           },
           Headers: [
             {

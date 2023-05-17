@@ -4,10 +4,9 @@ import CodeBlock from "../code-block"
 import "@/styles/mdx.css"
 import { useState } from "react"
 import { monacoInstanceState } from "@/atoms/editor"
+import { editorAction } from "@/utils/editor"
 import { useAtomValue } from "jotai"
 import { SearchIcon } from "lucide-react"
-
-import { editorAction } from "@/utils/editor"
 
 import { Input } from "../ui/input"
 

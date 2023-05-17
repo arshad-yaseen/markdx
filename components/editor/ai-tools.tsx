@@ -8,9 +8,10 @@ import { MoreHorizontalIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import "@/styles/mdx.css"
+import { OpenAICreateChat } from "@/utils/editor"
+
 import { OpenAIBody } from "types"
 import { AIConfig } from "@/config/editor"
-import { OpenAICreateChat } from "@/utils/editor"
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 import {
   DropdownMenu,

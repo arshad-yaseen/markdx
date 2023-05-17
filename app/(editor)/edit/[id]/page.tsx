@@ -6,12 +6,12 @@ import {
   editorCodesState,
   monacoInstanceState,
 } from "@/atoms/editor"
+import { handleShortCut } from "@/utils/editor"
 import { useAtom, useAtomValue } from "jotai"
 import { useTheme } from "next-themes"
 import { Toaster } from "sonner"
 
 import { editorCodeType } from "types"
-import { handleShortCut } from "@/utils/editor"
 // import { handleShortCut } from "@/lib/editor"
 import EditorLeft from "@/components/editor/editor-left"
 import EditorSection from "@/components/editor/editor-section"

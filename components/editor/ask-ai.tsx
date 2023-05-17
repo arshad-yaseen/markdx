@@ -1,9 +1,9 @@
 import React, { FormEvent, useRef, useState } from "react"
+import { OpenAICreateChat } from "@/utils/editor"
 import { MoreHorizontalIcon, SendIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { ChatType, OpenAIBody } from "types"
-import { OpenAICreateChat } from "@/utils/editor"
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 
 import { Button } from "../ui/button"

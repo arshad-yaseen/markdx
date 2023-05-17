@@ -2,6 +2,7 @@ import { editor } from "monaco-editor"
 
 export type SiteConfig = {
   name: string
+  short_name: string
   description: string
   url: string
   ogImage: string

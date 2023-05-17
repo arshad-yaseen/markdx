@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { signOut, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 
 import { githubRepo } from "@/config/site"
 
@@ -11,9 +11,6 @@ import { Button } from "./ui/button"
 
 function SiteHero() {
   const randomId = Math.random().toString(36).substring(2, 15)
-  const { data: session } = useSession()
-
-  console.log(session)
 
   return (
     <section className="flex w-full flex-col items-center ">
