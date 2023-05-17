@@ -2,13 +2,18 @@ import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 import { withAuth } from "next-auth/middleware"
 
+import { env } from "./env.mjs"
+
 export default withAuth(
   async function middleware(req) {
-    const token = await getToken({ req })
+    const token = await getToken({ req, secret: env.NEXTAUTH_SECRET })
     const isAuth = !!token
+
+    console.log(token, isAuth)
+
     const isAuthPage =
-      req.nextUrl.pathname.includes("/login") ||
-      req.nextUrl.pathname.includes("/register")
+      req.nextUrl.pathname.startsWith("/login") ||
+      req.nextUrl.pathname.startsWith("/register")
 
     if (isAuthPage) {
       if (isAuth) {

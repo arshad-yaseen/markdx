@@ -22,6 +22,9 @@ function SiteHero() {
         width={50}
         height={50}
       />
+      <h1>
+        {session?.user?.name} = {session?.user?.email}
+      </h1>
       <h1 className="mt-12 px-6 text-center font-heading text-3xl sm:text-5xl lg:text-6xl">
         Make standard Markdown <br /> more powerful with AI.
       </h1>
