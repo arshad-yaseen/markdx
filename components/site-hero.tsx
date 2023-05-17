@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 
 import { githubRepo } from "@/config/site"
 
@@ -11,10 +11,12 @@ import { Button } from "./ui/button"
 
 function SiteHero() {
   const randomId = Math.random().toString(36).substring(2, 15)
+  const { data: session } = useSession()
 
   return (
     <section className="flex w-full flex-col items-center ">
       <button onClick={() => signOut()}>Sinuout</button>
+      <Image src={session?.user?.image || ""} alt="image" width={50} height={50} />
       <h1 className="mt-12 px-6 text-center font-heading text-3xl sm:text-5xl lg:text-6xl">
         Make standard Markdown <br /> more powerful with AI.
       </h1>
