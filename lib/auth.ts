@@ -31,14 +31,14 @@ export const authOptions: NextAuthOptions = {
           name: profile.name || profile.login,
           email: profile.email,
           image: profile.avatar_url,
-        } 
+        }
       },
     }),
 
     EmailProvider({
       from: env.SMTP_FROM,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        const user = await db.user.findUnique({
+        const user = await db?.user?.findUnique({
           where: {
             email: identifier,
           },
