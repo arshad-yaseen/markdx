@@ -6,10 +6,7 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ["images.unsplash.com", "avatars.githubusercontent.com"],
-  },
-  experimental: {
-    serverComponentsExternalPackages: ["@prisma/client"],
-  },
+  }
 }
 
 export default nextConfig
