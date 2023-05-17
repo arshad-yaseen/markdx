@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "preview": "next build && next start"
+    "preview": "next build && next start",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
