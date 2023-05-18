@@ -10,7 +10,6 @@ import { Icons } from "./icons"
 import { Button } from "./ui/button"
 
 function SiteHero() {
-  const randomId = Math.random().toString(36).substring(2, 15)
 
   return (
     <section className="flex w-full flex-col items-center ">
@@ -24,7 +23,7 @@ function SiteHero() {
         MarkDX is a Markdown editor that uses AI to make your Markdown standard.
       </p>
       <div className="flex items-center space-x-4">
-        <Link href={`/edit/${randomId}`}>
+        <Link href="/dashboard">
           <Button size="lg" className="mt-12">
             Start writing
           </Button>

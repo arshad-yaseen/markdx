@@ -43,7 +43,7 @@ function SiteFooter() {
           >
             Vercel
           </Link>
-          . Ui inspirations by{" "}
+          . UI inspirations by{" "}
           <Link
             href="https://tx.shadcn.com"
             target="_blank"
