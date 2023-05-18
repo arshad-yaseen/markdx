@@ -6,7 +6,6 @@ import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
-import Provider from "@/components/provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const fontSans = FontSans({
@@ -85,12 +84,10 @@ export default function RootLayout({
           fontHeading.variable
         )}
       >
-        <Provider>
-          <ThemeProvider attribute="class" defaultTheme="light">
-            {children}
-            <Analytics />
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider attribute="class" defaultTheme="light">
+          {children}
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )
