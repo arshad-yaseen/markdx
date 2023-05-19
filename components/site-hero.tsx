@@ -10,7 +10,6 @@ import { Icons } from "./icons"
 import { Button } from "./ui/button"
 
 function SiteHero() {
-
   return (
     <section className="flex w-full flex-col items-center ">
       <h1

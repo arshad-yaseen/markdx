@@ -9,12 +9,16 @@ import { monacoInstanceState } from "@/atoms/editor"
 import { monacoInstanceType } from "@/types"
 import { useAtom } from "jotai"
 
+import EditorSkeleton from "./skeleton"
+
 function EditorSection({
   markdown,
   onCodeChange,
+  loading,
 }: {
   markdown: string
   onCodeChange: (value: string) => void
+  loading: boolean
 }) {
   const [code, setCode] = useState("")
   const { theme } = useTheme()
@@ -34,12 +38,15 @@ function EditorSection({
   }
 
   return (
-    <div className="flex h-full w-[45%] flex-col items-center">
+    <div className="relative flex h-full w-[45%] flex-col items-center">
+      {loading && <EditorSkeleton className="px-14" />}
+
       <Editor
         language="markdown"
         value={code}
         onMount={editorMount}
         theme={theme === "dark" ? "vs-dark" : "vs-light"}
+        loading={<EditorSkeleton className="px-14" />}
         onChange={handleEditorChange}
         options={{
           minimap: {

@@ -3,6 +3,13 @@ import { AIConfigType } from "types"
 export const editorConfig = {
   uploadMaxVideoSize: 30, //MB
 }
+
+export const defaultEditorContent = {
+  section_id: 0,
+  section: "Introduction",
+  content: `# Project Title\n\nA brief description of what this project does.`,
+}
+
 export const AIConfig: AIConfigType = {
   prompts: [
     {

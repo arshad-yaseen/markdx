@@ -19,8 +19,8 @@ export type SiteConfig = {
   }
 }
 export type editorCodeType = {
-  id: number
   section: string
+  section_id: number
   content: string
 }
 
@@ -87,3 +87,9 @@ export type ChatType = {
 }
 
 export type monacoInstanceType = editor.IStandaloneCodeEditor
+
+export type PostCodesType = {
+  section_id: number
+  section: string
+  content: string
+}

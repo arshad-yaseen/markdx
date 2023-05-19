@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 
 import { getCurrentUser } from "@/lib/session"
 import DashboardHeader from "@/components/dashboard/dashboard-header"
+import SiteFooter from "@/components/site-footer"
 
 interface DashboardLayout {
   children: React.ReactNode
@@ -28,7 +29,10 @@ async function DashboardLayout({ children }: DashboardLayout) {
           email: user.email,
         }}
       />
-      {children}
+      <main className="flex w-full flex-1 flex-col overflow-hidden px-52 py-12">
+        {children}
+      </main>
+      <SiteFooter />
     </main>
   )
 }

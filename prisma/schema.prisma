@@ -50,9 +50,8 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
-  accounts     Account[]
-  sessions     Session[]
-  MarkdownPost MarkdownPost[]
+  accounts Account[]
+  sessions Session[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -72,13 +71,22 @@ model VerificationToken {
 }
 
 model MarkdownPost {
-  id        Int      @id @default(autoincrement())
-  section   String
-  content   String
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @unique
+  id         Int      @id @unique @default(autoincrement())
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+  userId     String?
+  postCodes  Code[]
+  markdownId String?  @unique
 
   @@map(name: "markdown_posts")
+}
+
+model Code {
+  id           Int            @id @default(autoincrement())
+  section_id   Int
+  section      String
+  content      String         @db.VarChar(15000)
+  MarkdownPost MarkdownPost[]
+
+  @@map(name: "post_codes")
 }

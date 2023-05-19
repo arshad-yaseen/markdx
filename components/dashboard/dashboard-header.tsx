@@ -45,7 +45,7 @@ function DashboardHeader({ user }: UserAccountNavProps) {
               user={{ name: user.name || null, image: user.image || null }}
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-[170px]">
+          <DropdownMenuContent align="end" className="min-w-[170px]">
             <div className="flex items-center justify-start gap-2 p-2">
               <div className="flex flex-col space-y-1 leading-none">
                 {user.name && (

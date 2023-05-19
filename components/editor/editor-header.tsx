@@ -9,7 +9,7 @@ function EditorHeader() {
   return (
     <div className="flex h-[8vh] w-full border-b">
       <div className="flex h-full w-[20%] items-center px-6">
-        <Link href="/" className="flex items-center">
+        <Link href="/dashboard" className="flex items-center">
           <Image
             src="/logos/markdx-black.svg"
             priority

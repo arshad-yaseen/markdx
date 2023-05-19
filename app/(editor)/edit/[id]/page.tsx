@@ -12,28 +12,56 @@ import { useTheme } from "next-themes"
 import { Toaster } from "sonner"
 
 import { editorCodeType } from "types"
+import { defaultEditorContent } from "@/config/editor"
 // import { handleShortCut } from "@/lib/editor"
 import EditorLeft from "@/components/editor/editor-left"
 import EditorSection from "@/components/editor/editor-section"
 import PreviewSection from "@/components/editor/preview-section"
 
 type prevCodeType = {
-  id: number
   section: string
+  section_id: number
   content: string
 }
 
-function page() {
+export default function page({ params }: { params: { id: string } }) {
   const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
   const editorActiveSection = useAtomValue(editorActiveSectionState)
   const { theme } = useTheme()
   const [markdownCode, setMarkdownCode] = useState("")
   const monacoInstance = useAtomValue(monacoInstanceState)
+  const [loading, setLoading] = useState(true)
+
+  const markdownId = params.id
+
+  const getMarkdownPost = async (markdownId: string) => {
+    const response = await fetch(`/api/posts/${markdownId}`, {
+      method: "GET",
+    })
+
+    if (!response?.ok) {
+      return true
+    }
+
+    const markdownPost = await response.json()
+    console.log(markdownPost[0].postCodes)
+
+    if (markdownPost[0].postCodes.length > 0) {
+      setEditorCodes(markdownPost[0].postCodes)
+    } else {
+      setEditorCodes([defaultEditorContent])
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getMarkdownPost(markdownId)
+  }, [markdownId])
 
   useEffect(() => {
     editorCodes
       .filter((code) => {
-        return code.id === editorActiveSection
+        return code.section_id === editorActiveSection
       })
       .map((code) => {
         setMarkdownCode(code.content)
@@ -50,11 +78,12 @@ function page() {
       <Toaster theme={theme === "dark" ? "dark" : "light"} closeButton />
       <EditorLeft />
       <EditorSection
+        loading={loading}
         markdown={markdownCode}
         onCodeChange={(code) => {
           setEditorCodes((prev) => {
             return prev.map((prevCode: prevCodeType) => {
-              if (prevCode.id === editorActiveSection) {
+              if (prevCode.section_id === editorActiveSection) {
                 return {
                   ...prevCode,
                   content: code,
@@ -66,6 +95,7 @@ function page() {
         }}
       />
       <PreviewSection
+        loading={loading}
         code={editorCodes
           .map((code: editorCodeType) => code.content)
           .join("\n\n")}
@@ -73,5 +103,3 @@ function page() {
     </div>
   )
 }
-
-export default page

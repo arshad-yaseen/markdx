@@ -25,14 +25,6 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
-      profile(profile) {
-        return {
-          id: profile.id.toString(),
-          name: profile.name || profile.login,
-          email: profile.email,
-          image: profile.avatar_url,
-        }
-      },
     }),
 
     EmailProvider({
@@ -82,9 +74,15 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ token, session }) {
       if (token && session.user) {
-        session.user.name = token.name
-        session.user.email = token.email
-        session.user.image = token.picture
+        const userWithId = {
+          ...session.user,
+          id: token.id,
+          name: token.name,
+          email: token.email,
+          image: token.picture,
+        }
+
+        session.user = userWithId
       }
 
       return session

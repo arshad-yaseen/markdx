@@ -48,7 +48,7 @@ function EditorSectionsPanel() {
       return [
         ...prev,
         {
-          id: editorCodes.length,
+          section_id: editorCodes.length,
           section: title,
           content: `## ${title}`,
         },
@@ -68,7 +68,7 @@ function EditorSectionsPanel() {
     const renamedTitle = target[0].value
     setEditorCodes(
       editorCodes.map((code) => {
-        if (code.id === editorActiveSection) {
+        if (code.section_id === editorActiveSection) {
           return {
             ...code,
             section: renamedTitle,
@@ -91,9 +91,9 @@ function EditorSectionsPanel() {
       }
       if (editorActiveSection === 0) return
       setEditorCodes(
-        editorCodes.filter((item) => item.id !== editorActiveSection)
+        editorCodes.filter((item) => item.section_id !== editorActiveSection)
       )
-      setEditorActiveSection(editorCodes[0].id)
+      setEditorActiveSection(editorCodes[0].section_id)
     }, 1000) as unknown as number
     setHoldTimerId(id)
   }
@@ -107,17 +107,17 @@ function EditorSectionsPanel() {
   }
 
   return (
-    <div className="flex min-h-full w-full items-center justify-center space-x-3">
+    <div className="animate-opacity-in flex min-h-full w-full items-center justify-center space-x-3">
       <Select
         onValueChange={(value) => {
           setEditorActiveSection(Number(value))
         }}
       >
-        <SelectTrigger className="w-[220px]">
+        <SelectTrigger className="relative w-[220px]">
           <SelectValue
             placeholder={editorCodes
               .filter((code) => {
-                return code.id === editorActiveSection
+                return code.section_id === editorActiveSection
               })
               .map((code) => {
                 return code.section || ""
@@ -128,14 +128,14 @@ function EditorSectionsPanel() {
           {editorCodes.map(
             (
               code: {
-                id: number
                 section: string
                 content: string
+                section_id: number
               },
               index: number
             ) => {
               return (
-                <SelectItem key={index} value={String(code.id)}>
+                <SelectItem key={index} value={String(code.section_id)}>
                   {code.section}
                 </SelectItem>
               )

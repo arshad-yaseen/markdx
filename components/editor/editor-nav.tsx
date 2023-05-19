@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { editorCodesState } from "@/atoms/editor"
 import { markdownto } from "@/utils/editor"
 import copy from "copy-to-clipboard"
@@ -14,11 +15,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import EditorKbdShortcuts from "./editor-kbd-shortcuts"
+import SaveButton from "./save-button"
 
 function EditorNav() {
+  const [isSaving, setIsSaving] = useState(false)
   const editorCodes = useAtomValue(editorCodesState) as editorCodeType[]
   const fullCode = editorCodes
     .map((code: editorCodeType) => code.content)
@@ -52,9 +56,6 @@ function EditorNav() {
 
   return (
     <>
-      <Button variant="secondary" className="mr-4" onClick={handleDownload}>
-        Download
-      </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="mr-4">
@@ -71,8 +72,18 @@ function EditorNav() {
           <DropdownMenuItem onClick={() => handleExport.lexer()}>
             <span className="flex">Lexer data</span>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={handleDownload}>
+            <span className="flex">Download</span>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <SaveButton
+        isSaving={isSaving}
+        postCodes={editorCodes}
+        onSave={() => setIsSaving(true)}
+        onSaved={() => setIsSaving(false)}
+      />
       <EditorKbdShortcuts />
       <ModeToggle />
     </>

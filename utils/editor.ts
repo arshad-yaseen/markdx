@@ -152,3 +152,13 @@ export const handleShortCut = (
     editorAction.insertText(shortcuts.alignCenter.output, monacoInstance)
   }
 }
+
+export const getTitle = (markdown: string) => {
+  const regex = /^# (.+)/m // Matches the first line starting with a '# ' across multiple lines
+  markdown = markdown ? markdown : "# Project Title"
+
+  const match = markdown.match(regex)
+  const heading = match ? match[1] : null // Extract the captured heading text
+
+  return heading
+}
