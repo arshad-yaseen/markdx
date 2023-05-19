@@ -37,6 +37,14 @@ function EditorSectionsPanel() {
   const [holdTimerId, setHoldTimerId] = useState<number>()
   const [isHoldedDeleteButton, setIsHoldedDeleteButton] = useState(false)
 
+  const activeSectionName = editorCodes
+    .filter((code) => {
+      return code.section_id === editorActiveSection
+    })
+    .map((code) => {
+      return code.section || "Loading..."
+    })
+
   // Handle the add section
   const handleAddSection = (e: FormEvent) => {
     e.preventDefault()
@@ -114,15 +122,7 @@ function EditorSectionsPanel() {
         }}
       >
         <SelectTrigger className="relative w-[220px]">
-          <SelectValue
-            placeholder={editorCodes
-              .filter((code) => {
-                return code.section_id === editorActiveSection
-              })
-              .map((code) => {
-                return code.section || ""
-              })}
-          />
+          <SelectValue placeholder={activeSectionName} />
         </SelectTrigger>
         <SelectContent>
           {editorCodes.map(
