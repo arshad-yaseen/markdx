@@ -1,6 +1,7 @@
-import { editorCodeType } from "types"
 import { atom } from "jotai"
 import { editor } from "monaco-editor"
+
+import { editorCodeType } from "types"
 
 export const editorCodesState = atom<editorCodeType[]>([])
 

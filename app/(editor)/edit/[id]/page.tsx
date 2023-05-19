@@ -11,7 +11,6 @@ import { useAtom, useAtomValue } from "jotai"
 import { useTheme } from "next-themes"
 import { Toaster } from "sonner"
 
-import { editorCodeType } from "types"
 import { defaultEditorContent } from "@/config/editor"
 // import { handleShortCut } from "@/lib/editor"
 import EditorLeft from "@/components/editor/editor-left"
@@ -96,9 +95,7 @@ export default function page({ params }: { params: { id: string } }) {
       />
       <PreviewSection
         loading={loading}
-        code={editorCodes
-          .map((code: editorCodeType) => code.content)
-          .join("\n\n")}
+        code={monacoInstance?.getValue() || ""}
       />
     </div>
   )
