@@ -99,7 +99,11 @@ function EditorLeft() {
           <AITools />
           <hr className="my-4" />
           <div className="flex w-full flex-1 flex-col justify-end space-y-4 py-6">
-            <Button variant="outline" className="relative">
+            <Button
+              disabled={isUploadingFile}
+              variant="outline"
+              className="relative"
+            >
               {isUploadingFile && (
                 <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
               )}{" "}

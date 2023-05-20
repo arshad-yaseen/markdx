@@ -2,12 +2,20 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
+import { DialogDescription } from "@radix-ui/react-dialog"
 import { Loader2Icon, PlusIcon } from "lucide-react"
 
 import { defaultEditorContent } from "@/config/editor"
 import { cn } from "@/lib/utils"
-import { ButtonProps, buttonVariants } from "@/components/ui/button"
-import { toast } from "@/components/ui/use-toast"
+import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+} from "../ui/dialog"
 
 interface PostCreateButtonProps extends ButtonProps {}
 
@@ -18,6 +26,7 @@ export function PostCreateButton({
 }: PostCreateButtonProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [upgradeToPRODialog, setUpgradeToPRODialog] = React.useState(false)
 
   async function onClick() {
     setIsLoading(true)
@@ -36,20 +45,9 @@ export function PostCreateButton({
     setIsLoading(false)
 
     if (!response?.ok) {
-      //   if (response.status === 402) {
-      //     return toast({
-      //       title: "Limit of 3 posts reached.",
-      //       description: "Please upgrade to the PRO plan.",
-      //       variant: "destructive",
-      //     })
-      //   }
-      console.log("wrong")
-
-      return toast({
-        title: "Something went wrong.",
-        description: "Your post was not created. Please try again.",
-        variant: "destructive",
-      })
+      if (response.status === 402) {
+        setUpgradeToPRODialog(true)
+      }
     }
 
     const post = await response.json()
@@ -61,24 +59,56 @@ export function PostCreateButton({
   }
 
   return (
-    <button
-      onClick={onClick}
-      className={cn(
-        buttonVariants({ variant }),
-        {
-          "cursor-not-allowed opacity-60": isLoading,
-        },
-        className
-      )}
-      disabled={isLoading}
-      {...props}
-    >
-      {isLoading ? (
-        <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
-      ) : (
-        <PlusIcon className="mr-2 h-4 w-4" />
-      )}
-      New markdown
-    </button>
+    <>
+      <Dialog open={upgradeToPRODialog}>
+        <DialogOverlay onClick={() => setUpgradeToPRODialog(false)} />
+        <DialogContent className="flex flex-col items-center">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Upgrade to PRO</DialogTitle>
+          </DialogHeader>
+          <DialogDescription className="mt-2 w-full px-8 text-center">
+            The free plan is limited to 3 markdowns. Upgrade to the PRO plan for
+            unlimited markdowns.
+          </DialogDescription>
+
+          <div className="mt-4 flex w-full space-x-4">
+            <Button
+              onClick={() => {
+                setUpgradeToPRODialog(false)
+              }}
+              variant="outline"
+              className="mt-2 w-full"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => router.push("/dashboard/billing")}
+              className="mt-2 w-full"
+            >
+              Upgrade
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+      <button
+        onClick={onClick}
+        className={cn(
+          buttonVariants({ variant }),
+          {
+            "cursor-not-allowed opacity-60": isLoading,
+          },
+          className
+        )}
+        disabled={isLoading}
+        {...props}
+      >
+        {isLoading ? (
+          <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <PlusIcon className="mr-2 h-4 w-4" />
+        )}
+        New markdown
+      </button>
+    </>
   )
 }

@@ -2,8 +2,8 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-import { UserAuthForm } from "@/components/user-auth-form"
 import SiteAssets from "@/components/site-assets"
+import { UserAuthForm } from "@/components/user-auth-form"
 
 export const metadata = {
   title: "Create an account",
@@ -26,7 +26,7 @@ export default function RegisterPage() {
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center space-y-2 text-center">
-          <SiteAssets type="icon" className="h-10 w-10" />
+            <SiteAssets type="icon" className="h-10 w-10" />
             <h1 className="text-2xl font-semibold tracking-tight">
               Create an account
             </h1>

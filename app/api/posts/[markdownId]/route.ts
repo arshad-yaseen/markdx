@@ -143,7 +143,7 @@ async function verifyCurrentUserHasAccessToPost(markdownId: string) {
   const count = await db.markdownPost.count({
     where: {
       markdownId: String(markdownId),
-      userId: (session?.user as any).id,
+      userId: session?.user.id,
     },
   })
 

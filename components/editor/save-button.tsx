@@ -48,6 +48,7 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
 
   return (
     <Button
+      disabled={isSaving}
       ref={saveButtonRef}
       onClick={async () => {
         onSave()

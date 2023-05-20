@@ -1,3 +1,4 @@
+import { User } from "@prisma/client"
 import { editor } from "monaco-editor"
 
 export type SiteConfig = {
@@ -93,3 +94,15 @@ export type PostCodesType = {
   section: string
   content: string
 }
+
+export type UserSubscriptionPlan = SubscriptionPlan &
+  Pick<User, "stripeCustomerId" | "stripeSubscriptionId"> & {
+    stripeCurrentPeriodEnd: number
+    isPro: boolean
+  }
+
+  export type SubscriptionPlan = {
+    name: string
+    description: string
+    stripePriceId: string
+  }

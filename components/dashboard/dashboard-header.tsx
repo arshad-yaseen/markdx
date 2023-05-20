@@ -13,8 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { UserAvatar } from "./user-avatar"
 import SiteAssets from "../site-assets"
+import { UserAvatar } from "./user-avatar"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">
@@ -25,7 +25,7 @@ function DashboardHeader({ user }: UserAccountNavProps) {
     <header className={`flex h-16 w-full border-b px-6 lg:px-12`}>
       <div className={`flex h-full w-1/2 items-center`}>
         <Link href="/" className="flex items-center">
-        <SiteAssets type="icon" />
+          <SiteAssets type="icon" />
           <h4 className="ml-2 font-heading text-lg font-bold">MarkDX</h4>
         </Link>
       </div>

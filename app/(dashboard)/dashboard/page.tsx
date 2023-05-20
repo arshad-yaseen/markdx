@@ -13,8 +13,6 @@ import { DashboardShell } from "@/components/dashboard/shell"
 async function Dashboard() {
   const user = (await getCurrentUser()) as any
 
-  console.log(user)
-
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -36,38 +34,40 @@ async function Dashboard() {
   })
 
   return (
-    <DashboardShell>
-      <DashboardInlineHeader
-        heading="Markdowns"
-        text="Create and manage markdowns."
-      >
-        <PostCreateButton />
-      </DashboardInlineHeader>
-      <div className="no-scrollbar h-[50vh] w-full overflow-y-scroll">
-        {posts?.length ? (
-          <div className="divide-y divide-border rounded-md border">
-            {posts.map((post) => (
-              <PostItem
-                key={post.id}
-                post={post}
-                title={getTitle(post.postCodes[0]?.content) || ""}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>
-              No markdowns created
-            </EmptyPlaceholder.Title>
-            <EmptyPlaceholder.Description>
-              You don&apos;t have any markdowns yet. Start creating content.
-            </EmptyPlaceholder.Description>
-            <PostCreateButton variant="outline" />
-          </EmptyPlaceholder>
-        )}
-      </div>
-    </DashboardShell>
+    <>
+      <DashboardShell>
+        <DashboardInlineHeader
+          heading="Markdowns"
+          text="Create and manage markdowns."
+        >
+          <PostCreateButton />
+        </DashboardInlineHeader>
+        <div className="no-scrollbar h-[53vh] w-full overflow-y-scroll">
+          {posts?.length ? (
+            <div className="divide-y divide-border rounded-md border">
+              {posts.map((post) => (
+                <PostItem
+                  key={post.id}
+                  post={post}
+                  title={getTitle(post.postCodes[0]?.content) || ""}
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyPlaceholder>
+              <EmptyPlaceholder.Icon name="post" />
+              <EmptyPlaceholder.Title>
+                No markdowns created
+              </EmptyPlaceholder.Title>
+              <EmptyPlaceholder.Description>
+                You don&apos;t have any markdowns yet. Start creating content.
+              </EmptyPlaceholder.Description>
+              <PostCreateButton variant="outline" />
+            </EmptyPlaceholder>
+          )}
+        </div>
+      </DashboardShell>
+    </>
   )
 }
 
