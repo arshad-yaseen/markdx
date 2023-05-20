@@ -11,6 +11,7 @@ import { useAtom, useAtomValue } from "jotai"
 import { useTheme } from "next-themes"
 import { Toaster } from "sonner"
 
+import { editorCodeType } from "types"
 import { defaultEditorContent } from "@/config/editor"
 // import { handleShortCut } from "@/lib/editor"
 import EditorLeft from "@/components/editor/editor-left"
@@ -46,26 +47,43 @@ export default function page({ params }: { params: { id: string } }) {
     console.log(markdownPost[0].postCodes)
 
     if (markdownPost[0].postCodes.length > 0) {
-      setEditorCodes(markdownPost[0].postCodes)
+      let code = markdownPost[0].postCodes
+      setEditorCodes(code)
+      code
+        .filter((code: editorCodeType) => {
+          return code.section_id === editorActiveSection
+        })
+        .map((code: editorCodeType) => {
+          setMarkdownCode(code.content)
+        })
     } else {
-      setEditorCodes([defaultEditorContent])
+      const defaultCode = [defaultEditorContent] as editorCodeType[]
+
+      defaultCode
+        .filter((code: editorCodeType) => {
+          return code.section_id === editorActiveSection
+        })
+        .map((code: editorCodeType) => {
+          setMarkdownCode(code.content)
+        })
+      setEditorCodes(defaultCode)
     }
     setLoading(false)
   }
 
   useEffect(() => {
-    getMarkdownPost(markdownId)
-  }, [markdownId])
-
-  useEffect(() => {
     editorCodes
-      .filter((code) => {
+      .filter((code: editorCodeType) => {
         return code.section_id === editorActiveSection
       })
-      .map((code) => {
+      .map((code: editorCodeType) => {
         setMarkdownCode(code.content)
       })
-  }, [editorCodes, editorActiveSection])
+  }, [editorActiveSection])
+
+  useEffect(() => {
+    getMarkdownPost(markdownId)
+  }, [markdownId])
 
   return (
     <div
@@ -95,7 +113,9 @@ export default function page({ params }: { params: { id: string } }) {
       />
       <PreviewSection
         loading={loading}
-        code={monacoInstance?.getValue() || ""}
+        code={editorCodes
+          .map((code: editorCodeType) => code.content)
+          .join("\n\n")}
       />
     </div>
   )

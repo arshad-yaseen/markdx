@@ -108,12 +108,7 @@ export const editorAction = {
       const id = { major: 1, minor: 1 }
       const op = {
         identifier: id,
-        range: {
-          startLineNumber: selection?.selectionStartLineNumber || 1,
-          startColumn: selection?.selectionStartColumn || 1,
-          endLineNumber: selection?.endLineNumber || 1,
-          endColumn: selection?.endColumn || 1,
-        },
+        range: selection!,
         text,
         forceMoveMarkers: true,
       }

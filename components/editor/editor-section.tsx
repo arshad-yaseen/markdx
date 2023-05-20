@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Editor, { OnMount } from "@monaco-editor/react"
 import { useTheme } from "next-themes"
 
@@ -20,7 +19,6 @@ function EditorSection({
   onCodeChange: (value: string) => void
   loading: boolean
 }) {
-  const [code, setCode] = useState("")
   const { theme } = useTheme()
   const [, setMonacoInstance] = useAtom(monacoInstanceState)
 
@@ -28,12 +26,7 @@ function EditorSection({
     setMonacoInstance(editorL)
   }
 
-  useEffect(() => {
-    setCode(markdown)
-  }, [markdown])
-
   const handleEditorChange = (value: string | undefined) => {
-    setCode(value || "")
     onCodeChange(value || "")
   }
 
@@ -43,7 +36,7 @@ function EditorSection({
 
       <Editor
         language="markdown"
-        value={code}
+        value={markdown}
         onMount={editorMount}
         theme={theme === "dark" ? "vs-dark" : "vs-light"}
         loading={<EditorSkeleton className="px-14" />}
