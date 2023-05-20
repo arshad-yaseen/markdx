@@ -101,8 +101,8 @@ export type UserSubscriptionPlan = SubscriptionPlan &
     isPro: boolean
   }
 
-  export type SubscriptionPlan = {
-    name: string
-    description: string
-    stripePriceId: string
-  }
+export type SubscriptionPlan = {
+  name: string
+  description: string
+  stripePriceId: string
+}

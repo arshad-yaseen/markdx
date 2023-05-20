@@ -35,7 +35,7 @@ export default async function BillingPage() {
   return (
     <DashboardShell>
       <DashboardInlineHeader
-        heading={isPro? "Billing" : "Upgrade"}
+        heading={isPro ? "Billing" : "Upgrade"}
         text="Manage billing and your subscription plan."
       />
       <div className="grid gap-8">
