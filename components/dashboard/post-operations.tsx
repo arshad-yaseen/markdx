@@ -3,7 +3,9 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
 import { MarkdownPost } from "@prisma/client"
+import { useAtom } from "jotai"
 import { Loader2Icon, MoreVerticalIcon, TrashIcon } from "lucide-react"
 import { toast } from "sonner"
 
@@ -47,6 +49,8 @@ export function PostOperations({ post }: PostOperationsProps) {
   const router = useRouter()
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
+  const [, setEditorCodes] = useAtom(editorCodesState)
+  const [, setEditorActiveSection] = useAtom(editorActiveSectionState)
 
   return (
     <>
@@ -57,7 +61,20 @@ export function PostOperations({ post }: PostOperationsProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
-            <Link href={`/edit/${post.markdownId}`} className="flex w-full">
+            <Link
+              onClick={() => {
+                setEditorCodes([
+                  {
+                    section: "",
+                    content: "",
+                    section_id: 0,
+                  },
+                ])
+                setEditorActiveSection(0)
+              }}
+              href={`/edit/${post.markdownId}`}
+              className="flex w-full"
+            >
               Edit
             </Link>
           </DropdownMenuItem>

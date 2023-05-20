@@ -1,23 +1,16 @@
 import React from "react"
-import Image from "next/image"
 import Link from "next/link"
 
 import EditorNav from "./editor-nav"
 import EditorSectionsPanel from "./editor-sections-panel"
+import SiteAssets from "../site-assets"
 
 function EditorHeader() {
   return (
     <div className="flex h-[8vh] w-full border-b">
       <div className="flex h-full w-[20%] items-center px-6">
         <Link href="/dashboard" className="flex items-center">
-          <Image
-            src="/logos/markdx-black.svg"
-            priority
-            alt="logo"
-            className="h-8 w-auto"
-            width={"0"}
-            height={"0"}
-          />
+        <SiteAssets type="icon" />
           <h4 className="ml-2 font-heading text-xl font-bold">Editor</h4>
         </Link>
       </div>

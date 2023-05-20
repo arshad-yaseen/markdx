@@ -1,10 +1,10 @@
 import React from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeftIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import SiteAssets from "@/components/site-assets"
 import { UserAuthForm } from "@/components/user-auth-form"
 
 export const metadata = {
@@ -29,14 +29,7 @@ function LoginPage() {
       </Link>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col items-center space-y-2 text-center">
-          <Image
-            src="/logos/markdx-black.svg"
-            priority
-            alt="logo"
-            className="h-10 w-10"
-            width={"0"}
-            height={"0"}
-          />
+          <SiteAssets type="icon" className="h-10 w-10" />
           <h1 className="text-2xl font-semibold tracking-tight">
             Welcome back
           </h1>

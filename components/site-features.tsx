@@ -25,7 +25,7 @@ function SiteFeatures() {
       <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <CodeIcon />
+            <CodeIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h3 className="font-bold">Generate or Document codes</h3>
               <p className="text-sm text-muted-foreground">
@@ -36,7 +36,7 @@ function SiteFeatures() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <ShareIcon />
+            <ShareIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h3 className="font-bold">Export to any format</h3>
               <p className="text-sm text-muted-foreground">
@@ -47,7 +47,7 @@ function SiteFeatures() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <LanguagesIcon />
+            <LanguagesIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h3 className="font-bold">Translate</h3>
               <p className="text-sm text-muted-foreground">
@@ -58,7 +58,7 @@ function SiteFeatures() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <StarIcon />
+            <StarIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h3 className="font-bold">AI suggessions and corrections</h3>
               <p className="text-sm text-muted-foreground">
@@ -69,7 +69,7 @@ function SiteFeatures() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <SparklesIcon />
+            <SparklesIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h3 className="font-bold">Ask AI playground</h3>
               <p className="text-sm text-muted-foreground">
@@ -80,7 +80,7 @@ function SiteFeatures() {
         </div>
         <div className="relative overflow-hidden rounded-lg border bg-background p-2">
           <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-            <TimerIcon />
+            <TimerIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h3 className="font-bold">Realtime collaboration</h3>
               <p className="text-sm text-muted-foreground">

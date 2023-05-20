@@ -88,7 +88,7 @@ function EditorSectionsPanel() {
     setRenameDialogOpen(false)
   }
 
-  // hold for 2 seconds delete button to delete
+  // hold delete button for 2 seconds to delete
 
   function handleMouseDown() {
     const id = setTimeout(() => {
@@ -101,7 +101,7 @@ function EditorSectionsPanel() {
       setEditorCodes(
         editorCodes.filter((item) => item.section_id !== editorActiveSection)
       )
-      setEditorActiveSection(editorCodes[0].section_id)
+      setEditorActiveSection(0)
     }, 1000) as unknown as number
     setHoldTimerId(id)
   }
