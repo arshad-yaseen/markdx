@@ -148,6 +148,7 @@ function EditorSectionsPanel() {
           <DialogOverlay onClick={() => setDialogOpen(false)} />
           <DialogTrigger asChild>
             <Button
+            variant="outline"
               onClick={() => {
                 setDialogOpen(true)
               }}
@@ -198,6 +199,7 @@ function EditorSectionsPanel() {
           <DialogOverlay onClick={() => setRenameDialogOpen(false)} />
           <DialogTrigger asChild>
             <Button
+            variant="outline"
               onClick={() => {
                 setRenameDialogOpen(true)
               }}
