@@ -2,7 +2,9 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
+import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
 import { DialogDescription } from "@radix-ui/react-dialog"
+import { useAtom } from "jotai"
 import { Loader2Icon, PlusIcon } from "lucide-react"
 
 import { defaultEditorContent } from "@/config/editor"
@@ -27,9 +29,19 @@ export function PostCreateButton({
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [upgradeToPRODialog, setUpgradeToPRODialog] = React.useState(false)
+  const [, setEditorCodes] = useAtom(editorCodesState)
+  const [, setEditorActiveSection] = useAtom(editorActiveSectionState)
 
   async function onClick() {
     setIsLoading(true)
+    setEditorCodes([
+      {
+        section: "",
+        content: "",
+        section_id: 0,
+      },
+    ])
+    setEditorActiveSection(0)
 
     const response = await fetch("/api/posts", {
       method: "POST",

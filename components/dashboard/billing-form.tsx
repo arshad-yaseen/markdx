@@ -6,11 +6,11 @@ import { toast } from "sonner"
 
 import { UserSubscriptionPlan } from "types"
 import { cn, formatDate } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -54,19 +54,21 @@ export function BillingForm({
 
   return (
     <form className={cn(className)} onSubmit={onSubmit} {...props}>
-      <Card>
+      <Card className="relative">
+        <Badge variant="outline" className="absolute right-5 top-4">
+          {subscriptionPlan.name} plan
+        </Badge>
         <CardHeader>
           {!isPro && (
             <CardTitle className="my-4 text-4xl">
-              $3 <span className="text-lg">/month</span>
+              $2{" "}
+              <span className="text-lg font-medium text-muted-foreground">
+                /month
+              </span>
             </CardTitle>
           )}
 
           <CardTitle>Subscription Plan</CardTitle>
-          <CardDescription>
-            You are currently on the <strong>{subscriptionPlan.name}</strong>{" "}
-            plan.
-          </CardDescription>
         </CardHeader>
         <CardContent>{subscriptionPlan.description}</CardContent>
         <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">

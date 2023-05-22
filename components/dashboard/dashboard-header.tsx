@@ -22,9 +22,9 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 function DashboardHeader({ user }: UserAccountNavProps) {
   return (
-    <header className={`flex h-16 w-full border-b px-6 lg:px-12`}>
+    <header className={`sticky flex h-16 w-full border-b px-6 lg:px-12`}>
       <div className={`flex h-full w-1/2 items-center`}>
-        <Link href="/" className="flex items-center">
+        <Link href="/dashboard" className="flex items-center">
           <SiteAssets type="icon" />
           <h4 className="ml-2 font-heading text-lg font-bold">MarkDX</h4>
         </Link>

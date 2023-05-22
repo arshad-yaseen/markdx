@@ -42,7 +42,7 @@ async function Dashboard() {
         >
           <PostCreateButton />
         </DashboardInlineHeader>
-        <div className="no-scrollbar h-[53vh] w-full overflow-y-scroll">
+        <div className=" w-full">
           {posts?.length ? (
             <div className="divide-y divide-border rounded-md border">
               {posts.map((post) => (

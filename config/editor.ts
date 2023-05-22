@@ -4,6 +4,7 @@ export const editorConfig = {
   uploadMaxVideoSize: 30, //MB
 }
 
+
 export const defaultEditorContent = {
   section_id: 0,
   section: "Introduction",
