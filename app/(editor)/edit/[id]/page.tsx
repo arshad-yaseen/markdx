@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import {
   editorActiveSectionState,
   editorCodesState,
@@ -31,6 +32,7 @@ export default function page({ params }: { params: { id: string } }) {
   const [markdownCode, setMarkdownCode] = useState("")
   const monacoInstance = useAtomValue(monacoInstanceState)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   const markdownId = params.id
 
@@ -40,11 +42,10 @@ export default function page({ params }: { params: { id: string } }) {
     })
 
     if (!response?.ok) {
-      return true
+      return router.push("/")
     }
 
     const markdownPost = await response.json()
-    console.log(markdownPost[0].postCodes)
 
     if (markdownPost[0].postCodes.length > 0) {
       let code = markdownPost[0].postCodes
