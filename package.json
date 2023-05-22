@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
+  "author": {
+    "name": "arshad yaseen",
+    "url": "https://twitter.com/arshadyaseeen"
+  },
   "scripts": {
     "dev": "next dev",
     "turbo": "next dev --turbo",
