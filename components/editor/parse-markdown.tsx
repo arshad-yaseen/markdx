@@ -159,7 +159,7 @@ function ParseMarkdown({
       />
     ),
     pre: ({ className, ...props }: ComponentTypes) => (
-      <pre className={cn("mb-3 mt-6  flex w-full", className)} {...props} />
+      <pre className={cn("my-2 flex w-full", className)} {...props} />
     ),
     video: ({ className, ...props }: ComponentTypes) => (
       <video

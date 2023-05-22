@@ -26,7 +26,7 @@ async function handleSave(postCodes: PostCodesType[], markdownId: string) {
   })
 
   if (!response?.ok) {
-    console.log(response)
+    console.error(response)
     return false
   }
   return true
