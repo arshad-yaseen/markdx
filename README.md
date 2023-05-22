@@ -1,8 +1,8 @@
 # MarkDX
 
-MarkDX is a Markdown editor that uses AI to make your Markdown standard.
+Introducing MarkDX, the ultimate markdown editor that leverages artificial intelligence to ensure your markdown is of the highest standard.
 
-![hero](/public/og-twitter.png)
+![MarkDX Screenshot](https://shiny.link/HQuQyZ)
 
 ## Running Locally
 
