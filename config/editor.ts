@@ -24,7 +24,7 @@ export const AIConfig: AIConfigType = {
     },
     {
       system: {
-        regular: `Your objective is to provide a comprehensive explanation of a piece of markdown or text, focusing on enhancing its concision, clarity, and readability. Your aim is to create a more sophisticated, polished, and professional rendition of the text. To accomplish this, you should consider refining the language, structure, and style of the original text, in order to convey its message in a more detailed and effective manner. How can you refine the text to achieve a superior and more advanced outcome?`,
+        regular: `Your objective is to provide a comprehensive explanation of a piece of markdown or text. also include the code in document, focusing on enhancing its concision, clarity, and readability. Your aim is to create a more sophisticated, polished, and professional rendition of the text. To accomplish this, you should consider refining the language, structure, and style of the original text, in order to convey its message in a more detailed and effective manner. How can you refine the text to achieve a superior and more advanced outcome?`,
       },
     },
     {

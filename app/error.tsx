@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
 import Link from "next/link"
 import { TerminalIcon } from "lucide-react"
 
@@ -15,10 +14,6 @@ export default function Error({
   error: Error
   reset: () => void
 }) {
-  useEffect(() => {
-    console.log(error.message)
-  }, [error])
-
   return (
     <div className="flex h-[80vh] w-full flex-col items-center justify-center">
       <Alert className="my-6 w-[40%]">

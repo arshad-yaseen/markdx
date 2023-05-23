@@ -52,7 +52,7 @@ function AITools() {
     const editorSelectedCode = window.getSelection()?.toString()
     if (requestingToAPI) {
       return toast.message("Please wait for current action to finish")
-    } else if (!editorSelectedCode || !windowSelection) {
+    } else if (!editorSelectedCode && !windowSelection) {
       return toast.message("Please select a text or code")
     }
 
