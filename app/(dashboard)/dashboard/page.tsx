@@ -49,7 +49,7 @@ async function Dashboard() {
                 <PostItem
                   key={post.id}
                   post={post}
-                  title={getTitle(post.postCodes[0]?.content) || ""}
+                  title={getTitle(post.postCodes[0]?.content) || "Project Title"}
                 />
               ))}
             </div>
