@@ -79,7 +79,7 @@ export function PostCreateButton({
             <DialogTitle className="text-2xl">Upgrade to PRO</DialogTitle>
           </DialogHeader>
           <DialogDescription className="mt-2 w-full px-8 text-center">
-            The free plan is limited to 3 markdowns. Upgrade to the PRO plan for
+            The free plan is limited to 2 markdowns. Upgrade to the PRO plan for
             unlimited markdowns.
           </DialogDescription>
 

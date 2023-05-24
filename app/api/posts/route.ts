@@ -60,7 +60,7 @@ export async function POST(req: Request) {
         },
       })
 
-      if (count >= 3) {
+      if (count >= 2) {
         throw new RequiresProPlanError()
       }
     }
