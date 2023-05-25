@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { Loader2Icon } from "lucide-react"
 import { toast } from "sonner"
 
@@ -37,8 +37,6 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
   const markdownId = pathname.split("/")[2]
   const saveButtonRef = useRef<HTMLButtonElement>(null)
 
-  const router = useRouter()
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       saveButtonRef.current?.click()
@@ -57,7 +55,6 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
         const res = await handleSave(postCodes, markdownId)
         if (res) {
           onSaved()
-          router.refresh()
         } else {
           onSaved()
           toast("Something went wrong.", {

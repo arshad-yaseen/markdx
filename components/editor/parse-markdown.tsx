@@ -1,6 +1,8 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeRaw from "rehype-raw"
+import rehypeSlug from "rehype-slug"
 import remarkEmoji from "remark-emoji"
 import remarkGfm from "remark-gfm"
 
@@ -81,7 +83,6 @@ function ParseMarkdown({
           className
         )}
         {...props}
-        target="_blank"
       />
     ),
     p: ({ className, ...props }: ComponentTypes) => (
@@ -173,7 +174,7 @@ function ParseMarkdown({
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkEmoji]}
-      rehypePlugins={[rehypeRaw]}
+      rehypePlugins={[rehypeRaw, rehypeSlug, rehypeAutolinkHeadings]}
       components={{
         ...components,
         code({ inline, className, children, ...props }) {
