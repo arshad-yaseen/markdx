@@ -132,7 +132,7 @@ function EditorLeft() {
                 <DialogOverlay onClick={() => setUnsplashDialogOpen(false)} />
                 <Button
                   variant="outline"
-                  className="relative z-50 flex w-full justify-center px-6 "
+                  className="relative flex w-full justify-center px-6 "
                   onClick={() => {
                     setUnsplashDialogOpen(true)
                     if (unsplashImages.length > 0) return
