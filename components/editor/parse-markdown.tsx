@@ -79,7 +79,7 @@ function ParseMarkdown({
     a: ({ className, ...props }: ComponentTypes) => (
       <a
         className={cn(
-          "font-medium text-[#3181F6] underline-offset-4 hover:underline",
+          "font-medium underline underline-offset-4",
           className
         )}
         {...props}

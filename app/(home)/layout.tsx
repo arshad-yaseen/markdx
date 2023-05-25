@@ -1,5 +1,5 @@
-import SiteHeader from "@/components/site-header"
 import { getCurrentUser } from "@/lib/session"
+import SiteHeader from "@/components/site-header"
 
 interface MarketingLayoutProps {
   children: React.ReactNode
@@ -8,7 +8,6 @@ interface MarketingLayoutProps {
 export default async function MarketingLayout({
   children,
 }: MarketingLayoutProps) {
-
   const user = await getCurrentUser()
 
   return (

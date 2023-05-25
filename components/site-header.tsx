@@ -9,7 +9,7 @@ import { buttonVariants } from "./ui/button"
 
 interface SiteHeaderProps {
   user: User | undefined
-} 
+}
 
 function SiteHeader({ user }: SiteHeaderProps) {
   return (
@@ -26,7 +26,7 @@ function SiteHeader({ user }: SiteHeaderProps) {
           href={user ? "/dashboard" : "/login"}
           className={cn(buttonVariants({ variant: "secondary" }), "")}
         >
-          {user ? "Go to Dashboard" : "Login"}
+          {user ? "Go to dashboard" : "Login"}
         </Link>
       </div>
     </header>
