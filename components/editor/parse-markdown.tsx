@@ -16,7 +16,7 @@ interface ComponentTypes {
 
 function ParseMarkdown({
   code,
-  codeCopyable = true,
+  codeCopyable = false,
 }: {
   code: string
   codeCopyable?: boolean
@@ -186,7 +186,7 @@ function ParseMarkdown({
           ) : (
             <code
               {...props}
-              className={cn("rounded-sm bg-muted px-1.5 py-0.5", className)}
+              className={cn("rounded-sm border px-1.5 py-0.5", className)}
             >
               {children}
             </code>
