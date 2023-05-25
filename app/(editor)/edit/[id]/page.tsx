@@ -14,10 +14,10 @@ import { Toaster } from "sonner"
 
 import { editorCodeType } from "types"
 import { defaultEditorContent } from "@/config/editor"
-// import { handleShortCut } from "@/lib/editor"
-import EditorLeft from "@/components/editor/editor-left"
 import EditorSection from "@/components/editor/editor-section"
 import PreviewSection from "@/components/editor/preview-section"
+// import { handleShortCut } from "@/lib/editor"
+import ToolsPanel from "@/components/editor/tools-panel"
 
 type prevCodeType = {
   section: string
@@ -94,7 +94,7 @@ export default function page({ params }: { params: { id: string } }) {
       className="flex h-[92vh] w-full flex-col lg:flex-row"
     >
       <Toaster theme={theme === "dark" ? "dark" : "light"} closeButton />
-      <EditorLeft />
+      <ToolsPanel />
       <EditorSection
         loading={loading}
         markdown={markdownCode}
