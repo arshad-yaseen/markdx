@@ -1,15 +1,17 @@
-"use client"
-
 import React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { User } from "next-auth"
+
+import { cn } from "@/lib/utils"
 
 import SiteAssets from "./site-assets"
-import { Button } from "./ui/button"
+import { buttonVariants } from "./ui/button"
 
-function SiteHeader() {
-  const router = useRouter()
+interface SiteHeaderProps {
+  user: User | undefined
+} 
 
+function SiteHeader({ user }: SiteHeaderProps) {
   return (
     <header className={`flex h-20 w-full px-6 lg:px-12`}>
       <div className={`flex h-full w-1/2 items-center`}>
@@ -20,9 +22,12 @@ function SiteHeader() {
       </div>
 
       <div className={`flex h-full w-1/2 items-center justify-end`}>
-        <Button variant="secondary" onClick={() => router.push("/login")}>
-          Login
-        </Button>
+        <Link
+          href={user ? "/dashboard" : "/login"}
+          className={cn(buttonVariants({ variant: "secondary" }), "")}
+        >
+          {user ? "Go to Dashboard" : "Login"}
+        </Link>
       </div>
     </header>
   )

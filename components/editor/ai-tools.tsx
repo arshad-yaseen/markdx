@@ -104,7 +104,7 @@ function AITools() {
           variant="outline"
           className="flex w-full justify-center px-6  "
         >
-          Standardize or Format
+          Standardize
         </Button>
         <Button
           onClick={() => {
