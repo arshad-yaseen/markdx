@@ -28,7 +28,7 @@ async function DashboardLayout({ children }: DashboardLayout) {
           email: user.email,
         }}
       />
-      <main className="flex w-full flex-1 flex-col overflow-hidden px-52 py-12">
+      <main className="flex w-full flex-1 flex-col overflow-hidden px-6 py-12 lg:px-52">
         {children}
       </main>
     </main>

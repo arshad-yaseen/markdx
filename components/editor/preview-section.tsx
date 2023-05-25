@@ -4,7 +4,7 @@ import EditorSkeleton from "./skeleton"
 
 function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
   return (
-    <div className="relative flex  h-full w-[35%] flex-col overflow-scroll border-l px-12 py-8">
+    <div className="relative flex  h-full w-full flex-col overflow-scroll border-l border-t px-12 py-8 lg:w-[35%] lg:border-t-0">
       {loading && <EditorSkeleton />}
       <ParseMarkdown code={code} />
     </div>

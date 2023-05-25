@@ -85,7 +85,7 @@ function EditorLeft() {
   }
 
   return (
-    <div className="flex h-full w-[20%] flex-col items-center border-r p-6 ">
+    <div className="hidden h-full w-[20%] flex-col items-center border-r p-6 lg:flex ">
       <Tabs defaultValue="tools" className="w-full">
         <TabsList className="w-ful mb-6 flex">
           <TabsTrigger value="tools" className="w-full">

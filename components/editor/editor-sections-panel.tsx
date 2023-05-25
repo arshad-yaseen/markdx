@@ -153,7 +153,8 @@ function EditorSectionsPanel() {
                 setDialogOpen(true)
               }}
             >
-              Create new section
+              <p className="hidden lg:block">Create new section</p>
+              <p className="block lg:hidden">Create new</p>
             </Button>
           </DialogTrigger>
           <DialogContent className="flex flex-col items-center">
@@ -194,7 +195,7 @@ function EditorSectionsPanel() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex items-center">
+      <div className="hidden items-center lg:flex">
         <Dialog open={renameDialogOpen}>
           <DialogOverlay onClick={() => setRenameDialogOpen(false)} />
           <DialogTrigger asChild>

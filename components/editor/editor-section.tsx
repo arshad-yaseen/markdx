@@ -31,7 +31,7 @@ function EditorSection({
   }
 
   return (
-    <div className="relative flex h-full w-[45%] flex-col items-center">
+    <div className="relative flex h-[50%] w-full flex-col items-center lg:h-full lg:w-[45%]">
       {loading && <EditorSkeleton className="px-14" />}
 
       <Editor

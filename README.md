@@ -1,6 +1,6 @@
 # MarkDX
 
-Introducing MarkDX, the ultimate markdown editor that leverages artificial intelligence to ensure your markdown is of the highest standard.
+Meet MarkDX, an AI-powered markdown editor for top-notch markdown writing.
 
 ![MarkDX Screenshot](https://shiny.link/HQuQyZ)
 

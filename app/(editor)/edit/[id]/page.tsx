@@ -91,7 +91,7 @@ export default function page({ params }: { params: { id: string } }) {
       onKeyDown={(event) => {
         handleShortCut(event, monacoInstance!)
       }}
-      className="flex h-[92vh] w-full"
+      className="flex h-[92vh] w-full flex-col lg:flex-row"
     >
       <Toaster theme={theme === "dark" ? "dark" : "light"} closeButton />
       <EditorLeft />
