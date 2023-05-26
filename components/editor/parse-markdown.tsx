@@ -12,6 +12,8 @@ import CodeBlock from "../code-block"
 
 interface ComponentTypes {
   className?: string
+  href?: string
+  [key: string]: any
 }
 
 function ParseMarkdown({
@@ -76,12 +78,18 @@ function ParseMarkdown({
         {...props}
       />
     ),
-    a: ({ className, ...props }: ComponentTypes) => (
-      <a
-        className={cn("font-medium underline underline-offset-4", className)}
-        {...props}
-      />
-    ),
+    a: ({ className, href, ...props }: ComponentTypes) => {
+      const isHashURL = href?.includes("#") // Ex. https://example.com#section
+
+      return (
+        <a
+          className={cn("font-medium underline underline-offset-4", className)}
+          {...props}
+          href={href}
+          target={isHashURL ? "_self" : "_blank"}
+        />
+      )
+    },
     p: ({ className, ...props }: ComponentTypes) => (
       <p
         className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
@@ -157,7 +165,7 @@ function ParseMarkdown({
       />
     ),
     pre: ({ className, ...props }: ComponentTypes) => (
-      <pre className={cn("my-5 flex w-full", className)} {...props} />
+      <pre className={cn("mt-5 flex w-full", className)} {...props} />
     ),
     video: ({ className, ...props }: ComponentTypes) => (
       <video
@@ -186,7 +194,7 @@ function ParseMarkdown({
           ) : (
             <code
               {...props}
-              className={cn("rounded-sm border px-1.5 py-0.5", className)}
+              className={cn("rounded-sm border px-1", className)}
             >
               {children}
             </code>

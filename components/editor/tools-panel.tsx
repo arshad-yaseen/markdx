@@ -96,7 +96,7 @@ function EditorLeft() {
     <>
       <div
         className={`hidden h-full ${
-          isToolsPanelCollapsed ? "invisible w-0 opacity-0" : "w-[18%]"
+          isToolsPanelCollapsed ? "invisible w-0 opacity-0" : "min-w-[18%]"
         } flex-col items-center border-r p-6 lg:flex `}
       >
         <Tabs defaultValue="tools" className="w-full">
