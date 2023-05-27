@@ -85,7 +85,7 @@ model Code {
   id           Int            @id @default(autoincrement())
   section_id   Int
   section      String
-  content      String         @db.VarChar(20000)
+  content      String         @db.Text
   MarkdownPost MarkdownPost[]
 
   @@map(name: "post_codes")
