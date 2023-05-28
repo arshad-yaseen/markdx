@@ -23,7 +23,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
     STRIPE_PRO_MONTHLY_PLAN_ID: z.string().min(1),
     DATABASE_URL: z.string().min(1),
-    REDIS_URL: z.string().min(1)
+    REDIS_URL: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_GITHUB_ACCESS_TOKEN: z.string().min(1).optional(),
@@ -59,6 +59,6 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_PRO_MONTHLY_PLAN_ID: process.env.STRIPE_PRO_MONTHLY_PLAN_ID,
     DATABASE_URL: process.env.DATABASE_URL,
-    REDIS_URL: process.env.REDIS_URL
+    REDIS_URL: process.env.REDIS_URL,
   },
 })

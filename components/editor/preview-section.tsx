@@ -22,7 +22,7 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
     }
 
     const handleMouseDown = (e: MouseEvent) => {
-      e.preventDefault();
+      e.preventDefault()
       if (e.offsetX < BORDER_SIZE) {
         mPos.current = e.x
         document.addEventListener("mousemove", resize)

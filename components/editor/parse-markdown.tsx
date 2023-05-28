@@ -184,7 +184,10 @@ function ParseMarkdown({
           copyable={codeCopyable}
         />
       ) : (
-        <code {...props} className={cn("rounded-sm border px-1 py-0.5", className)}>
+        <code
+          {...props}
+          className={cn("rounded-sm border px-1 py-0.5", className)}
+        >
           {children}
         </code>
       )
