@@ -1,24 +1,24 @@
 .dark .monaco-editor span {
-  color: white !important;
+  @apply !text-white
 }
 .monaco-editor span {
-  color: black !important;
+  @apply !text-black
 }
 
 .monaco-editor,
 .monaco-editor-background {
-  background-color: transparent !important;
+  @apply !bg-transparent
 }
 
 .monaco-editor .mtk6,
 .monaco-editor .mtk20,
 .monaco-editor .mtk8 {
-  color: #546478 !important;
+  @apply !text-muted-foreground
 }
 
 .dark .monaco-editor .mtk5,
 .dark .monaco-editor .mtk8 {
-  color: #aab2bd !important;
+  @apply !text-muted-foreground
 }
 
 .copy-button {

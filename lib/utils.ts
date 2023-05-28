@@ -19,3 +19,17 @@ export function cn(...inputs: ClassValue[]) {
 export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
 }
+
+export const generateUniqueChars = (length: number) => {
+  var chars = "abcdefghijklmnopqrstuvwxyz"
+  var uniqueChars = ""
+
+  while (uniqueChars.length < length) {
+    var randomChar = chars.charAt(Math.floor(Math.random() * chars.length))
+    if (uniqueChars.indexOf(randomChar) === -1) {
+      uniqueChars += randomChar
+    }
+  }
+
+  return uniqueChars
+}

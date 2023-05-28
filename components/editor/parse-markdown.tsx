@@ -174,6 +174,21 @@ function ParseMarkdown({
         controls
       />
     ),
+    code({ inline, className, children, ...props }: ComponentTypes) {
+      const match = /language-(\w+)/.exec(className || "")
+      return !inline && match ? (
+        <CodeBlock
+          value={String(children).replace(/\n$/, "")}
+          language={match[1]}
+          {...props}
+          copyable={codeCopyable}
+        />
+      ) : (
+        <code {...props} className={cn("rounded-sm border px-1 py-0.5", className)}>
+          {children}
+        </code>
+      )
+    },
   }
 
   return (
@@ -182,24 +197,6 @@ function ParseMarkdown({
       rehypePlugins={[rehypeRaw, rehypeSlug, rehypeAutolinkHeadings]}
       components={{
         ...components,
-        code({ inline, className, children, ...props }) {
-          const match = /language-(\w+)/.exec(className || "")
-          return !inline && match ? (
-            <CodeBlock
-              value={String(children).replace(/\n$/, "")}
-              language={match[1]}
-              {...props}
-              copyable={codeCopyable}
-            />
-          ) : (
-            <code
-              {...props}
-              className={cn("rounded-sm border px-1", className)}
-            >
-              {children}
-            </code>
-          )
-        },
       }}
     >
       {code}

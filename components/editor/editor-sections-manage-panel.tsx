@@ -121,7 +121,7 @@ function EditorSectionsPanel() {
           setEditorActiveSection(Number(value))
         }}
       >
-        <SelectTrigger className="relative w-[220px]">
+        <SelectTrigger className="relative w-[160px] lg:w-[220px]">
           <SelectValue placeholder={activeSectionName} />
         </SelectTrigger>
         <SelectContent>

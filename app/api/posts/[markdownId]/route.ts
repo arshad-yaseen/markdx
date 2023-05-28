@@ -3,7 +3,7 @@ import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import { getCurrentUser } from "@/lib/session"
+import { redis } from "@/lib/redis"
 import { postPatchSchema } from "@/lib/validations/post"
 
 const routeContextSchema = z.object({
@@ -50,7 +50,12 @@ export async function GET(
   try {
     // Validate the route params.
     const { params } = routeContextSchema.parse(context)
-    const user = await getCurrentUser()
+    const cacheKey = `markdownPost:${params.markdownId}`
+    const cachedData = await redis.get(cacheKey)
+
+    if (cachedData) {
+      return new Response(JSON.stringify(JSON.parse(cachedData)))
+    }
 
     // Check if the user has access to this post.
     if (!(await verifyCurrentUserHasAccessToPost(params.markdownId))) {
@@ -61,7 +66,6 @@ export async function GET(
     const markdownPost = await db.markdownPost.findMany({
       where: {
         markdownId: params.markdownId,
-        userId: (user as any).id,
       },
       select: {
         postCodes: true,
@@ -73,7 +77,7 @@ export async function GET(
       },
     })
 
-    return new Response(JSON.stringify(markdownPost))
+    return new Response(JSON.stringify(markdownPost[0]))
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
@@ -114,7 +118,7 @@ export async function PATCH(
       },
     })
 
-    await db.markdownPost.update({
+    const updatedData = await db.markdownPost.update({
       where: {
         markdownId: params.markdownId,
       },
@@ -123,7 +127,19 @@ export async function PATCH(
           create: markdown_post.postCodes, // Place new array
         },
       },
+      select: {
+        postCodes: true,
+        createdAt: true,
+        userId: true,
+        id: true,
+        markdownId: true,
+        updatedAt: true,
+      },
     })
+
+    const cacheKey = `markdownPost:${params.markdownId}`
+
+    redis.set(cacheKey, JSON.stringify(updatedData))
 
     return new Response(null, { status: 200 })
   } catch (error) {

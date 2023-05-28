@@ -8,7 +8,7 @@ import { useAtom } from "jotai"
 import { Loader2Icon, PlusIcon } from "lucide-react"
 
 import { defaultEditorContent } from "@/config/editor"
-import { cn } from "@/lib/utils"
+import { cn, generateUniqueChars } from "@/lib/utils"
 import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
 
 import {
@@ -50,7 +50,7 @@ export function PostCreateButton({
       },
       body: JSON.stringify({
         code: defaultEditorContent,
-        markdown_id: Math.random().toString(36).substring(2, 15), // generating random string
+        markdown_id: generateUniqueChars(15),
       }),
     })
 

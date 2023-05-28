@@ -26,7 +26,7 @@ function SiteHeader({ user }: SiteHeaderProps) {
           href={user ? "/dashboard" : "/login"}
           className={cn(buttonVariants({ variant: "secondary" }), "")}
         >
-          {user ? "Go to dashboard" : "Login"}
+          {user ? "Dashboard" : "Login"}
         </Link>
       </div>
     </header>

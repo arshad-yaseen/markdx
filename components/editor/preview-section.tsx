@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 
 import EditorSkeleton from "./skeleton"
 
-const BORDER_SIZE = 32
+const BORDER_SIZE = 4
 
 function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
   const previewSectionRef = useRef<HTMLDivElement | null>(null)
@@ -22,6 +22,7 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
     }
 
     const handleMouseDown = (e: MouseEvent) => {
+      e.preventDefault();
       if (e.offsetX < BORDER_SIZE) {
         mPos.current = e.x
         document.addEventListener("mousemove", resize)
@@ -46,9 +47,9 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
   return (
     <div
       ref={previewSectionRef}
-      className="preview-section relative flex  h-full w-full flex-col overflow-scroll border-l border-t px-12 py-8 lg:w-[36%]  lg:border-t-0"
+      className="preview-section relative flex  h-full w-full flex-col overflow-scroll border-l border-t px-12 py-8 lg:w-[36%] lg:min-w-[25%]  lg:border-t-0"
     >
-      <div className="absolute left-0 top-0 min-h-full w-8 cursor-ew-resize"></div>
+      <div className="absolute left-0 top-0 min-h-full w-1 cursor-ew-resize"></div>
       {loading && <EditorSkeleton />}
       <ParseMarkdown code={code} />
     </div>

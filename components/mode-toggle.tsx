@@ -1,5 +1,5 @@
 import React from "react"
-import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react"
+import { MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { Button } from "./ui/button"
@@ -39,11 +39,6 @@ function ModeToggle() {
         <DropdownMenuItem onClick={() => toggleTheme("dark")}>
           <span className="flex">
             <MoonIcon className="mr-2 h-4 w-4" /> Dark
-          </span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => toggleTheme("system")}>
-          <span className="flex">
-            <LaptopIcon className="mr-2 h-4 w-4" /> System
           </span>
         </DropdownMenuItem>
       </DropdownMenuContent>

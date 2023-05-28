@@ -15,7 +15,7 @@ export default function Assets() {
   const monacoInstance = useAtomValue(monacoInstanceState)
 
   return (
-    <div className=" relative flex h-[80vh] w-full flex-col">
+    <div className=" relative flex h-[70vh] w-full flex-col">
       <div className=" sticky top-0 z-50 flex w-full items-center">
         <Input
           onChange={(e) => setSearchValue(e.target.value)}
@@ -49,7 +49,7 @@ export default function Assets() {
                   value={asset.code || ""}
                   codeClass="text-xs no-scrollbar"
                   copyable={false}
-                  preClass="hover:border-foreground cursor-pointer transition-all duration-200"
+                  preClass="hover:border-foreground w-52 cursor-pointer transition-all duration-200"
                 />
               </div>
             )

@@ -47,8 +47,10 @@ export default function page({ params }: { params: { id: string } }) {
 
     const markdownPost = await response.json()
 
-    if (markdownPost[0].postCodes.length > 0) {
-      let code = markdownPost[0].postCodes
+    console.log(markdownPost)
+
+    if (markdownPost.postCodes.length > 0) {
+      let code = markdownPost.postCodes
       setEditorCodes(code)
       code
         .filter((code: editorCodeType) => {

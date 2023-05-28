@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import SiteAssets from "../site-assets"
 import EditorNav from "./editor-nav"
-import EditorSectionsPanel from "./editor-sections-panel"
+import EditorSectionsPanel from "./editor-sections-manage-panel"
 
 function EditorHeader() {
   return (

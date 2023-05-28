@@ -48,6 +48,7 @@
     "framer-motion": "^10.12.8",
     "highlight.js": "^11.8.0",
     "install": "^0.13.0",
+    "ioredis": "^5.3.2",
     "jotai": "^2.1.0",
     "lucide-react": "^0.214.0",
     "marked": "^5.0.2",

@@ -3,14 +3,16 @@
 .dark .hljs-title,
 .dark .hljs-function,
 .dark .hljs-attr,
+.dark .hljs-attribute,
 .dark .hljs-section {
-  color: #aab2bd;
+  color: #ffc698;
 }
 .hljs-keyword,
 .hljs-comment,
 .hljs-title,
 .hljs-function,
 .hljs-attr,
+.hljs-attribute,
 .hljs-section {
-  color: #546478;
+  @apply text-muted-foreground;
 }
