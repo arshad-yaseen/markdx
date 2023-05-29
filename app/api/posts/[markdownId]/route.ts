@@ -52,7 +52,7 @@ export async function GET(
     const { params } = routeContextSchema.parse(context)
     const cacheKey = `markdownPost:${params.markdownId}`
     const cachedData = await redis.get(cacheKey)
-
+    
     if (cachedData) {
       return new Response(JSON.stringify(JSON.parse(cachedData)))
     }

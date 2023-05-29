@@ -27,7 +27,7 @@ function ParseMarkdown({
     h1: ({ className, ...props }: ComponentTypes) => (
       <h1
         className={cn(
-          "mt-4 scroll-m-20 text-3xl font-bold tracking-tight",
+          "mt-4 scroll-m-20 font-heading text-3xl font-bold ",
           className
         )}
         {...props}
@@ -36,7 +36,7 @@ function ParseMarkdown({
     h2: ({ className, ...props }: ComponentTypes) => (
       <h2
         className={cn(
-          "mt-10 scroll-m-20 border-b pb-1 text-2xl font-semibold tracking-tight first:mt-0",
+          "mt-10 scroll-m-20 border-b pb-1 font-heading text-2xl font-semibold first:mt-0",
           className
         )}
         {...props}
@@ -198,9 +198,7 @@ function ParseMarkdown({
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkEmoji]}
       rehypePlugins={[rehypeRaw, rehypeSlug, rehypeAutolinkHeadings]}
-      components={{
-        ...components,
-      }}
+      components={components}
     >
       {code}
     </ReactMarkdown>

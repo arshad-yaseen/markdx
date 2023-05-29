@@ -49,7 +49,7 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
       ref={previewSectionRef}
       className="preview-section relative flex  h-full w-full flex-col overflow-scroll border-l border-t px-12 py-8 lg:w-[36%] lg:min-w-[25%]  lg:border-t-0"
     >
-      <div className="absolute left-0 top-0 min-h-full w-1 cursor-ew-resize"></div>
+      <div className="absolute left-0 top-0 h-full w-1 cursor-ew-resize"></div>
       {loading && <EditorSkeleton />}
       <ParseMarkdown code={code} />
     </div>

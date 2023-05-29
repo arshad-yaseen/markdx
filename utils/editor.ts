@@ -41,10 +41,10 @@ export async function uploadFile(
               markdown = `![${fileName}](${url})`
             }
           } else {
-            markdown = `<video controls preload="auto" src="${url.full_short_link3}" />`
+            markdown = `<video controls ><source src="${url.full_short_link3}" type="${selectedFile?.type}"></video>`
 
             if (typeof url === "string") {
-              markdown = `<video controls preload="auto" src="${url}" />`
+              markdown = `<video controls ><source src="${url}" type="${selectedFile?.type}"></video>`
             }
           }
 

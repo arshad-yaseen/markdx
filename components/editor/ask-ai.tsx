@@ -126,7 +126,7 @@ function AskAI() {
           </div>
           <form
             onSubmit={handleChat}
-            className="absolute bottom-0 flex h-32 w-full items-center rounded-lg bg-white px-6"
+            className="absolute bottom-0 flex h-32 w-full items-center rounded-lg bg-background px-6"
           >
             <Input
               autoComplete="off"
@@ -137,7 +137,7 @@ function AskAI() {
               name="user_prompt"
             />
             <button className="absolute right-10 w-fit">
-              <SendIcon className="h-5 w-5 text-gray-400" />
+              <SendIcon className="h-5 w-5 text-muted-foreground" />
             </button>
           </form>
         </DialogContent>
