@@ -83,7 +83,7 @@ function AITools() {
             setGeneratedText("")
           }}
         />
-        <DialogContent className="flex flex-col items-center justify-center space-y-2">
+        <DialogContent className="flex max-h-[600px] flex-col items-center justify-center space-y-2">
           {generatedText ? (
             <CodeBlock
               language="markdown"

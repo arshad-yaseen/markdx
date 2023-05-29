@@ -42,6 +42,7 @@ export default function page({ params }: { params: { id: string } }) {
     })
 
     if (!response?.ok) {
+      // The User dont have a access to this markdown
       return router.push("/")
     }
 

@@ -11,6 +11,7 @@ import {
 import { toast } from "sonner"
 
 import { UnsplashImageResponse } from "types"
+import { useLocalStorage } from "@/hooks/use-localstorage"
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
 import {
   Select,
@@ -35,8 +36,10 @@ interface UnsplashSearchFormData {
 function EditorLeft() {
   const monacoInstance = useAtomValue(monacoInstanceState)
   const [isUploadingFile, setIsUploadingFile] = useState(false)
+  const [isToolsPanelCollapsedStore, setIsToolsPanelCollapsedStore] =
+    useLocalStorage("toolbar-collapse", "false")
   const [isToolsPanelCollapsed, setIsToolsPanelCollapsed] = useState(
-    localStorage.getItem("toolbar-collapse") === "true" ? true : false
+    isToolsPanelCollapsedStore === "true" ? true : false
   )
   const [unsplashDialogOpen, setUnsplashDialogOpen] = useState(false)
   let imageQueries = ["minimalism", "nature", "mountains", "sky", "city"]
@@ -210,10 +213,7 @@ function EditorLeft() {
         <Button
           onClick={() => {
             setIsToolsPanelCollapsed(!isToolsPanelCollapsed)
-            localStorage.setItem(
-              "toolbar-collapse",
-              `${!isToolsPanelCollapsed}`
-            )
+            setIsToolsPanelCollapsedStore(String(!isToolsPanelCollapsed)) // Setting to localStorage
           }}
           variant="outline"
           className="hidden h-8 w-8 items-center justify-center px-0 lg:flex"
