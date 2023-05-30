@@ -6,8 +6,6 @@ import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
-export const runtime = "edge"
-
 const postCreateSchema = z.object({
   code: z.object({
     section: z.string(),
