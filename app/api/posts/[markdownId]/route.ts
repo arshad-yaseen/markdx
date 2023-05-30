@@ -6,7 +6,6 @@ import { db } from "@/lib/db"
 import { redis } from "@/lib/redis"
 import { postPatchSchema } from "@/lib/validations/post"
 
-export const runtime = "edge"
 export const revalidate = 0
 
 const routeContextSchema = z.object({
