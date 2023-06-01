@@ -42,6 +42,7 @@
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "copy-to-clipboard": "^3.3.3",
+    "crypto": "^1.0.1",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
     "eventsource-parser": "^1.0.0",

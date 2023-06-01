@@ -1,3 +1,4 @@
+import crypto from "crypto"
 import { ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -20,16 +21,14 @@ export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
 }
 
-export const generateUniqueChars = (length: number) => {
-  var chars = "abcdefghijklmnopqrstuvwxyz"
-  var uniqueChars = ""
+export function generateUniqueString(length: number) {
+  let uniqueString = Date.now().toString(36)
 
-  while (uniqueChars.length < length) {
-    var randomChar = chars.charAt(Math.floor(Math.random() * chars.length))
-    if (uniqueChars.indexOf(randomChar) === -1) {
-      uniqueChars += randomChar
-    }
-  }
+  uniqueString += Math.random().toString(36).substring(2)
 
-  return uniqueChars
+  uniqueString = crypto.createHash("sha256").update(uniqueString).digest("hex")
+
+  uniqueString = uniqueString.substring(0, length)
+
+  return uniqueString
 }

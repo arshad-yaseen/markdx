@@ -6,9 +6,10 @@ import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
 import { DialogDescription } from "@radix-ui/react-dialog"
 import { useAtom } from "jotai"
 import { Loader2Icon, PlusIcon } from "lucide-react"
+import { toast } from "sonner"
 
 import { defaultEditorContent } from "@/config/editor"
-import { cn, generateUniqueChars } from "@/lib/utils"
+import { cn, generateUniqueString } from "@/lib/utils"
 import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
 
 import {
@@ -50,7 +51,7 @@ export function PostCreateButton({
       },
       body: JSON.stringify({
         code: defaultEditorContent,
-        markdown_id: generateUniqueChars(15),
+        markdown_id: generateUniqueString(15),
       }),
     })
 
@@ -59,6 +60,8 @@ export function PostCreateButton({
     if (!response?.ok) {
       if (response.status === 402) {
         setUpgradeToPRODialog(true)
+      } else if (response.status === 403) {
+        toast.message("Try again")
       }
     }
 

@@ -3,7 +3,10 @@ import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import { RequiresProPlanError } from "@/lib/exceptions"
+import {
+  MarkdownAlreadyExistError,
+  RequiresProPlanError,
+} from "@/lib/exceptions"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
 const postCreateSchema = z.object({
@@ -43,6 +46,8 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions)
+    const json = await req.json()
+    const body = postCreateSchema.parse(json)
 
     if (!session) {
       return new Response("Unauthorized", { status: 403 })
@@ -59,14 +64,19 @@ export async function POST(req: Request) {
           userId: user.id,
         },
       })
+      const markdownCount = await db.markdownPost.count({
+        where: {
+          userId: user.id,
+          markdownId: body.markdown_id,
+        },
+      })
 
       if (count >= 2) {
         throw new RequiresProPlanError()
+      } else if (markdownCount > 0) {
+        throw new MarkdownAlreadyExistError()
       }
     }
-
-    const json = await req.json()
-    const body = postCreateSchema.parse(json)
 
     const post = await db.markdownPost.create({
       data: {
@@ -89,6 +99,8 @@ export async function POST(req: Request) {
 
     if (error instanceof RequiresProPlanError) {
       return new Response("Requires Pro Plan", { status: 402 })
+    } else if (error instanceof MarkdownAlreadyExistError) {
+      return new Response("Markdown ID Already Exist", { status: 403 })
     }
 
     return new Response(null, { status: 500 })
