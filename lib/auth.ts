@@ -8,7 +8,7 @@ import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
 
-const postmarkClient = new Client(env.POSTMARK_API_TOKEN)
+const postmarkClient = new Client(env.POSTMARK_API_TOKEN || "fallback_token")
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db as any),

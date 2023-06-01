@@ -14,7 +14,7 @@ export const env = createEnv({
     SMTP_PORT: z.string().optional(),
     SMTP_USER: z.string().optional(),
     SMTP_PASSWORD: z.string().optional(),
-    POSTMARK_API_TOKEN: z.string().min(1),
+    POSTMARK_API_TOKEN: z.string().optional(),
     POSTMARK_SIGN_IN_TEMPLATE: z.string().optional(),
     POSTMARK_ACTIVATION_TEMPLATE: z.string().optional(),
     NEXTAUTH_URL: z.string().url().optional(),
