@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth"
 import * as z from "zod"
 
+import { env } from "@/env.mjs"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { redis } from "@/lib/redis"
@@ -52,11 +53,14 @@ export async function GET(
   try {
     // Validate the route params.
     const { params } = routeContextSchema.parse(context)
-    const cacheKey = `markdownPost:${params.markdownId}`
-    const cachedData = await redis.get(cacheKey)
 
-    if (cachedData) {
-      return new Response(JSON.stringify(JSON.parse(cachedData)))
+    if (env.REDIS_URL) {
+      const cacheKey = `markdownPost:${params.markdownId}`
+      const cachedData = await redis.get(cacheKey)
+
+      if (cachedData) {
+        return new Response(JSON.stringify(JSON.parse(cachedData)))
+      }
     }
 
     // Check if the user has access to this post.
@@ -141,7 +145,9 @@ export async function PATCH(
 
     const cacheKey = `markdownPost:${params.markdownId}`
 
-    redis.set(cacheKey, JSON.stringify(updatedData))
+    if (env.REDIS_URL) {
+      redis.set(cacheKey, JSON.stringify(updatedData))
+    }
 
     return new Response(null, { status: 200 })
   } catch (error) {

@@ -4,6 +4,7 @@ import { marked } from "marked"
 import { OpenAIBody, UploadResponse, monacoInstanceType } from "types"
 import { editorConfig, shortcuts } from "@/config/editor"
 import { cloudinaryUpload } from "@/lib/apiClient"
+import { env } from "@/env.mjs"
 
 export const markdownto = {
   html: (markdown: string) => marked.parse(markdown),
@@ -14,6 +15,11 @@ export async function uploadFile(
   event: ChangeEvent<HTMLInputElement>
 ): Promise<UploadResponse> {
   return new Promise<UploadResponse>((resolve, reject) => {
+
+    if(!env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || !env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET){
+      reject({ message: "Invalid Cloudinary ENV Variables" })
+    }
+
     const selectedFile = event.target.files?.[0]
     const fileName = selectedFile?.name.split(".")[0] || ""
     const isImage = selectedFile?.type.includes("image")
