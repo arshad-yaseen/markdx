@@ -26,14 +26,11 @@ export const env = createEnv({
     REDIS_URL: z.string().optional(),
   },
   client: {
-    NEXT_PUBLIC_GITHUB_ACCESS_TOKEN: z.string().optional(),
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().optional(),
     NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: z.string().optional(),
     NEXT_PUBLIC_APP_URL: z.string().min(1),
   },
   runtimeEnv: {
-    NEXT_PUBLIC_GITHUB_ACCESS_TOKEN:
-      process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN,
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET:

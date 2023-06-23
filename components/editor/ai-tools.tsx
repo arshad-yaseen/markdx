@@ -12,7 +12,7 @@ import { OpenAICreateChat } from "@/utils/editor"
 
 import { OpenAIBody } from "types"
 import { AIConfig } from "@/config/editor"
-import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,12 +77,6 @@ function AITools() {
   return (
     <>
       <Dialog open={isDialogOpen}>
-        <DialogOverlay
-          onClick={() => {
-            setIsDialogOpen(false)
-            setGeneratedText("")
-          }}
-        />
         <DialogContent className="flex max-h-[600px] flex-col items-center justify-center space-y-2">
           {generatedText ? (
             <CodeBlock

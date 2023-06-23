@@ -13,7 +13,6 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog"
@@ -145,7 +144,6 @@ function EditorSectionsPanel() {
       </Select>
       <div>
         <Dialog open={dialogOpen}>
-          <DialogOverlay onClick={() => setDialogOpen(false)} />
           <DialogTrigger asChild>
             <Button
               variant="outline"
@@ -197,7 +195,6 @@ function EditorSectionsPanel() {
       </div>
       <div className="hidden items-center lg:flex">
         <Dialog open={renameDialogOpen}>
-          <DialogOverlay onClick={() => setRenameDialogOpen(false)} />
           <DialogTrigger asChild>
             <Button
               variant="outline"

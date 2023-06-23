@@ -3,12 +3,7 @@ import { env } from "@/env.mjs"
 
 export const getRepo = async (owner: string, repo: string) => {
   const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-    headers: {
-      Authorization: env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN!,
-    },
-    next: {
-      revalidate: 60,
-    },
+    cache: "no-store",
   })
   const data = await res.json()
 

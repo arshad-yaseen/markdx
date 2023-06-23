@@ -4,7 +4,7 @@ import { MoreHorizontalIcon, SendIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { ChatType, OpenAIBody } from "types"
-import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -103,7 +103,6 @@ function AskAI() {
   return (
     <div>
       <Dialog open={isDialogOpen}>
-        <DialogOverlay onClick={() => setIsDialogOpen(false)} />
         <DialogContent className="h-[600px] px-8 pb-32 text-sm">
           <div
             ref={chatWrapper}

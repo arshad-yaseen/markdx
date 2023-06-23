@@ -3,7 +3,6 @@ import { CommandIcon } from "lucide-react"
 import {
   Dialog,
   DialogContent,
-  DialogOverlay,
   DialogTrigger,
 } from "@/components/ui/dialog"
 
@@ -15,7 +14,6 @@ function EditorKbdShortcuts() {
 
   return (
     <Dialog>
-      <DialogOverlay />
       <DialogTrigger asChild>
         <Button
           variant="ghost"

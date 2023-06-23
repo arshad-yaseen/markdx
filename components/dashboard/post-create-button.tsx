@@ -16,7 +16,6 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogOverlay,
   DialogTitle,
 } from "../ui/dialog"
 
@@ -76,7 +75,6 @@ export function PostCreateButton({
   return (
     <>
       <Dialog open={upgradeToPRODialog}>
-        <DialogOverlay onClick={() => setUpgradeToPRODialog(false)} />
         <DialogContent className="flex flex-col items-center">
           <DialogHeader>
             <DialogTitle className="text-2xl">Upgrade to PRO</DialogTitle>

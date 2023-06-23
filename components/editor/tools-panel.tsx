@@ -12,7 +12,7 @@ import { toast } from "sonner"
 
 import { UnsplashImageResponse } from "types"
 import { useLocalStorage } from "@/hooks/use-localstorage"
-import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import {
   Select,
   SelectContent,
@@ -132,7 +132,6 @@ function EditorLeft() {
                 />
               </Button>
               <Dialog open={unsplashDialogOpen}>
-                <DialogOverlay onClick={() => setUnsplashDialogOpen(false)} />
                 <Button
                   variant="outline"
                   className="relative flex w-full justify-center px-6 "

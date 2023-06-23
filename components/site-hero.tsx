@@ -11,7 +11,7 @@ import { Button } from "./ui/button"
 function SiteHero() {
   return (
     <section className="flex w-full flex-col items-center ">
-      <h1 className="animate-fade-up mt-12 bg-gradient-to-br from-black to-stone-600 bg-clip-text px-6 text-center font-heading  text-3xl text-transparent drop-shadow-sm sm:text-5xl lg:text-6xl">
+      <h1 className="animate-fade-up mt-12 px-6 text-center font-heading  text-3xl drop-shadow-sm sm:text-5xl lg:text-6xl">
         Make standard Markdown <br /> more powerful with AI.
       </h1>
       <p className="mt-7 max-w-[30rem] px-6 text-center leading-normal text-muted-foreground sm:text-[1.20rem] sm:leading-8">
