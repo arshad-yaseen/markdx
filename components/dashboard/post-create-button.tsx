@@ -12,12 +12,7 @@ import { defaultEditorContent } from "@/config/editor"
 import { cn, generateUniqueString } from "@/lib/utils"
 import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "../ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
 
 interface PostCreateButtonProps extends ButtonProps {}
 
