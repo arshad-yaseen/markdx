@@ -7,6 +7,9 @@ const nextConfig = {
   images: {
     domains: ["images.unsplash.com", "avatars.githubusercontent.com"],
   },
+  experimental: {
+    serverActions: true,
+  }
 }
 
 export default nextConfig
