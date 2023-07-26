@@ -21,9 +21,8 @@ function SiteAssets({
   }, [currentTheme])
 
   return type === "icon" ? (
-    <Image
+    <img
       src={`/logos/markdx-${theme === "dark" ? "white" : "black"}.svg`}
-      priority
       alt="logo"
       className={cn("", className)}
       width={30}
