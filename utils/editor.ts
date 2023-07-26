@@ -52,7 +52,7 @@ export async function uploadFile(
             markdown = `<video controls ><source src="${url.full_short_link3}" type="${selectedFile?.type}"></video>`
 
             if (typeof url === "string") {
-              markdown = `<video controls ><source src="${url}" type="${selectedFile?.type}"></video>`
+              markdown = `<video controls ><source src="${url}" type="video/mp4"></video>`
             }
           }
 
