@@ -26,7 +26,7 @@ function DashboardHeader({ user }: UserAccountNavProps) {
       <div className={`flex h-full w-1/2 items-center`}>
         <Link href="/dashboard" className="flex items-center">
           <SiteAssets type="icon" />
-          <h4 className="ml-2 font-heading text-lg font-bold">MarkDX</h4>
+          <h4 className="ml-2 font-heading text-lg">MarkDX</h4>
         </Link>
       </div>
 

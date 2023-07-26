@@ -11,7 +11,7 @@ function EditorHeader() {
       <div className="hidden h-full w-[18%] items-center px-6 lg:flex">
         <Link href="/dashboard" className="flex items-center">
           <SiteAssets type="icon" />
-          <h4 className="ml-2 font-heading text-xl font-bold">Editor</h4>
+          <h4 className="ml-2 font-heading text-xl">Editor</h4>
         </Link>
       </div>
       <div className="flex h-full w-full items-center justify-center lg:w-[46%]">

@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
+import { markdownLimit } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import {
@@ -71,7 +72,7 @@ export async function POST(req: Request) {
         },
       })
 
-      if (count >= 2) {
+      if (count >= markdownLimit) {
         throw new RequiresProPlanError()
       } else if (markdownCount > 0) {
         throw new MarkdownAlreadyExistError()

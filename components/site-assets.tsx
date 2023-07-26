@@ -25,16 +25,16 @@ function SiteAssets({
       src={`/logos/markdx-${theme === "dark" ? "white" : "black"}.svg`}
       priority
       alt="logo"
-      className={cn("h-8 w-auto", className)}
-      width={"0"}
-      height={"0"}
+      className={cn("", className)}
+      width={30}
+      height={30}
     />
   ) : type === "hero-image" ? (
     <Image
       src={`/markdx-editor-frame-${theme === "dark" ? "dark" : "light"}.png`}
       priority
       alt="hero"
-      className={cn("absolute h-auto  w-auto lg:-top-24", className)}
+      className={cn("absolute lg:-top-24", className)}
       width={1000}
       height={1000}
     />

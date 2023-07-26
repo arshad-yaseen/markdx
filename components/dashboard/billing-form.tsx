@@ -54,8 +54,8 @@ export function BillingForm({
 
   return (
     <form className={cn(className)} onSubmit={onSubmit} {...props}>
-      <Card className="relative">
-        <Badge variant="outline" className="absolute right-5 top-4">
+      <Card className="relative p-4">
+        <Badge variant="outline" className="absolute right-4 top-4">
           {subscriptionPlan.name} plan
         </Badge>
         <CardHeader>

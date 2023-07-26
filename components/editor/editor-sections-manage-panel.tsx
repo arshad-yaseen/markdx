@@ -143,7 +143,7 @@ function EditorSectionsPanel() {
         </SelectContent>
       </Select>
       <div>
-        <Dialog open={dialogOpen}>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button
               variant="outline"
@@ -194,7 +194,7 @@ function EditorSectionsPanel() {
         </Dialog>
       </div>
       <div className="hidden items-center lg:flex">
-        <Dialog open={renameDialogOpen}>
+        <Dialog open={renameDialogOpen} onOpenChange={setRenameDialogOpen}>
           <DialogTrigger asChild>
             <Button
               variant="outline"
@@ -221,6 +221,7 @@ function EditorSectionsPanel() {
                     setInputFilled(false)
                   }
                 }}
+                defaultValue={editorCodes![editorActiveSection]?.section}
                 placeholder="New name"
                 className="mt-4 w-full"
               />

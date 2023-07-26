@@ -11,20 +11,20 @@ import { Button } from "./ui/button"
 function SiteHero() {
   return (
     <section className="flex w-full flex-col items-center ">
-      <h1 className="animate-fade-up mt-12 px-6 text-center font-heading  text-3xl drop-shadow-sm sm:text-5xl lg:text-6xl">
+      <h1 className="animate-fade-up mt-12 px-6 text-center font-heading  text-4xl drop-shadow-sm sm:text-5xl lg:text-6xl">
         Make standard Markdown <br /> more powerful with AI.
       </h1>
       <p className="mt-7 max-w-[30rem] px-6 text-center leading-normal text-muted-foreground sm:text-[1.20rem] sm:leading-8">
         MarkDX is a Markdown editor that uses AI to make your Markdown standard.
       </p>
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-col items-center sm:flex-row sm:space-x-4">
         <Link href="/dashboard">
-          <Button size="lg" className="mt-12">
-            Start writing
+          <Button size="lg" className="mb-4 mt-10 sm:mb-0 sm:mt-12">
+            Start writing for free
           </Button>
         </Link>
         <Link href={githubRepo} target="_blank">
-          <Button variant="outline" size="lg" className="mt-12">
+          <Button variant="outline" size="lg" className="sm:mt-12">
             <Icons.gitHub className="mr-2 h-4 w-4" /> Github
           </Button>
         </Link>

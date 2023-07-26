@@ -17,7 +17,7 @@ function SiteHeader({ user }: SiteHeaderProps) {
       <div className={`flex h-full w-1/2 items-center`}>
         <Link href="/" className="flex items-center">
           <SiteAssets type="icon" />
-          <h4 className="ml-2 font-heading text-xl font-bold">MarkDX</h4>
+          <h4 className="ml-2 font-heading text-xl">MarkDX</h4>
         </Link>
       </div>
 

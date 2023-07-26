@@ -102,7 +102,7 @@ function AskAI() {
 
   return (
     <div>
-      <Dialog open={isDialogOpen}>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="h-[600px] px-8 pb-32 text-sm">
           <div
             ref={chatWrapper}

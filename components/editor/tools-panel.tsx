@@ -131,7 +131,10 @@ function EditorLeft() {
                   accept="image/*,video/*"
                 />
               </Button>
-              <Dialog open={unsplashDialogOpen}>
+              <Dialog
+                open={unsplashDialogOpen}
+                onOpenChange={setUnsplashDialogOpen}
+              >
                 <Button
                   variant="outline"
                   className="relative flex w-full justify-center px-6 "
