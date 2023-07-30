@@ -5,6 +5,7 @@ import {
   OpenAIStream,
   OpenAIStreamPayload,
 } from "../../../utils/openai/OpenAIStream"
+import { openai_model } from "@/config/editor"
 
 if (!env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI")
@@ -28,7 +29,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const payload: OpenAIStreamPayload = {
-    model: "gpt-3.5-turbo",
+    model: openai_model,
     messages: [
       { role: "system", content: prompt.system },
       { role: "user", content: prompt.user },

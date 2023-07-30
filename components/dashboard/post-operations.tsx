@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
 import { MarkdownPost } from "@prisma/client"
 import { useAtom } from "jotai"
-import { Loader2Icon, MoreVerticalIcon, TrashIcon } from "lucide-react"
+import { Loader, MoreVerticalIcon, TrashIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import {
@@ -115,7 +115,7 @@ export function PostOperations({ post }: PostOperationsProps) {
               className="bg-red-600 focus:ring-red-600"
             >
               {isDeleteLoading ? (
-                <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                <Loader className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <TrashIcon className="mr-2 h-4 w-4" />
               )}

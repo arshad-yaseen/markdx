@@ -157,10 +157,10 @@ export const handleShortCut = (
 }
 
 export const getTitle = (markdown: string = "") => {
-  const regex = /^# (.+)/m // Matches the first line starting with a '# ' across multiple lines
+  const regex = /^(#{1,6}) (.+)/m // Matches lines starting with 1 to 6 hashes followed by a space across multiple lines
 
   const match = markdown.match(regex)
-  const heading = match ? match[1] : null // Extract the captured heading text
+  const heading = match ? match[2] : null // Extract the captured heading text
 
   return heading
 }

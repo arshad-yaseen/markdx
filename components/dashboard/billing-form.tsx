@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Loader2Icon } from "lucide-react"
+import { Loader } from "lucide-react"
 import { toast } from "sonner"
 
 import { UserSubscriptionPlan } from "types"
@@ -54,7 +54,7 @@ export function BillingForm({
 
   return (
     <form className={cn(className)} onSubmit={onSubmit} {...props}>
-      <Card className="relative p-4">
+      <Card className="relative">
         <Badge variant="outline" className="absolute right-4 top-4">
           {subscriptionPlan.name} plan
         </Badge>
@@ -77,7 +77,7 @@ export function BillingForm({
             className={cn(buttonVariants())}
             disabled={isLoading}
           >
-            {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
             {subscriptionPlan.isPro ? "Manage Subscription" : "Upgrade to PRO"}
           </button>
           {subscriptionPlan.isPro ? (

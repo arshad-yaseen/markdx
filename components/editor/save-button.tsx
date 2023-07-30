@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
-import { Loader2Icon } from "lucide-react"
+import { Loader } from "lucide-react"
 import { toast } from "sonner"
 
 import { PostCodesType } from "types"
@@ -49,6 +49,7 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
   return (
     <Button
       disabled={isSaving}
+      variant={isSaving ? "outline" : "default"}
       ref={saveButtonRef}
       onClick={async () => {
         onSave()
@@ -64,7 +65,7 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
       }}
       className="mr-4"
     >
-      {isSaving && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}{" "}
+      {isSaving && <Loader className="mr-2 h-4 w-4 animate-spin" />}{" "}
       {isSaving ? "Saving" : "Save"}
     </Button>
   )

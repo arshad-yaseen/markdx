@@ -9,6 +9,7 @@ export const defaultEditorContent = {
   section: "Introduction",
   content: `# Project Title\n\nA brief description of what this project does.`,
 }
+export const openai_model = "gpt-3.5-turbo-16k-0613"
 
 export const AIConfig: AIConfigType = {
   prompts: [

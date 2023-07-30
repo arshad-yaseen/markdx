@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
 import { DialogDescription } from "@radix-ui/react-dialog"
 import { useAtom } from "jotai"
-import { Loader2Icon, PlusIcon } from "lucide-react"
+import { Loader, PlusIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { defaultEditorContent } from "@/config/editor"
@@ -111,7 +111,7 @@ export function PostCreateButton({
         {...props}
       >
         {isLoading ? (
-          <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+          <Loader className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <PlusIcon className="mr-2 h-4 w-4" />
         )}
