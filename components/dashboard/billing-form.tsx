@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Loader } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { UserSubscriptionPlan } from "types"
@@ -77,7 +77,7 @@ export function BillingForm({
             className={cn(buttonVariants())}
             disabled={isLoading}
           >
-            {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {subscriptionPlan.isPro ? "Manage Subscription" : "Upgrade to PRO"}
           </button>
           {subscriptionPlan.isPro ? (

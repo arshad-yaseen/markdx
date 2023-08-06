@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai"
 import {
   ChevronLeftIcon,
   ImageIcon,
-  Loader,
+  Loader2,
   SearchIcon,
 } from "lucide-react"
 import { toast } from "sonner"
@@ -121,7 +121,7 @@ function EditorLeft() {
                 className="relative"
               >
                 {isUploadingFile && (
-                  <Loader className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}{" "}
                 {isUploadingFile ? "Uploading" : "Upload"} file
                 <Input

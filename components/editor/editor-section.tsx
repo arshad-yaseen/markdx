@@ -64,6 +64,9 @@ function EditorSection({
             top: 48,
             bottom: 650,
           },
+          cursorSmoothCaretAnimation: "on",
+          cursorBlinking: "smooth",
+          dragAndDrop: true,
         }}
         className="px-14"
       />
