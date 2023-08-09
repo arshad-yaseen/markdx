@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { monacoInstanceState } from "@/atoms/editor"
 import { listLanguages } from "@/utils/world-languages"
 import { useAtomValue } from "jotai"
-import { MoreHorizontalIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import "@/styles/mdx.css"
@@ -77,21 +76,25 @@ function AITools() {
   return (
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="flex max-h-[600px] flex-col items-center justify-center space-y-2">
+        <DialogContent className="flex max-h-[700px]  w-[800px] flex-col items-center space-y-2 p-6">
           {generatedText ? (
             <CodeBlock
               language="markdown"
               value={generatedText}
               codeWrap
               preClass="border-none"
+              codeClass="text-[0.880rem]"
+              noCodeFont
             />
           ) : (
-            <MoreHorizontalIcon className="h-3 w-3 animate-ping" />
+            <p className="text-sm text-muted-foreground">
+              {requestingToAPI ? "thinking..." : "No text generated"}
+            </p>
           )}
         </DialogContent>
       </Dialog>
 
-      <div className="space-y-4">
+      <div className="space-y-2">
         <Button
           onClick={() => {
             setGeneratedText("")
@@ -113,7 +116,7 @@ function AITools() {
             }
           }}
           variant="outline"
-          className="flex w-full justify-center px-6  "
+          className="flex h-10 w-full justify-center px-6  "
         >
           Standardize
         </Button>
@@ -142,7 +145,7 @@ function AITools() {
             }
           }}
           variant="outline"
-          className="flex w-full justify-center px-6 "
+          className="flex h-10 w-full justify-center px-6 "
         >
           Make short
         </Button>
@@ -169,7 +172,7 @@ function AITools() {
             }
           }}
           variant="outline"
-          className="flex w-full justify-center px-6 "
+          className="flex h-10 w-full justify-center px-6 "
         >
           Explain
         </Button>
@@ -196,7 +199,7 @@ function AITools() {
             }
           }}
           variant="outline"
-          className="flex w-full justify-center px-6 "
+          className="flex h-10 w-full justify-center px-6 "
         >
           Document code
         </Button>
@@ -267,7 +270,7 @@ function AITools() {
             }
           }}
           variant="outline"
-          className="flex w-full justify-center px-6 "
+          className="flex h-10 w-full justify-center px-6 "
         >
           Correct grammar
         </Button>

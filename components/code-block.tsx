@@ -13,6 +13,7 @@ function CodeBlock({
   copyable = true,
   codeWrap = false,
   copyOnHover = false,
+  noCodeFont = false,
 }: {
   language: string
   value: string
@@ -21,6 +22,7 @@ function CodeBlock({
   copyable?: boolean
   codeWrap?: boolean
   copyOnHover?: boolean
+  noCodeFont?: boolean
 }) {
   value = value || ""
   hljs.getLanguage(language) ? (language = language) : (language = "plaintext")
@@ -52,7 +54,9 @@ function CodeBlock({
       <code
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
         className={cn(
-          `hljs ${language} no-scrollbar min-w-full overflow-x-scroll  px-4 py-3 text-sm`,
+          `hljs ${language} no-scrollbar min-w-full overflow-x-scroll  px-4 py-3 text-sm ${
+            !noCodeFont ? "jetbrains" : ""
+          }`,
           codeClass
         )}
       ></code>

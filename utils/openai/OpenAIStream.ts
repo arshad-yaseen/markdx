@@ -40,6 +40,12 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
     body: JSON.stringify(payload),
   })
 
+  if (!res.ok) {
+    console.log(res.statusText)
+
+    throw new Error(`OpenAI API error: ${res.statusText}`)
+  }
+
   const stream = new ReadableStream({
     async start(controller) {
       // callback

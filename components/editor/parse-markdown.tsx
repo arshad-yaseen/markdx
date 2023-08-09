@@ -19,9 +19,11 @@ interface ComponentTypes {
 function ParseMarkdown({
   code,
   codeCopyable = false,
+  codeClass = "",
 }: {
   code: string
   codeCopyable?: boolean
+  codeClass?: string
 }) {
   const components = {
     h1: ({ className, ...props }: ComponentTypes) => (
@@ -182,6 +184,7 @@ function ParseMarkdown({
           language={match[1]}
           {...props}
           copyable={codeCopyable}
+          codeClass={codeClass}
         />
       ) : (
         <code

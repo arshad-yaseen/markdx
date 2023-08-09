@@ -1,6 +1,6 @@
 import React, { FormEvent, useRef, useState } from "react"
 import { OpenAICreateChat } from "@/utils/editor"
-import { MoreHorizontalIcon, SendIcon } from "lucide-react"
+import { MoreHorizontalIcon, SendIcon, SparklesIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { ChatType, OpenAIBody } from "types"
@@ -103,7 +103,7 @@ function AskAI() {
   return (
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="h-[600px] px-8 pb-32 text-sm">
+        <DialogContent className="h-[600px] px-8 pb-32 pt-2 text-sm">
           <div
             ref={chatWrapper}
             className="no-scrollbar w-full flex-1 flex-col overflow-scroll"
@@ -114,7 +114,11 @@ function AskAI() {
                   <div className="mt-5 flex w-full items-center border-b py-3">
                     {chat.user}
                   </div>
-                  <ParseMarkdown codeCopyable code={chat.ai} />
+                  <ParseMarkdown
+                    codeCopyable
+                    code={chat.ai}
+                    codeClass="text-[0.890rem]"
+                  />
                   {AIThinking && (
                     <MoreHorizontalIcon className="mt-6 h-4 w-4 animate-pulse" />
                   )}
@@ -144,9 +148,9 @@ function AskAI() {
 
       <Button
         onClick={() => setIsDialogOpen(true)}
-        className="flex w-full justify-center px-6 "
+        className="flex h-10 w-full justify-center px-6 "
       >
-        Ask AI to write
+        <SparklesIcon className="mr-2 h-4 w-4" /> Ask AI to write
       </Button>
     </div>
   )

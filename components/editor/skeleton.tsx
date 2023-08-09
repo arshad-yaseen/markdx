@@ -11,10 +11,13 @@ interface EditorSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 
 function EditorSkeleton({ props, className }: EditorSkeletonProps) {
   return (
-    <div className={cn("absolute top-0 w-full py-12", className)} {...props}>
-      <Skeleton className="h-4 w-2/5" />
-      <Skeleton className="mt-2 h-4 w-[60%]" />
-      <Skeleton className="mt-2 h-4 w-[60%]" />
+    <div
+      className={cn("absolute top-0 w-full space-y-2 py-12", className)}
+      {...props}
+    >
+      <Skeleton className="h-6 w-2/5" />
+      <Skeleton className="h-8 w-[60%]" />
+      <Skeleton className="h-8 w-[60%]" />
     </div>
   )
 }

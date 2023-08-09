@@ -75,7 +75,10 @@
   src: url("../assets/fonts/JetBrainsMono-Regular.ttf");
 }
 
-pre code,
+.jetbrains {
+  font-family: "JetBrains-Regular", ui-monospace, monospace;
+}
+
 .monaco-editor span {
   font-family: "JetBrains-Regular", ui-monospace, monospace;
 }

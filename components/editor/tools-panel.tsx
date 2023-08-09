@@ -2,12 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { monacoInstanceState } from "@/atoms/editor"
 import { editorAction, uploadFile } from "@/utils/editor"
 import { useAtomValue } from "jotai"
-import {
-  ChevronLeftIcon,
-  ImageIcon,
-  Loader2,
-  SearchIcon,
-} from "lucide-react"
+import { ChevronLeftIcon, ImageIcon, Loader2, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { UnsplashImageResponse } from "types"
@@ -114,11 +109,11 @@ function EditorLeft() {
           <TabsContent value="tools">
             <AITools />
             <hr className="my-4" />
-            <div className="flex w-full flex-1 flex-col justify-end space-y-4 py-2">
+            <div className="flex w-full flex-1 flex-col justify-end space-y-2 py-2">
               <Button
                 disabled={isUploadingFile}
                 variant="outline"
-                className="relative"
+                className="relative h-10"
               >
                 {isUploadingFile && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -127,7 +122,7 @@ function EditorLeft() {
                 <Input
                   onChange={handleUploadFile}
                   type="file"
-                  className="absolute h-fit w-fit opacity-0"
+                  className="absolute h-fit w-fit cursor-pointer opacity-0"
                   accept="image/*,video/*"
                 />
               </Button>
@@ -137,7 +132,7 @@ function EditorLeft() {
               >
                 <Button
                   variant="outline"
-                  className="relative flex w-full justify-center px-6 "
+                  className="relative flex h-10 w-full justify-center px-6"
                   onClick={() => {
                     setUnsplashDialogOpen(true)
                     if (unsplashImages.length > 0) return

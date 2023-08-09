@@ -51,7 +51,7 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
     >
       <div className="absolute left-0 top-0 h-full w-1 cursor-ew-resize"></div>
       {loading && <EditorSkeleton />}
-      <ParseMarkdown code={code} />
+      <ParseMarkdown code={code} codeCopyable />
     </div>
   )
 }

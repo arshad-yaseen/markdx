@@ -201,6 +201,7 @@ function EditorSectionsPanel() {
               onClick={() => {
                 setRenameDialogOpen(true)
               }}
+              size="icon"
             >
               <Edit2Icon className="h-3.5 w-3.5" />
             </Button>
@@ -251,7 +252,8 @@ function EditorSectionsPanel() {
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           variant="outline"
-          className="ml-3 px-3"
+          className="ml-2"
+          size="icon"
         >
           <XIcon className="h-4 w-4" />
         </Button>

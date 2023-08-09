@@ -1,11 +1,11 @@
 import { OpenAIBody } from "types"
 import { env } from "@/env.mjs"
+import { openai_model } from "@/config/editor"
 
 import {
   OpenAIStream,
   OpenAIStreamPayload,
 } from "../../../utils/openai/OpenAIStream"
-import { openai_model } from "@/config/editor"
 
 if (!env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI")
