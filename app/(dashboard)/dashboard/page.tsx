@@ -9,6 +9,7 @@ import { EmptyPlaceholder } from "@/components/dashboard/empty-placeholder"
 import { PostCreateButton } from "@/components/dashboard/post-create-button"
 import { PostItem } from "@/components/dashboard/post-item"
 import { DashboardShell } from "@/components/dashboard/shell"
+import { Icons } from "@/components/icons"
 
 async function Dashboard() {
   const user = (await getCurrentUser()) as any
@@ -57,14 +58,14 @@ async function Dashboard() {
             </div>
           ) : (
             <EmptyPlaceholder>
-              <EmptyPlaceholder.Icon name="post" />
+              <EmptyPlaceholder.Icon>
+                <Icons.markdown className="h-10 w-10 text-primary" />
+              </EmptyPlaceholder.Icon>
               <EmptyPlaceholder.Title>
                 No markdowns created
               </EmptyPlaceholder.Title>
-              <EmptyPlaceholder.Description>
-                You don&apos;t have any markdowns yet. Start creating content.
-              </EmptyPlaceholder.Description>
-              <PostCreateButton variant="outline" />
+
+              <PostCreateButton variant="outline" className="mt-6" />
             </EmptyPlaceholder>
           )}
         </div>

@@ -7,8 +7,6 @@ export const env = createEnv({
     OPENAI_API_KEY: z.string().min(1),
     RAPID_API_KEY: z.string().optional(),
     DATABASE_URL: z.string().min(1),
-    GITHUB_CLIENT_ID: z.string().min(1),
-    GITHUB_CLIENT_SECRET: z.string().min(1),
     SMTP_FROM: z.string().optional(),
     SMTP_HOST: z.string().optional(),
     SMTP_PORT: z.string().optional(),

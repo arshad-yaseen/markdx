@@ -10,7 +10,7 @@ import { toast } from "sonner"
 
 import { defaultEditorContent } from "@/config/editor"
 import { cn, generateUniqueString } from "@/lib/utils"
-import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
 
@@ -98,16 +98,16 @@ export function PostCreateButton({
           </div>
         </DialogContent>
       </Dialog>
-      <button
+      <Button
         onClick={onClick}
         className={cn(
-          buttonVariants({ variant }),
           {
             "cursor-not-allowed opacity-60": isLoading,
           },
           className
         )}
         disabled={isLoading}
+        variant={variant || "default"}
         {...props}
       >
         {isLoading ? (
@@ -116,7 +116,7 @@ export function PostCreateButton({
           <PlusIcon className="mr-2 h-4 w-4" />
         )}
         New markdown
-      </button>
+      </Button>
     </>
   )
 }

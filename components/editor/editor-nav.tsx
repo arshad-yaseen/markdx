@@ -58,7 +58,7 @@ function EditorNav() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="mr-4">
+          <Button variant="outline" className="mr-2">
             Export
           </Button>
         </DropdownMenuTrigger>

@@ -13,7 +13,7 @@ export function EmptyPlaceholder({
   return (
     <div
       className={cn(
-        "flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50",
+        "flex min-h-[400px] flex-col items-center justify-center rounded-md border p-8 text-center animate-in fade-in-50",
         className
       )}
       {...props}
@@ -30,11 +30,16 @@ interface EmptyPlaceholderIconProps
 
 EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
   className,
-  ...props
+  children,
 }: EmptyPlaceholderIconProps) {
   return (
-    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-      <FileTextIcon className={cn("h-10 w-10", className)} {...props} />
+    <div
+      className={cn(
+        "flex h-20 w-20 items-center justify-center rounded-lg border bg-muted",
+        className
+      )}
+    >
+      {children || <FileTextIcon className="h-10 w-10 text-muted-foreground" />}
     </div>
   )
 }

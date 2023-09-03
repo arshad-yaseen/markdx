@@ -1,17 +1,17 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
 import EmailProvider from "next-auth/providers/email"
-import GitHubProvider from "next-auth/providers/github"
 import { Client } from "postmark"
 
 import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
 
-const postmarkClient = new Client(env.POSTMARK_API_TOKEN || "fallback_token")
+const postmarkClient = new Client(env.POSTMARK_API_TOKEN as string)
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db as any),
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -19,23 +19,10 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   providers: [
-    GitHubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    }),
-
     EmailProvider({
-      server: {
-        host: env.SMTP_HOST,
-        port: Number(env.SMTP_PORT),
-        auth: {
-          user: env.SMTP_USER,
-          pass: env.SMTP_PASSWORD,
-        },
-      },
       from: env.SMTP_FROM,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        const user = await db?.user?.findUnique({
+        const user = await db.user.findUnique({
           where: {
             email: identifier,
           },
@@ -57,7 +44,7 @@ export const authOptions: NextAuthOptions = {
           From: provider.from as string,
           TemplateModel: {
             action_url: url,
-            product_name: siteConfig.short_name,
+            product_name: siteConfig.name,
           },
           Headers: [
             {
@@ -75,7 +62,6 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  secret: env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ token, session }) {
       if (token) {

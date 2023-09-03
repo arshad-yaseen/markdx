@@ -13,15 +13,15 @@ function SiteAssets({
   className?: string
   type: "icon" | "hero-image"
 }) {
-  const { theme: currentTheme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const [theme, setTheme] = useState("")
 
   useEffect(() => {
-    setTheme(currentTheme!)
-  }, [currentTheme])
+    setTheme(resolvedTheme!)
+  }, [resolvedTheme])
 
   return type === "icon" ? (
-    <img
+    <Image
       src={`/logos/markdx-${theme === "dark" ? "white" : "black"}.svg`}
       alt="logo"
       className={cn("", className)}

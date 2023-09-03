@@ -21,7 +21,7 @@
     "@hookform/resolvers": "^3.1.0",
     "@monaco-editor/react": "^4.5.1",
     "@next-auth/prisma-adapter": "^1.0.6",
-    "@prisma/client": "^4.14.0",
+    "@prisma/client": "^5.2.0",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-avatar": "^1.0.2",
     "@radix-ui/react-dialog": "^1.0.4",
@@ -93,6 +93,6 @@
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
-    "prisma": "^4.14.0"
+    "prisma": "^5.2.0"
   }
 }

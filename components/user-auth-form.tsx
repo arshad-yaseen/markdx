@@ -29,7 +29,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     resolver: zodResolver(userAuthSchema),
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
 
   async function onSubmit(data: FormData) {
@@ -71,7 +70,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 autoCapitalize="none"
                 autoComplete="email"
                 autoCorrect="off"
-                disabled={isLoading || isGitHubLoading}
+                disabled={isLoading}
+                className="h-11"
                 {...register("email")}
               />
               {errors?.email && (
@@ -80,38 +80,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </p>
               )}
             </div>
-            <Button disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Sign In with Email
+            <Button disabled={isLoading} className="mt-2 h-10">
+              {isLoading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Icons.sparkles className="mr-2 h-4 w-4" />
+              )}
+              Send magic link
             </Button>
           </div>
         </form>
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div>
-        <Button
-          variant="outline"
-          type="button"
-          onClick={() => {
-            setIsGitHubLoading(true)
-            signIn("github")
-          }}
-          disabled={isLoading || isGitHubLoading}
-        >
-          {isGitHubLoading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Icons.gitHub className="mr-2 h-4 w-4" />
-          )}{" "}
-          Github
-        </Button>
       </div>
     </>
   )

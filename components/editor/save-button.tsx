@@ -34,7 +34,7 @@ async function handleSave(postCodes: PostCodesType[], markdownId: string) {
 
 function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
   const pathname = usePathname()
-  const markdownId = pathname.split("/")[2]
+  const markdownId = pathname?.split("/")[2]
   const saveButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -53,7 +53,7 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
       ref={saveButtonRef}
       onClick={async () => {
         onSave()
-        const res = await handleSave(postCodes, markdownId)
+        const res = await handleSave(postCodes, markdownId!)
         if (res) {
           onSaved()
         } else {

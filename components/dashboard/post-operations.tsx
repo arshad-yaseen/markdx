@@ -100,6 +100,7 @@ export function PostOperations({ post }: PostOperationsProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
+              disabled={isDeleteLoading}
               onClick={async (event: any) => {
                 event.preventDefault()
                 setIsDeleteLoading(true)

@@ -55,7 +55,7 @@ function CodeBlock({
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
         className={cn(
           `hljs ${language} no-scrollbar min-w-full overflow-x-scroll  px-4 py-3 text-sm ${
-            !noCodeFont ? "jetbrains" : ""
+            !noCodeFont ? "font-mono" : ""
           }`,
           codeClass
         )}
