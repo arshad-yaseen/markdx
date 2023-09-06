@@ -3,11 +3,10 @@ import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
 import { Analytics } from "@vercel/analytics/react"
+import { Provider as TextBalancer } from "react-wrap-balancer"
 
 import { fontHeading, fontMono, fontSans } from "@/lib/fonts"
 import { ThemeProvider } from "@/components/theme-provider"
-
-import {Provider as TextBalancer} from "react-wrap-balancer"
 
 export const metadata = {
   title: {
@@ -80,9 +79,7 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
-          <TextBalancer>
-          {children}
-          </TextBalancer>
+          <TextBalancer>{children}</TextBalancer>
           <Analytics />
         </ThemeProvider>
       </body>

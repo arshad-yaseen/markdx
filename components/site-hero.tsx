@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
+import { Balancer } from "react-wrap-balancer"
 
 import { githubRepo } from "@/config/site"
 
 import { Icons } from "./icons"
 import SiteAssets from "./site-assets"
 import { Button } from "./ui/button"
-import { Balancer } from "react-wrap-balancer"
 
 function SiteHero() {
   return (
