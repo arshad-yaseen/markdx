@@ -178,6 +178,7 @@ function EditorSectionsPanel() {
                   }}
                   variant="outline"
                   className="mt-2 w-full"
+                  type="button"
                 >
                   Cancel
                 </Button>

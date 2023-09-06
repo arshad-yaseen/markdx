@@ -52,12 +52,12 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
       variant={isSaving ? "outline" : "default"}
       ref={saveButtonRef}
       onClick={async () => {
-        onSave()
+        onSave?.()
         const res = await handleSave(postCodes, markdownId!)
         if (res) {
-          onSaved()
+          onSaved?.()
         } else {
-          onSaved()
+          onSaved?.()
           toast("Something went wrong.", {
             description: "Your markdown was not saved. Please try again.",
           })

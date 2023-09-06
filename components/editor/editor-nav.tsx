@@ -23,7 +23,7 @@ import SaveButton from "./save-button"
 
 function EditorNav() {
   const [isSaving, setIsSaving] = useState(false)
-  const editorCodes = useAtomValue(editorCodesState) as editorCodeType[]
+  const editorCodes = useAtomValue(editorCodesState) satisfies editorCodeType[]
   const fullCode = editorCodes
     .map((code: editorCodeType) => code.content)
     .join("\n\n") as string
@@ -51,7 +51,7 @@ function EditorNav() {
     downloadLink.download = "README.md"
     downloadLink.href = URL.createObjectURL(blob)
     document.body.appendChild(downloadLink)
-    downloadLink.click()
+    downloadLink?.click()
   }
 
   return (

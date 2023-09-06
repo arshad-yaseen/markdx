@@ -66,6 +66,7 @@
     "react-hook-form": "^7.43.9",
     "react-loading-skeleton": "^3.3.1",
     "react-markdown": "^8.0.7",
+    "react-wrap-balancer": "^1.1.0",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-raw": "^6.1.1",
     "rehype-slug": "^5.1.0",

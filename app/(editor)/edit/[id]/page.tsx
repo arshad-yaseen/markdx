@@ -16,7 +16,6 @@ import { editorCodeType } from "types"
 import { defaultEditorContent } from "@/config/editor"
 import EditorSection from "@/components/editor/editor-section"
 import PreviewSection from "@/components/editor/preview-section"
-// import { handleShortCut } from "@/lib/editor"
 import ToolsPanel from "@/components/editor/tools-panel"
 
 type prevCodeType = {

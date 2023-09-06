@@ -7,6 +7,8 @@ import { Analytics } from "@vercel/analytics/react"
 import { fontHeading, fontMono, fontSans } from "@/lib/fonts"
 import { ThemeProvider } from "@/components/theme-provider"
 
+import {Provider as TextBalancer} from "react-wrap-balancer"
+
 export const metadata = {
   title: {
     default: siteConfig.name,
@@ -78,7 +80,9 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
+          <TextBalancer>
           {children}
+          </TextBalancer>
           <Analytics />
         </ThemeProvider>
       </body>
