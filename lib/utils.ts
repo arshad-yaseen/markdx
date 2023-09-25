@@ -1,5 +1,7 @@
 import crypto from "crypto"
+import { PostCodesType } from "@/types"
 import { ClassValue, clsx } from "clsx"
+import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
 
 import { env } from "@/env.mjs"
@@ -31,4 +33,28 @@ export function generateUniqueString(length: number) {
   uniqueString = uniqueString.substring(0, length)
 
   return uniqueString
+}
+
+export async function handleSave(
+  postCodes: PostCodesType[],
+  markdownId: string
+) {
+  const response = await fetch(`/api/posts/${String(markdownId)}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      postCodes,
+    }),
+  })
+
+  if (!response?.ok) {
+    console.error(response)
+    toast("Something went wrong.", {
+      description: "Your markdown was not saved. Please try again.",
+    })
+    return false
+  }
+  return true
 }

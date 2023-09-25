@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { PostCodesType } from "types"
+import { handleSave } from "@/lib/utils"
 
 import { Button } from "../ui/button"
 
@@ -12,24 +13,6 @@ interface SaveButtonProps {
   postCodes: PostCodesType[]
   onSave: () => void
   onSaved: () => void
-}
-
-async function handleSave(postCodes: PostCodesType[], markdownId: string) {
-  const response = await fetch(`/api/posts/${String(markdownId)}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      postCodes,
-    }),
-  })
-
-  if (!response?.ok) {
-    console.error(response)
-    return false
-  }
-  return true
 }
 
 function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
@@ -53,15 +36,8 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
       ref={saveButtonRef}
       onClick={async () => {
         onSave?.()
-        const res = await handleSave(postCodes, markdownId!)
-        if (res) {
-          onSaved?.()
-        } else {
-          onSaved?.()
-          toast("Something went wrong.", {
-            description: "Your markdown was not saved. Please try again.",
-          })
-        }
+        await handleSave(postCodes, markdownId!)
+        onSaved?.()
       }}
       className="mr-4"
     >

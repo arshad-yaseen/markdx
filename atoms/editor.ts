@@ -1,3 +1,4 @@
+import { RefObject } from "react"
 import { atom } from "jotai"
 import { editor } from "monaco-editor"
 
@@ -10,3 +11,9 @@ export const editorActiveSectionState = atom(0)
 export const monacoInstanceState = atom<editor.IStandaloneCodeEditor | null>(
   null
 )
+
+export const previewSectionRefAtom = atom<RefObject<HTMLDivElement> | null>(
+  null
+)
+
+export const editorSelectedContentAtom = atom("")

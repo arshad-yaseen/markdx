@@ -3,15 +3,18 @@ import copy from "copy-to-clipboard"
 import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 
 import "../styles/editor.css"
+import { cn } from "@/lib/utils"
 
 export default function CopyButton({
   value,
   copyable = true,
   isBlockHovered,
+  className,
 }: {
   value: string
   copyable?: boolean
   isBlockHovered?: boolean
+  className?: string
 }) {
   if (!value || !copyable) return <></>
 
@@ -33,9 +36,11 @@ export default function CopyButton({
     <button
       onClick={onCopy}
       aria-label="Copy code"
-      className={`copy-button ${
-        isBlockHovered ? "opacity-100" : copying ? "opacity-100" : "opacity-0"
-      } absolute right-3 top-[0.6rem] z-50 flex h-6 w-6 items-center justify-center rounded-md border bg-background`}
+      className={cn(
+        `copy-button absolute right-3 top-[0.6rem] z-50 flex h-6 w-6 items-center justify-center rounded-md border bg-background`,
+        isBlockHovered ? "opacity-100" : copying ? "opacity-100" : "opacity-0",
+        className
+      )}
     >
       <MotionConfig transition={{ duration: 0.15 }}>
         <AnimatePresence initial={false} mode="wait">

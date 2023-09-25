@@ -1,17 +1,26 @@
 import ParseMarkdown from "./parse-markdown"
 import "@/styles/mdx.css"
 import { useEffect, useRef } from "react"
+import { previewSectionRefAtom } from "@/atoms/editor"
+import { useAtom } from "jotai"
 
 import EditorSkeleton from "./skeleton"
 
 const BORDER_SIZE = 4
 
 function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
-  const previewSectionRef = useRef<HTMLDivElement | null>(null)
+  const [_, setPreviewSectionRefState] = useAtom(previewSectionRefAtom)
   const mPos = useRef<number | null>(null)
+  const previewSectionRef = useRef<HTMLDivElement>(null)
 
+  // Set preview section ref
   useEffect(() => {
-    const panel = previewSectionRef.current
+    setPreviewSectionRefState(previewSectionRef)
+  }, [previewSectionRef ? previewSectionRef.current : null])
+
+  // Resize preview section
+  useEffect(() => {
+    const panel = previewSectionRef?.current
 
     const resize = (e: MouseEvent) => {
       if (mPos.current !== null && panel) {
@@ -51,7 +60,7 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
     >
       <div className="absolute left-0 top-0 h-full w-1 cursor-ew-resize"></div>
       {loading && <EditorSkeleton />}
-      <ParseMarkdown code={code} codeCopyable />
+      <ParseMarkdown code={code} codeCopyable className="pb-[80vh]" />
     </div>
   )
 }

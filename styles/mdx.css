@@ -7,3 +7,8 @@
 .hljs-section {
   @apply text-muted-foreground;
 }
+
+em {
+  font-family: "Times New Roman", Times, serif, sans-serif;
+  @apply text-lg;
+}

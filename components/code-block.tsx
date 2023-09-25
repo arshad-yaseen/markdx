@@ -14,6 +14,7 @@ function CodeBlock({
   codeWrap = false,
   copyOnHover = false,
   noCodeFont = false,
+  noMask = false,
 }: {
   language: string
   value: string
@@ -23,6 +24,7 @@ function CodeBlock({
   codeWrap?: boolean
   copyOnHover?: boolean
   noCodeFont?: boolean
+  noMask?: boolean
 }) {
   value = value || ""
   hljs.getLanguage(language) ? (language = language) : (language = "plaintext")
@@ -50,7 +52,9 @@ function CodeBlock({
         isBlockHovered={copyOnHover ? isBlockHovered : true}
       />
 
-      <div className="absolute -right-4 top-0 h-full w-12 bg-background blur"></div>
+      {!noMask && (
+        <div className="absolute -right-4 top-0 h-full w-12 bg-background blur"></div>
+      )}
       <code
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
         className={cn(

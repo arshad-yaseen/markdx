@@ -20,10 +20,12 @@ function ParseMarkdown({
   code,
   codeCopyable = false,
   codeClass = "",
+  className,
 }: {
   code: string
   codeCopyable?: boolean
   codeClass?: string
+  className?: string
 }) {
   const components = {
     h1: ({ className, ...props }: ComponentTypes) => (
@@ -189,7 +191,7 @@ function ParseMarkdown({
       ) : (
         <code
           {...props}
-          className={cn("rounded-sm border px-1 py-0.5", className)}
+          className={cn("rounded-sm border px-1 text-sm", className)}
         >
           {children}
         </code>
@@ -202,6 +204,7 @@ function ParseMarkdown({
       remarkPlugins={[remarkGfm, remarkEmoji]}
       rehypePlugins={[rehypeRaw, rehypeSlug, rehypeAutolinkHeadings]}
       components={components}
+      className={cn("markdown", className)}
     >
       {code}
     </ReactMarkdown>

@@ -19,13 +19,13 @@ export default function Assets() {
       <div className=" sticky top-0 z-50 flex w-full items-center">
         <Input
           onChange={(e) => setSearchValue(e.target.value)}
-          className="bg-background pl-9"
+          className="h-10 bg-background pl-9"
           placeholder="Search asset..."
           autoFocus
           autoComplete="off"
           spellCheck={false}
         />
-        <SearchIcon className="absolute left-3.5 h-4 w-4 text-slate-500" />
+        <SearchIcon className="absolute left-3.5 h-3.5 w-3.5 text-slate-500" />
       </div>
       <div className="no-scrollbar w-full  space-y-4 overflow-scroll py-4">
         {assets

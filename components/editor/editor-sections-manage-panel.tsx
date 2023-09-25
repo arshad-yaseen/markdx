@@ -1,12 +1,18 @@
 "use client"
 
-import React, { FormEvent, useState } from "react"
-import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
-import { useAtom } from "jotai"
+import React, { FormEvent, useEffect, useMemo, useState } from "react"
+import { usePathname } from "next/navigation"
+import {
+  editorActiveSectionState,
+  editorCodesState,
+  previewSectionRefAtom,
+} from "@/atoms/editor"
+import { editorCodeType } from "@/types"
+import { useAtom, useAtomValue } from "jotai"
 import { Edit2Icon, XIcon } from "lucide-react"
 import { toast } from "sonner"
 
-import { editorCodeType } from "types"
+import { handleSave } from "@/lib/utils"
 
 import { Button } from "../ui/button"
 import {
@@ -35,72 +41,85 @@ function EditorSectionsPanel() {
   const [renameDialogOpen, setRenameDialogOpen] = useState(false)
   const [holdTimerId, setHoldTimerId] = useState<number>()
   const [isHoldedDeleteButton, setIsHoldedDeleteButton] = useState(false)
+  const previewSectionRef = useAtomValue(previewSectionRefAtom)
+  const [loading, setLoading] = useState(true)
 
-  const activeSectionName = editorCodes
-    .filter((code) => {
-      return code.section_id === editorActiveSection
-    })
-    .map((code) => {
-      return code.section || "Loading..."
-    })
+  useEffect(() => {
+    if (editorCodes.length > 0) {
+      setLoading(false)
+    }
+  }, [editorCodes])
+
+  const pathname = usePathname()
+  const markdownId = pathname?.split("/")[2]
 
   // Handle the add section
-  const handleAddSection = (e: FormEvent) => {
+  const handleAddSection = async (e: FormEvent) => {
     e.preventDefault()
     const target = e.target as typeof e.target & {
       0: { value: string }
     }
     const title = target[0].value
-    setEditorCodes((prev: editorCodeType[]) => {
-      return [
-        ...prev,
-        {
-          section_id: editorCodes.length,
-          section: title,
-          content: `## ${title}`,
-        },
-      ]
-    })
-    setEditorActiveSection(editorCodes.length)
+    const newEditorCodes = [
+      ...editorCodes,
+      {
+        section_id: editorCodes.length,
+        section: title,
+        content: `## ${title}`,
+      },
+    ]
+    setEditorCodes(newEditorCodes)
+    setEditorActiveSection(newEditorCodes.length - 1)
     setDialogOpen(false)
+    // Scroll to bottom of preview section
+    previewSectionRef?.current?.scrollTo({
+      top:
+        previewSectionRef?.current?.scrollHeight +
+        previewSectionRef?.current?.clientHeight,
+      behavior: "smooth",
+    })
+    await handleSave(newEditorCodes, markdownId!)
   }
 
   // Rename the section name
 
-  const handleRenameSectionName = (e: FormEvent) => {
+  const handleRenameSectionName = async (e: FormEvent) => {
     e.preventDefault()
     const target = e.target as typeof e.target & {
       0: { value: string }
     }
     const renamedTitle = target[0].value
-    setEditorCodes(
-      editorCodes.map((code) => {
-        if (code.section_id === editorActiveSection) {
-          return {
-            ...code,
-            section: renamedTitle,
-          }
+    const newEditorCodes = editorCodes.map((code: editorCodeType) => {
+      if (code.section_id === editorActiveSection) {
+        return {
+          ...code,
+          section: renamedTitle,
         }
-        return code
-      })
-    )
+      }
+      return code
+    })
+    setEditorCodes(newEditorCodes)
     setRenameDialogOpen(false)
+    await handleSave(newEditorCodes, markdownId!)
   }
 
-  // hold delete button for 2 seconds to delete
-
+  // hold delete button for 1 second to delete
   function handleMouseDown() {
-    const id = setTimeout(() => {
+    if (editorCodes.length === 1) {
+      toast.message("Can't delete. only have one section")
+      return
+    }
+    if (editorActiveSection === 0) return
+    const id = setTimeout(async () => {
       setIsHoldedDeleteButton(true)
-      if (editorCodes.length === 1) {
-        toast.message("Can't delete. only have one section")
-        return
-      }
-      if (editorActiveSection === 0) return
-      setEditorCodes(
-        editorCodes.filter((item) => item.section_id !== editorActiveSection)
+      const newEditorCodes = editorCodes.filter(
+        (item: editorCodeType) => item.section_id !== editorActiveSection
       )
-      setEditorActiveSection(0)
+      setEditorCodes(newEditorCodes)
+      setEditorActiveSection(
+        newEditorCodes[newEditorCodes.length - 1].section_id
+      )
+      await handleSave(newEditorCodes, markdownId!)
     }, 1000) as unknown as number
     setHoldTimerId(id)
   }
@@ -119,27 +138,20 @@ function EditorSectionsPanel() {
         onValueChange={(value) => {
           setEditorActiveSection(Number(value))
         }}
+        value={String(editorActiveSection)}
       >
-        <SelectTrigger className="relative w-[160px] lg:w-[220px]">
-          <SelectValue placeholder={activeSectionName} />
+        <SelectTrigger className="relative w-[160px] rounded-md lg:w-[220px]">
+          {loading && "Loading..."}
+          <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {editorCodes.map(
-            (
-              code: {
-                section: string
-                content: string
-                section_id: number
-              },
-              index: number
-            ) => {
-              return (
-                <SelectItem key={index} value={String(code.section_id)}>
-                  {code.section}
-                </SelectItem>
-              )
-            }
-          )}
+          {editorCodes.map((code, index) => {
+            return (
+              <SelectItem key={index} value={String(code.section_id)}>
+                {code.section}
+              </SelectItem>
+            )
+          })}
         </SelectContent>
       </Select>
       <div>
@@ -223,7 +235,7 @@ function EditorSectionsPanel() {
                     setInputFilled(false)
                   }
                 }}
-                defaultValue={editorCodes![editorActiveSection]?.section}
+                defaultValue={editorCodes![editorActiveSection!]?.section}
                 placeholder="New name"
                 className="mt-4 w-full"
               />

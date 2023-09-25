@@ -58,9 +58,7 @@ async function Dashboard() {
             </div>
           ) : (
             <EmptyPlaceholder>
-              <EmptyPlaceholder.Icon>
-                <Icons.markdown className="h-10 w-10 text-primary" />
-              </EmptyPlaceholder.Icon>
+              <Icons.markdown className="h-10 w-10 text-muted-foreground" />
               <EmptyPlaceholder.Title>
                 No markdowns created
               </EmptyPlaceholder.Title>

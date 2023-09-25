@@ -8,6 +8,7 @@ import { toast } from "sonner"
 
 import "@/styles/mdx.css"
 import { OpenAICreateChat } from "@/utils/editor"
+import copy from "copy-to-clipboard"
 
 import { OpenAIBody } from "types"
 import { AIConfig } from "@/config/editor"
@@ -24,10 +25,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import CodeBlock from "../code-block"
+import CopyButton from "../copy-button"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import AskAI from "./ask-ai"
+import ParseMarkdown from "./parse-markdown"
 
 function AITools() {
   const [requestingToAPI, setRequestingToAPI] = useState(false)
@@ -76,19 +78,21 @@ function AITools() {
   return (
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="flex max-h-[700px]  w-[800px] flex-col items-center space-y-2 p-6">
+        <DialogContent className="flex max-h-[700px] min-h-[300px] min-w-[650px] flex-col space-y-2 overflow-y-scroll !rounded-2xl p-6">
+          <CopyButton
+            value={generatedText}
+            copyable={true}
+            isBlockHovered={true}
+            className="right-6 top-4"
+          />
           {generatedText ? (
-            <CodeBlock
-              language="markdown"
-              value={generatedText}
-              codeWrap
-              preClass="border-none"
-              codeClass="text-[0.880rem]"
-              noCodeFont
+            <ParseMarkdown
+              code={generatedText}
+              codeClass="leading-6 text-sm text-slate-500"
             />
           ) : (
             <p className="text-sm text-muted-foreground">
-              {requestingToAPI ? "thinking..." : "No text generated"}
+              {requestingToAPI ? "Thinking..." : "No text generated"}
             </p>
           )}
         </DialogContent>
@@ -99,7 +103,7 @@ function AITools() {
           onClick={() => {
             setGeneratedText("")
             if (requestingToAPI) {
-              toast.message("Please wait for current action to finish")
+              toast.message("Please wait for current response to finish")
             } else {
               const editorSelectedCode = window.getSelection()?.toString()
               const options = {
@@ -109,7 +113,7 @@ function AITools() {
                     ? editorSelectedCode
                     : monacoInstance?.getValue()!,
                 },
-                max_tokens: 1000,
+                max_tokens: 10000,
               }
               handleClick(options)
               setIsDialogOpen(true)
@@ -124,7 +128,7 @@ function AITools() {
           onClick={() => {
             setGeneratedText("")
             if (requestingToAPI) {
-              toast.message("Please wait for current action to finish")
+              toast.message("Please wait for current response to finish")
             } else {
               const editorSelectedCode = window.getSelection()?.toString()
               const options = {
@@ -153,7 +157,7 @@ function AITools() {
           onClick={() => {
             setGeneratedText("")
             if (requestingToAPI) {
-              toast.message("Please wait for current action to finish")
+              toast.message("Please wait for current response to finish")
             } else {
               const editorSelectedCode = window.getSelection()?.toString()
               const options = {
@@ -180,7 +184,7 @@ function AITools() {
           onClick={() => {
             setGeneratedText("")
             if (requestingToAPI) {
-              toast.message("Please wait for current action to finish")
+              toast.message("Please wait for current response to finish")
             } else {
               const editorSelectedCode = window.getSelection()?.toString()
               if (!editorSelectedCode) {
@@ -213,7 +217,7 @@ function AITools() {
                 e.preventDefault()
                 setGeneratedText("")
                 if (requestingToAPI) {
-                  toast.message("Please wait for current action to finish")
+                  toast.message("Please wait for current response to finish")
                 } else {
                   const formData = new FormData(e.target as HTMLFormElement)
                   const { to } = Object.fromEntries(formData.entries())
@@ -251,7 +255,7 @@ function AITools() {
           onClick={() => {
             setGeneratedText("")
             if (requestingToAPI) {
-              toast.message("Please wait for current action to finish")
+              toast.message("Please wait for current response to finish")
             } else {
               const editorSelectedCode = window.getSelection()?.toString()
               const options = {
@@ -293,7 +297,7 @@ function AITools() {
                         setGeneratedText("")
                         if (requestingToAPI) {
                           toast.message(
-                            "Please wait for current action to finish"
+                            "Please wait for current response to finish"
                           )
                         } else {
                           const selectedText = windowSelection
@@ -308,8 +312,6 @@ function AITools() {
                             },
                             max_tokens: selectedText?.length! * 6,
                           }
-                          console.log(options)
-
                           handleClick(options)
                           setIsDialogOpen(true)
                         }

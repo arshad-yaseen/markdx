@@ -4,7 +4,7 @@ import Editor, { OnMount } from "@monaco-editor/react"
 import { useTheme } from "next-themes"
 
 import "@/styles/editor.css"
-import { monacoInstanceState } from "@/atoms/editor"
+import { editorSelectedContentAtom, monacoInstanceState } from "@/atoms/editor"
 import { monacoInstanceType } from "@/types"
 import { useAtom } from "jotai"
 
@@ -19,11 +19,18 @@ function EditorSection({
   onCodeChange: (value: string) => void
   loading: boolean
 }) {
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const [, setMonacoInstance] = useAtom(monacoInstanceState)
+
+  const [_, setEditorSelectedContent] = useAtom(editorSelectedContentAtom)
 
   const editorMount: OnMount = (editorL: monacoInstanceType) => {
     setMonacoInstance(editorL)
+    // Set the selected text in the editor
+    editorL.onDidChangeCursorSelection((e) => {
+      const selectedText = editorL.getModel()?.getValueInRange(e.selection)
+      setEditorSelectedContent(selectedText || "")
+    })
   }
 
   const handleEditorChange = (value: string | undefined) => {
@@ -38,7 +45,7 @@ function EditorSection({
         language="markdown"
         value={markdown}
         onMount={editorMount}
-        theme={theme === "dark" ? "vs-dark" : "vs-light"}
+        theme={resolvedTheme === "dark" ? "vs-dark" : "vs-light"}
         loading={<EditorSkeleton className="px-14" />}
         onChange={handleEditorChange}
         options={{

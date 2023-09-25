@@ -27,6 +27,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { Button } from "../ui/button"
+
 async function deletePost(markdownId: string) {
   const response = await fetch(`/api/posts/${markdownId}`, {
     method: "DELETE",
@@ -99,28 +101,29 @@ export function PostOperations({ post }: PostOperationsProps) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              disabled={isDeleteLoading}
-              onClick={async (event: any) => {
-                event.preventDefault()
-                setIsDeleteLoading(true)
+            <AlertDialogAction asChild>
+              <Button
+                disabled={isDeleteLoading}
+                onClick={async (event: any) => {
+                  event.preventDefault()
+                  setIsDeleteLoading(true)
 
-                const deleted = await deletePost(String(post.markdownId))
+                  const deleted = await deletePost(String(post.markdownId))
 
-                if (deleted) {
-                  setIsDeleteLoading(false)
-                  setShowDeleteAlert(false)
-                  router.refresh()
-                }
-              }}
-              className="bg-red-600 focus:ring-red-600"
-            >
-              {isDeleteLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <TrashIcon className="mr-2 h-4 w-4" />
-              )}
-              <span>Delete</span>
+                  if (deleted) {
+                    setIsDeleteLoading(false)
+                    setShowDeleteAlert(false)
+                    router.refresh()
+                  }
+                }}
+              >
+                {isDeleteLoading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <TrashIcon className="mr-2 h-4 w-4" />
+                )}
+                Delete
+              </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

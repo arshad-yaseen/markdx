@@ -25,25 +25,6 @@ export function EmptyPlaceholder({
   )
 }
 
-interface EmptyPlaceholderIconProps
-  extends Partial<React.SVGProps<SVGSVGElement>> {}
-
-EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
-  className,
-  children,
-}: EmptyPlaceholderIconProps) {
-  return (
-    <div
-      className={cn(
-        "flex h-20 w-20 items-center justify-center rounded-lg border bg-muted",
-        className
-      )}
-    >
-      {children || <FileTextIcon className="h-10 w-10 text-muted-foreground" />}
-    </div>
-  )
-}
-
 interface EmptyPlacholderTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement> {}
 
