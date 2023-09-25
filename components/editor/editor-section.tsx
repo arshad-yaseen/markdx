@@ -22,7 +22,7 @@ function EditorSection({
   const { resolvedTheme } = useTheme()
   const [, setMonacoInstance] = useAtom(monacoInstanceState)
 
-  const [_, setEditorSelectedContent] = useAtom(editorSelectedContentAtom)
+  const [, setEditorSelectedContent] = useAtom(editorSelectedContentAtom)
 
   const editorMount: OnMount = (editorL: monacoInstanceType) => {
     setMonacoInstance(editorL)

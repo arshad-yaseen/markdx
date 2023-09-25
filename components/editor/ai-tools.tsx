@@ -8,7 +8,6 @@ import { toast } from "sonner"
 
 import "@/styles/mdx.css"
 import { OpenAICreateChat } from "@/utils/editor"
-import copy from "copy-to-clipboard"
 
 import { OpenAIBody } from "types"
 import { AIConfig } from "@/config/editor"

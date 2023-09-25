@@ -1,6 +1,6 @@
 "use client"
 
-import React, { FormEvent, useEffect, useMemo, useState } from "react"
+import React, { FormEvent, useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import {
   editorActiveSectionState,

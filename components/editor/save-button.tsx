@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 import { Loader2 } from "lucide-react"
-import { toast } from "sonner"
 
 import { PostCodesType } from "types"
 import { handleSave } from "@/lib/utils"

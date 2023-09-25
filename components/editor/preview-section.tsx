@@ -9,7 +9,7 @@ import EditorSkeleton from "./skeleton"
 const BORDER_SIZE = 4
 
 function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
-  const [_, setPreviewSectionRefState] = useAtom(previewSectionRefAtom)
+  const [, setPreviewSectionRefState] = useAtom(previewSectionRefAtom)
   const mPos = useRef<number | null>(null)
   const previewSectionRef = useRef<HTMLDivElement>(null)
 
