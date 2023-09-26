@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
 import "@/styles/components.css"
+import { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/react"
 import { Provider as TextBalancer } from "react-wrap-balancer"
 import { Toaster } from "sonner"
 
 import { fontHeading, fontMono, fontSans } from "@/lib/fonts"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: {

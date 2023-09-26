@@ -12,15 +12,18 @@ import { Button } from "./ui/button"
 function SiteHero() {
   return (
     <section className="flex w-full flex-col items-center ">
-      <Balancer className="animate-fade-up tracking-tigt mt-12  px-6 text-center font-heading  text-4xl font-bold drop-shadow-sm sm:text-5xl lg:text-6xl">
-        <div className="relative inline-block">
+      <Balancer
+        as="h1"
+        className="mt-12  px-6   text-center font-heading text-4xl font-bold drop-shadow-sm sm:text-5xl lg:text-6xl"
+      >
+        <p className="relative inline-block">
           <span className="absolute left-[70%] top-[15%] z-10 -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-5xl lg:text-6xl">
             🪄
           </span>
           <span className="z-0 bg-gradient-to-b from-black  to-black/70 bg-clip-text pb-1 text-transparent">
             Magically
           </span>
-        </div>{" "}
+        </p>{" "}
         {""}
         Supercharge Your <br /> Markdown with {""}
         <span className="z-0 bg-gradient-to-r from-black to-black/60 bg-clip-text pb-1 text-transparent">
