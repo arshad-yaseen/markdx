@@ -9,8 +9,6 @@ import {
 } from "@/atoms/editor"
 import { handleShortCut } from "@/utils/editor"
 import { useAtom, useAtomValue } from "jotai"
-import { useTheme } from "next-themes"
-import { Toaster } from "sonner"
 
 import { editorCodeType } from "types"
 import { defaultEditorContent } from "@/config/editor"
@@ -27,7 +25,6 @@ type prevCodeType = {
 export default function page({ params }: { params: { id: string } }) {
   const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
   const editorActiveSection = useAtomValue(editorActiveSectionState)
-  const { theme } = useTheme()
   const [markdownCode, setMarkdownCode] = useState("")
   const monacoInstance = useAtomValue(monacoInstanceState)
   const [loading, setLoading] = useState(true)
@@ -80,11 +77,11 @@ export default function page({ params }: { params: { id: string } }) {
       .map((code: editorCodeType) => {
         setMarkdownCode(code.content)
       })
-  }, [editorActiveSection])
+  }, [editorActiveSection, editorCodes])
 
   useEffect(() => {
     getMarkdownPost(markdownId)
-  }, [markdownId])
+  }, [markdownId, getMarkdownPost])
 
   return (
     <div
@@ -93,7 +90,6 @@ export default function page({ params }: { params: { id: string } }) {
       }}
       className="flex h-[92vh] w-full flex-col lg:flex-row"
     >
-      <Toaster theme={theme === "dark" ? "dark" : "light"} closeButton />
       <ToolsPanel />
       <EditorSection
         loading={loading}

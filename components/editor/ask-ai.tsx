@@ -12,13 +12,14 @@ import { ChatType, OpenAIBody } from "types"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 
+import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import ParseMarkdown from "./parse-markdown"
 
 function AskAI() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [previousAnswers, setPreviousAnswers] = useState("")
+  const [previousGenerations, setPreviousGenerations] = useState("")
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [AIThinking, setAIThinking] = useState(false)
   const chatWrapper = useRef(null)
@@ -34,6 +35,33 @@ function AskAI() {
       ai: "",
     },
   ])
+
+  const buildPrompt = (
+    userPrompt: string,
+    editorSelectedContent?: string,
+    previousGenerations?: string
+  ): OpenAIBody => {
+    let systemPrompt = `Please provide a high-quality, professional response to the following prompt. Adhere to industry standards for quality and documentation.`
+
+    let userPromptText = `${userPrompt}`
+
+    if (editorSelectedContent) {
+      editorSelectedContent = editorSelectedContent
+      userPromptText += `\nThis:\n${editorSelectedContent}`
+    }
+
+    if (previousGenerations) {
+      systemPrompt += `\nFor guidance, refer to these previous answers: ${previousGenerations}`
+    }
+
+    return {
+      prompt: {
+        system: systemPrompt,
+        user: userPromptText,
+      },
+      max_tokens: 1000,
+    }
+  }
 
   const handleChat = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -60,17 +88,11 @@ function AskAI() {
       ])
 
       // Create the request body for OpenAI's API
-      const body = {
-        prompt: {
-          system: `Please provide a response to the following prompt using a programming language of your choice. Your answer should be of a high level and adhere to industry standards for code quality and documentation.\n Please reference previous answers for guidance: ${previousAnswers}.
-          `,
-          user: `  
-          ${editorSelectedContent}
-            ${user_prompt}
-          `,
-        },
-        max_tokens: 1000,
-      } as OpenAIBody
+      const body = buildPrompt(
+        user_prompt.toString(),
+        editorSelectedContent,
+        previousGenerations
+      )
 
       try {
         // Call the OpenAI API with the request body
@@ -106,7 +128,9 @@ function AskAI() {
           chat.scrollTop = chat.scrollHeight
         }
         setRequestingToAPI(false)
-        setPreviousAnswers(`${previousAnswers},${aiResponse}`)
+        setPreviousGenerations(
+          `${previousGenerations},\n\nQuestion: ${user_prompt.toString()}\nAnswer: ${aiResponse}`
+        )
         setGenerating(false)
       } catch (error) {
         // Handle any other errors that may occur
@@ -117,12 +141,23 @@ function AskAI() {
     }
   }
 
+  const clearChat = () => {
+    setChats([
+      {
+        id: 1,
+        user: "Hello, How can i help you?",
+        ai: "",
+      },
+    ])
+    setPreviousGenerations("")
+  }
+
   return (
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent
           className={cn(
-            "h-[700px] !rounded-2xl px-8 pb-44 pt-5  text-sm sm:min-w-[650px]",
+            "h-[750px] !rounded-xl px-8 pb-44 pt-5  text-sm sm:min-w-[600px]",
             { "pt-2": editorSelectedContent }
           )}
         >
@@ -130,18 +165,20 @@ function AskAI() {
             ref={chatWrapper}
             className="no-scrollbar w-full flex-1 flex-col overflow-scroll"
           >
+            <h1 className="py-3 font-heading text-2xl">MarkGPT</h1>
             {chats.map((chat, index) => {
               return (
                 <div key={index}>
                   {editorSelectedContent && (
-                    <div className="mt-5 flex w-full items-center rounded-md border p-4 text-[0.950rem]">
-                      <p className="line-clamp-3 leading-relaxed text-muted-foreground">
-                        {editorSelectedContent}
-                      </p>
-                    </div>
+                    <CodeBlock
+                      value={editorSelectedContent}
+                      language="markdown"
+                      className="mt-3 max-h-[170px]"
+                      copyable={false}
+                    />
                   )}
 
-                  <div className="mt-2 flex w-full items-center rounded-md bg-muted p-4 text-[0.950rem]">
+                  <div className="mt-2 flex w-full items-center border-b py-4 text-[0.950rem]">
                     {chat.user}
                   </div>
                   <ParseMarkdown
@@ -159,23 +196,24 @@ function AskAI() {
           </div>
           <form
             onSubmit={handleChat}
-            className="absolute bottom-0 flex h-36 w-full flex-col items-center justify-center space-y-2 rounded-2xl bg-background px-6"
+            className="absolute bottom-0 flex h-36 w-full flex-col items-center justify-center space-y-2 rounded-xl bg-background px-8"
           >
-            {!generating && previousAnswers && (
-              <Button
-                onClick={() => {
-                  copy(chats[chats.length - 1].ai)
-                  setCopied(true)
-                  setTimeout(() => {
-                    setCopied(false)
-                  }, 1000)
-                }}
-                className="absolute top-0 w-fit"
-                variant={"outline"}
-              >
-                {copied ? "Copied!" : "Copy answer"}
-              </Button>
-            )}
+            <Button
+              onClick={() => {
+                copy(chats[chats.length - 1].ai)
+                setCopied(true)
+                setTimeout(() => {
+                  setCopied(false)
+                }, 1000)
+              }}
+              className={cn("invisible absolute top-0 w-fit opacity-0", {
+                "visible opacity-100": !generating && previousGenerations,
+              })}
+              variant={"outline"}
+            >
+              {copied ? "Copied!" : "Copy answer"}
+            </Button>
+
             <div className="relative flex w-full items-center">
               <Input
                 autoComplete="off"
@@ -184,7 +222,7 @@ function AskAI() {
                 placeholder={
                   editorSelectedContent
                     ? "Please rewrite the markdown in a formal style"
-                    : "Type your message here."
+                    : "Write me a blog about elon musk in markdown"
                 }
                 autoFocus
                 name="user_prompt"
@@ -200,15 +238,7 @@ function AskAI() {
       <Button
         onClick={() => {
           setIsDialogOpen(true)
-          // clear all
-          setChats([
-            {
-              id: 1,
-              user: "Hello, How can i help you?",
-              ai: "",
-            },
-          ])
-          setPreviousAnswers("")
+          clearChat()
         }}
         className={cn(
           "flex h-10 w-full justify-center px-6 transition-colors duration-200"

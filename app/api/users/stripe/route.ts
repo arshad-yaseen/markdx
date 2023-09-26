@@ -9,6 +9,8 @@ import { absoluteUrl } from "@/lib/utils"
 
 const billingUrl = absoluteUrl("/dashboard/billing")
 
+export const dynamic = "force-dynamic"
+
 export async function GET() {
   try {
     const session = await getServerSession(authOptions)
@@ -37,6 +39,7 @@ export async function GET() {
       cancel_url: billingUrl,
       payment_method_types: ["card"],
       mode: "subscription",
+      customer_email: session.user.email!,
       billing_address_collection: "auto",
       line_items: [
         {

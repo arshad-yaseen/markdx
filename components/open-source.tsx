@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import Link from "next/link"
 
@@ -12,6 +14,12 @@ async function getStars() {
 }
 
 function OpenSource() {
+  const [stars, setStars] = React.useState(0)
+
+  React.useEffect(() => {
+    getStars().then(setStars)
+  }, [])
+
   return (
     <section id="open-source" className="md:pyb-12 container py-8 lg:py-24">
       <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
@@ -43,7 +51,7 @@ function OpenSource() {
           <div className="flex items-center">
             <div className="h-4 w-4 border-y-8 border-l-0 border-r-8 border-solid border-muted border-y-transparent"></div>
             <div className="flex h-10 items-center rounded-md border border-muted bg-muted px-4 font-medium">
-              {getStars() || "0"} stars on GitHub
+              {stars} stars on GitHub
             </div>
           </div>
         </Link>

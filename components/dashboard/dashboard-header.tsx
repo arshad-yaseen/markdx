@@ -2,6 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
+import { CreditCardIcon, LayoutDashboardIcon, LogOutIcon } from "lucide-react"
 import { User } from "next-auth"
 import { signOut } from "next-auth/react"
 
@@ -53,10 +54,17 @@ function DashboardHeader({ user }: UserAccountNavProps) {
             </div>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/dashboard">
+                {" "}
+                <LayoutDashboardIcon className="mr-2 h-4 w-4" />
+                Dashboard
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/dashboard/billing">Billing</Link>
+              <Link href="/dashboard/billing">
+                <CreditCardIcon className="mr-2 h-4 w-4" />
+                Billing
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -68,6 +76,7 @@ function DashboardHeader({ user }: UserAccountNavProps) {
                 })
               }}
             >
+              <LogOutIcon className="mr-2 h-4 w-4" />
               Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>

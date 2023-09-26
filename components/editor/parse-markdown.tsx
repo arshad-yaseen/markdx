@@ -191,7 +191,7 @@ function ParseMarkdown({
       ) : (
         <code
           {...props}
-          className={cn("rounded-sm border px-1 text-sm", className)}
+          className={cn("rounded-sm border bg-muted px-1 text-sm", className)}
         >
           {children}
         </code>

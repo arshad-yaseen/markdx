@@ -72,11 +72,13 @@ export function PostCreateButton({
       <Dialog open={upgradeToPRODialog} onOpenChange={setUpgradeToPRODialog}>
         <DialogContent className="flex flex-col items-center">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Upgrade to PRO</DialogTitle>
+            <DialogTitle className="text-2xl font-bold">
+              Upgrade to PRO
+            </DialogTitle>
           </DialogHeader>
           <DialogDescription className="mt-2 w-full px-8 text-center">
-            The free plan is limited to 10 markdowns. Upgrade to the PRO plan
-            for unlimited markdowns.
+            The free plan is limited to 2 markdowns. Upgrade to the PRO plan for
+            unlimited markdowns.
           </DialogDescription>
 
           <div className="mt-4 flex w-full space-x-4">

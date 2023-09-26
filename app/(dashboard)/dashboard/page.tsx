@@ -45,7 +45,7 @@ async function Dashboard() {
         </DashboardInlineHeader>
         <div className=" w-full">
           {posts?.length ? (
-            <div className="divide-y divide-border rounded-md border">
+            <div className="divide-y divide-border rounded-md shadow-tooltip">
               {posts.map((post) => (
                 <PostItem
                   key={post.id}

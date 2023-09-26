@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
-import { Toaster, toast } from "sonner"
+import { toast } from "sonner"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
@@ -55,7 +55,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <>
-      <Toaster closeButton />
       <div className={cn("grid gap-6", className)} {...props}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-2">

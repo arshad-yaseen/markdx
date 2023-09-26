@@ -49,7 +49,7 @@ export default function Assets() {
                   value={asset.code || ""}
                   codeClass="text-xs no-scrollbar"
                   copyable={false}
-                  preClass="hover:border-foreground w-52 cursor-pointer transition-all duration-200"
+                  className="w-52 cursor-pointer transition-all duration-200 hover:border-foreground"
                 />
               </div>
             )

@@ -12,8 +12,20 @@ import { Button } from "./ui/button"
 function SiteHero() {
   return (
     <section className="flex w-full flex-col items-center ">
-      <Balancer className="animate-fade-up mt-12 px-6 text-center font-heading text-4xl  font-bold tracking-tight drop-shadow-sm sm:text-5xl lg:text-6xl">
-        Make standard Markdown <br /> more powerful with AI.
+      <Balancer className="animate-fade-up tracking-tigt mt-12  px-6 text-center font-heading  text-4xl font-bold drop-shadow-sm sm:text-5xl lg:text-6xl">
+        <div className="relative inline-block">
+          <span className="absolute left-[70%] top-[15%] z-10 -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-5xl lg:text-6xl">
+            🪄
+          </span>
+          <span className="z-0 bg-gradient-to-b from-black  to-black/70 bg-clip-text pb-1 text-transparent">
+            Magically
+          </span>
+        </div>{" "}
+        {""}
+        Supercharge Your <br /> Markdown with {""}
+        <span className="z-0 bg-gradient-to-r from-black to-black/60 bg-clip-text pb-1 text-transparent">
+          AI
+        </span>
       </Balancer>
       <Balancer className="mt-7 max-w-[30rem] px-6 text-center leading-normal text-muted-foreground sm:text-[1.20rem] sm:leading-8">
         MarkDX is a Markdown editor that uses AI to make your Markdown standard.
@@ -25,7 +37,7 @@ function SiteHero() {
           </Button>
         </Link>
         <Link href={githubRepo} target="_blank">
-          <Button variant="outline" size="lg" className="sm:mt-12">
+          <Button variant="fancy" size="lg" className="sm:mt-12">
             <Icons.gitHub className="mr-2 h-4 w-4" /> Github
           </Button>
         </Link>

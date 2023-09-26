@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
 import { MarkdownPost } from "@prisma/client"
 import { useAtom } from "jotai"
-import { Loader2, MoreVerticalIcon, TrashIcon } from "lucide-react"
+import { Loader2, MoreVerticalIcon, PenLine, TrashIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import {
@@ -77,6 +77,7 @@ export function PostOperations({ post }: PostOperationsProps) {
               href={`/edit/${post.markdownId}`}
               className="flex w-full"
             >
+              <PenLine className="mr-2 h-4 w-4" />
               Edit
             </Link>
           </DropdownMenuItem>
@@ -85,6 +86,7 @@ export function PostOperations({ post }: PostOperationsProps) {
             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
             onSelect={() => setShowDeleteAlert(true)}
           >
+            <TrashIcon className="mr-2 h-4 w-4" />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

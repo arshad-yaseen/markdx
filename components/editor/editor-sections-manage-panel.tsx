@@ -162,6 +162,7 @@ function EditorSectionsPanel() {
               onClick={() => {
                 setDialogOpen(true)
               }}
+              className="h-10"
             >
               <p className="hidden lg:block">Create new section</p>
               <p className="block lg:hidden">Create new</p>
@@ -215,6 +216,7 @@ function EditorSectionsPanel() {
                 setRenameDialogOpen(true)
               }}
               size="icon"
+              className="h-10 w-10"
             >
               <Edit2Icon className="h-3.5 w-3.5" />
             </Button>
@@ -265,7 +267,7 @@ function EditorSectionsPanel() {
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           variant="outline"
-          className="ml-2"
+          className="ml-2 h-10 w-10"
           size="icon"
         >
           <XIcon className="h-4 w-4" />

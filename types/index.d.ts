@@ -68,6 +68,7 @@ export type OpenAIBody = {
   frequency_penalty?: number
   presence_penalty?: number
   n?: 1
+  ApiKey?: string
 }
 
 export type AIConfigType = {

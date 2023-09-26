@@ -24,6 +24,28 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.55rem;
+
+    /* Shadows */
+    --shadow-border: 0 0 0 1px rgba(0, 0, 0, 0.08);
+    --shadow-small: 0px 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-border-small: var(--shadow-border), var(--shadow-small);
+    --shadow-medium: 0px 2px 2px rgba(0, 0, 0, 0.04),
+      0px 8px 8px -8px rgba(0, 0, 0, 0.04);
+    --shadow-border-medium: var(--shadow-border), var(--shadow-medium);
+    --shadow-large: 0px 2px 2px rgba(0, 0, 0, 0.04),
+      0px 8px 16px -4px rgba(0, 0, 0, 0.04);
+    --shadow-border-large: var(--shadow-border), var(--shadow-large);
+    --shadow-tooltip: var(--shadow-border), 0px 1px 1px rgba(0, 0, 0, 0.02),
+      0px 4px 8px rgba(0, 0, 0, 0.04);
+    --shadow-dialog: var(--shadow-border), 0px 1px 1px rgba(0, 0, 0, 0.02),
+      0px 4px 8px -4px rgba(0, 0, 0, 0.04),
+      0px 16px 24px -8px rgba(0, 0, 0, 0.06);
+    --shadow-dialog: var(--shadow-border), 0px 1px 1px rgba(0, 0, 0, 0.02),
+      0px 8px 16px -4px rgba(0, 0, 0, 0.04),
+      0px 24px 32px -8px rgba(0, 0, 0, 0.06);
+    --shadow-fullscreen: var(--shadow-border), 0px 1px 1px rgba(0, 0, 0, 0.02),
+      0px 8px 16px -4px rgba(0, 0, 0, 0.04),
+      0px 24px 32px -8px rgba(0, 0, 0, 0.06);
   }
 
   .dark {

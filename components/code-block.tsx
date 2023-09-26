@@ -8,7 +8,7 @@ import CopyButton from "./copy-button"
 function CodeBlock({
   language,
   value,
-  preClass,
+  className,
   codeClass,
   copyable = true,
   codeWrap = false,
@@ -18,7 +18,7 @@ function CodeBlock({
 }: {
   language: string
   value: string
-  preClass?: string
+  className?: string
   codeClass?: string
   copyable?: boolean
   codeWrap?: boolean
@@ -37,7 +37,7 @@ function CodeBlock({
         `relative flex w-full overflow-hidden rounded-lg ${
           value ? "border" : null
         } ${codeWrap ? "whitespace-pre-wrap" : null} `,
-        preClass
+        className
       )}
       onMouseEnter={() => {
         setIsBlockHovered(true)

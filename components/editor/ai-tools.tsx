@@ -77,7 +77,7 @@ function AITools() {
   return (
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="flex max-h-[700px] min-h-[300px] min-w-[650px] flex-col space-y-2 overflow-y-scroll !rounded-2xl p-6">
+        <DialogContent className="flex max-h-[700px] min-h-[300px] min-w-[650px] flex-col space-y-2 overflow-y-scroll !rounded-xl p-6">
           <CopyButton
             value={generatedText}
             copyable={true}

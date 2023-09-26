@@ -54,13 +54,16 @@ export function BillingForm({
 
   return (
     <form className={cn(className)} onSubmit={onSubmit} {...props}>
-      <Card className="relative">
-        <Badge variant="outline" className="absolute right-4 top-4">
+      <Card className="relative ">
+        <Badge
+          variant="secondary"
+          className="absolute right-4 top-4 rounded-sm"
+        >
           {subscriptionPlan.name} plan
         </Badge>
         <CardHeader>
           {!isPro && (
-            <CardTitle className="my-4 text-4xl">
+            <CardTitle className="mb-4 text-4xl">
               $2{" "}
               <span className="text-lg font-medium text-muted-foreground">
                 /month

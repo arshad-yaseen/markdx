@@ -16,7 +16,7 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
   // Set preview section ref
   useEffect(() => {
     setPreviewSectionRefState(previewSectionRef)
-  }, [previewSectionRef ? previewSectionRef.current : null])
+  }, [previewSectionRef])
 
   // Resize preview section
   useEffect(() => {
