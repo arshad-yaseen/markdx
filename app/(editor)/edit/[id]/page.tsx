@@ -77,11 +77,11 @@ export default function page({ params }: { params: { id: string } }) {
       .map((code: editorCodeType) => {
         setMarkdownCode(code.content)
       })
-  }, [editorActiveSection, editorCodes])
+  }, [editorActiveSection])
 
   useEffect(() => {
     getMarkdownPost(markdownId)
-  }, [markdownId, getMarkdownPost])
+  }, [markdownId])
 
   return (
     <div
