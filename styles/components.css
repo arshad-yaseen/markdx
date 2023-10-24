@@ -104,6 +104,31 @@
   transition: opacity 0.3s ease;
 }
 
+.dark .gradient-box {
+  box-shadow: 0px 0px 20px 0px rgba(236, 237, 238, 0.1) inset;
+  position: relative;
+  background: conic-gradient(
+    from calc(var(--r2) - 80deg) at var(--x) 20px,
+    #222 0%,
+    #fff 20%,
+    #222 25%
+  );
+  animation: -0.64s rotating2 2s linear infinite, -0.64s x 2s linear infinite;
+}
+
+.dark .gradient-box::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background: linear-gradient(hsl(0, 0%, 11%), hsl(0, 0%, 17.9%)) padding-box,
+    linear-gradient(to right, rgba(236, 237, 238, 0.4), hsl(0 0% 85.8%))
+      border-box;
+  inset: 2px;
+  border-radius: 45px;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
 @property --r {
   syntax: "<angle>";
   inherits: false;

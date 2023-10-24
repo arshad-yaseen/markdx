@@ -13,7 +13,7 @@ import { Button } from "./ui/button"
 function SiteHero() {
   return (
     <section className="flex w-full flex-col items-center ">
-      <div className="gradient-box mt-4 rounded-full border border-slate-200 bg-muted px-6 py-2.5 text-sm font-medium">
+      <div className="gradient-box mt-4 rounded-full px-6 py-2.5 text-sm font-medium">
         <span className="relative z-30">
           Now featuring support for GPT-4{" "}
           <SparklesIcon className="mb-1 inline-block h-4 w-4" />
@@ -24,13 +24,13 @@ function SiteHero() {
         className="mt-8  px-6   text-center font-heading text-4xl font-bold drop-shadow-sm sm:text-5xl lg:text-6xl"
       >
         <p className="relative inline-block">
-          <span className="z-0 bg-gradient-to-b from-black  to-black/70 bg-clip-text pb-1 text-transparent">
+          <span className="z-0 bg-gradient-to-b from-foreground  to-foreground/70 bg-clip-text pb-1 text-transparent dark:from-white dark:to-white">
             Magically
           </span>
         </p>{" "}
         {""}
         Supercharge Your <br /> Markdown with {""}
-        <span className="z-0 bg-gradient-to-r from-black to-black/60 bg-clip-text pb-1 text-transparent">
+        <span className="z-0 bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text pb-1 text-transparent dark:from-white dark:to-white">
           AI
         </span>
       </Balancer>
