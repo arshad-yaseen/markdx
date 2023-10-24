@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import React, { ChangeEvent, FormEvent, useState } from "react"
 import { monacoInstanceState } from "@/atoms/editor"
 import { editorAction, uploadFile } from "@/utils/editor"
 import { useAtomValue } from "jotai"
@@ -6,7 +6,7 @@ import { ChevronLeftIcon, ImageIcon, Loader2, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { UnsplashImageResponse } from "types"
-import { useLocalStorage } from "@/hooks/use-localstorage"
+import { useLocalStorage } from "@/lib/hooks/use-localstorage"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import {
   Select,
@@ -33,9 +33,7 @@ function EditorLeft() {
   const [isUploadingFile, setIsUploadingFile] = useState(false)
   const [isToolsPanelCollapsedStore, setIsToolsPanelCollapsedStore] =
     useLocalStorage("toolbar-collapse", "false")
-  const [isToolsPanelCollapsed, setIsToolsPanelCollapsed] = useState(
-    isToolsPanelCollapsedStore === "true" ? true : false
-  )
+  const [isToolsPanelCollapsed, setIsToolsPanelCollapsed] = useState(false)
   const [unsplashDialogOpen, setUnsplashDialogOpen] = useState(false)
   let imageQueries = ["minimalism", "nature", "mountains", "sky", "city"]
   let unsplashRandomQuery =
@@ -43,6 +41,12 @@ function EditorLeft() {
   let [unsplashImages, setUnsplashImages] = useState<UnsplashImageResponse[]>(
     []
   )
+
+  React.useEffect(() => {
+    setIsToolsPanelCollapsed(isToolsPanelCollapsedStore === "true")
+  }, [isToolsPanelCollapsedStore])
+
+  const uploadFileInputRef = React.useRef<HTMLInputElement>(null)
 
   async function handleUploadFile(event: ChangeEvent<HTMLInputElement>) {
     setIsUploadingFile(true)
@@ -114,18 +118,22 @@ function EditorLeft() {
                 disabled={isUploadingFile}
                 variant="outline"
                 className="relative h-10"
+                onClick={() => {
+                  uploadFileInputRef.current?.click()
+                }}
               >
                 {isUploadingFile && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}{" "}
                 {isUploadingFile ? "Uploading" : "Upload"} file
-                <Input
+              </Button>
+              <Input
                   onChange={handleUploadFile}
                   type="file"
-                  className="absolute h-fit w-fit cursor-pointer opacity-0"
+                  ref={uploadFileInputRef}
+                  className="sr-only"
                   accept="image/*,video/*"
                 />
-              </Button>
               <Dialog
                 open={unsplashDialogOpen}
                 onOpenChange={setUnsplashDialogOpen}

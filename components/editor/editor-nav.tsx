@@ -7,7 +7,7 @@ import copy from "copy-to-clipboard"
 import { useAtomValue } from "jotai"
 import { toast } from "sonner"
 
-import { editorCodeType } from "types"
+import { editorCode } from "types"
 
 import ModeToggle from "../mode-toggle"
 import { Button } from "../ui/button"
@@ -23,9 +23,9 @@ import SaveButton from "./save-button"
 
 function EditorNav() {
   const [isSaving, setIsSaving] = useState(false)
-  const editorCodes = useAtomValue(editorCodesState) satisfies editorCodeType[]
+  const editorCodes = useAtomValue(editorCodesState) satisfies editorCode[]
   const fullCode = editorCodes
-    .map((code: editorCodeType) => code.content)
+    .map((code: editorCode) => code.content)
     .join("\n\n") as string
 
   const handleExport = {

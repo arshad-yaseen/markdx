@@ -8,18 +8,21 @@ import { githubRepo } from "@/config/site"
 import { Icons } from "./icons"
 import SiteAssets from "./site-assets"
 import { Button } from "./ui/button"
+import { SparklesIcon } from "lucide-react"
 
 function SiteHero() {
   return (
     <section className="flex w-full flex-col items-center ">
+      <div className="px-6 py-2.5 mt-4 gradient-box bg-muted rounded-full border border-slate-200 font-medium text-sm">
+      <span className="relative z-30">
+      Now featuring support for GPT-4 <SparklesIcon  className="inline-block h-4 w-4 mb-1" />
+      </span>
+      </div>
       <Balancer
         as="h1"
-        className="mt-12  px-6   text-center font-heading text-4xl font-bold drop-shadow-sm sm:text-5xl lg:text-6xl"
+        className="mt-8  px-6   text-center font-heading text-4xl font-bold drop-shadow-sm sm:text-5xl lg:text-6xl"
       >
         <p className="relative inline-block">
-          <span className="absolute left-[70%] top-[15%] z-10 -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-5xl lg:text-6xl">
-            🪄
-          </span>
           <span className="z-0 bg-gradient-to-b from-black  to-black/70 bg-clip-text pb-1 text-transparent">
             Magically
           </span>

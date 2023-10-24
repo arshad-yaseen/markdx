@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from "react"
 import { marked } from "marked"
 
-import { OpenAIBody, UploadResponse, monacoInstanceType } from "types"
+import { OpenAIBody, UploadResponse, monacoInstance } from "types"
 import { env } from "@/env.mjs"
 import { editorConfig, shortcuts } from "@/config/editor"
 import { cloudinaryUpload } from "@/lib/apiClient"
@@ -43,27 +43,14 @@ export async function uploadFile(
         if (url) {
           let markdown
           if (isImage) {
-            markdown = `<!-- Choose what you want -->\n![${fileName}](${url.full_short_link})\n![${fileName}](${url.full_short_link2})\n![${fileName}](${url.full_short_link3})`
-
-            if (typeof url === "string") {
               markdown = `![${fileName}](${url})`
-            }
           } else {
-            markdown = `<video controls ><source src="${url.full_short_link3}" type="${selectedFile?.type}"></video>`
-
-            if (typeof url === "string") {
               markdown = `<video controls ><source src="${url}" type="video/mp4"></video>`
-            }
           }
 
           resolve({
-            markdown,
+            markdown: markdown || "",
             fileName,
-            urls: {
-              short_link: url.full_short_link,
-              shiny_link: url.full_short_link3,
-              short_link_2: url.full_short_link2,
-            },
             message: isImage
               ? "Images copied to clipboard"
               : "Video copied to clipboard",
@@ -75,42 +62,48 @@ export async function uploadFile(
       })
   })
 }
-
 export const OpenAICreateChat = async (body: OpenAIBody) => {
-  const response = await fetch("/api/openai-generate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ...body,
-    }),
-  })
+  try {
+    const response = await fetch("/api/openai-generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...body,
+      }),
+    })
 
-  if (!response.ok) {
-    console.error(response.statusText)
-    return {
-      err: true,
-      message: "Can't do this action. Try again!",
+    if (!response.ok) {
+      console.log("response not ok")
+
+      console.error(response.statusText)
+      return {
+        err: true,
+        message: "Can't do this action. Try again!",
+      }
     }
-  }
 
-  // This data is a ReadableStream
-  const data = response.body
-  if (!data) {
+    const data = response.body
+    return {
+      data,
+    }
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Fetch error:", error)
+    } else {
+      console.error("An unexpected error occurred:", error)
+    }
+
     return {
       err: true,
       message: "Something went wrong!",
     }
   }
-
-  return {
-    data,
-  }
 }
 
 export const editorAction = {
-  insertText: (text: string, monacoInstance: monacoInstanceType) => {
+  insertText: (text: string, monacoInstance: monacoInstance) => {
     if (monacoInstance) {
       const selection = monacoInstance.getSelection()
       const id = { major: 1, minor: 1 }
@@ -123,14 +116,14 @@ export const editorAction = {
       monacoInstance.executeEdits("", [op])
     }
   },
-  setText: (text: string, monacoInstance: monacoInstanceType) => {
+  setText: (text: string, monacoInstance: monacoInstance) => {
     monacoInstance.setValue(text)
   },
 }
 
 export const handleShortCut = (
   event: KeyboardEvent<HTMLDivElement>,
-  monacoInstance: monacoInstanceType
+  monacoInstance: monacoInstance
 ) => {
   if (event.metaKey && event.ctrlKey && event.key === "c") {
     event.preventDefault()

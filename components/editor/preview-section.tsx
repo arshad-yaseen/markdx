@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { previewSectionRefAtom } from "@/atoms/editor"
 import { useAtom } from "jotai"
 
-import EditorSkeleton from "./skeleton"
+import { useLocalStorage } from "@/lib/hooks/use-localstorage"
 
 const BORDER_SIZE = 4
 
@@ -12,11 +12,20 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
   const [, setPreviewSectionRefState] = useAtom(previewSectionRefAtom)
   const mPos = useRef<number | null>(null)
   const previewSectionRef = useRef<HTMLDivElement>(null)
+  const [previewSectionWidth, setPreviewSectionWidth] = useLocalStorage("preview-section-width", "0px")
 
   // Set preview section ref
   useEffect(() => {
     setPreviewSectionRefState(previewSectionRef)
   }, [previewSectionRef])
+
+  // Set preview section width  
+  useEffect(() => {
+    const panel = previewSectionRef?.current
+    if (panel) {
+      panel.style.width = previewSectionWidth
+    }
+  }, [previewSectionWidth])
 
   // Resize preview section
   useEffect(() => {
@@ -40,6 +49,7 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
 
     const handleMouseUp = () => {
       mPos.current = null
+      setPreviewSectionWidth(getComputedStyle(panel!).width)
       document.removeEventListener("mousemove", resize)
     }
 
@@ -58,8 +68,15 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
       ref={previewSectionRef}
       className="preview-section relative flex  h-full w-full flex-col overflow-scroll border-l border-t px-12 py-8 lg:w-[36%] lg:min-w-[25%]  lg:border-t-0"
     >
-      <div className="absolute left-0 top-0 h-full w-1 cursor-ew-resize"></div>
-      {loading && <EditorSkeleton />}
+      <div className="absolute left-0 top-0 h-full w-1 cursor-ew-resize hover:bg-foreground transition-colors duration-300"></div>
+     {
+      loading && (
+        <div className="absolute left-0 top-0 h-full w-full flex items-center justify-center">
+        Loading...
+    </div>
+      )
+     }
+
       <ParseMarkdown code={code} codeCopyable className="pb-[80vh]" />
     </div>
   )

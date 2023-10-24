@@ -7,9 +7,9 @@ import {
   editorCodesState,
   previewSectionRefAtom,
 } from "@/atoms/editor"
-import { editorCodeType } from "@/types"
+import { editorCode } from "@/types"
 import { useAtom, useAtomValue } from "jotai"
-import { Edit2Icon, XIcon } from "lucide-react"
+import { PenLine, XIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { handleSave } from "@/lib/utils"
@@ -89,7 +89,7 @@ function EditorSectionsPanel() {
       0: { value: string }
     }
     const renamedTitle = target[0].value
-    const newEditorCodes = editorCodes.map((code: editorCodeType) => {
+    const newEditorCodes = editorCodes.map((code: editorCode) => {
       if (code.section_id === editorActiveSection) {
         return {
           ...code,
@@ -113,7 +113,7 @@ function EditorSectionsPanel() {
     const id = setTimeout(async () => {
       setIsHoldedDeleteButton(true)
       const newEditorCodes = editorCodes.filter(
-        (item: editorCodeType) => item.section_id !== editorActiveSection
+        (item: editorCode) => item.section_id !== editorActiveSection
       )
       setEditorCodes(newEditorCodes)
       setEditorActiveSection(
@@ -131,6 +131,7 @@ function EditorSectionsPanel() {
       toast.message("Hold for 1 second to delete")
     }
   }
+
 
   return (
     <div className="animate-opacity-in flex min-h-full w-full items-center justify-center space-x-3">
@@ -218,7 +219,7 @@ function EditorSectionsPanel() {
               size="icon"
               className="h-10 w-10"
             >
-              <Edit2Icon className="h-3.5 w-3.5" />
+              <PenLine className="h-4 w-4" />
             </Button>
           </DialogTrigger>
           <DialogContent className="flex flex-col items-center">

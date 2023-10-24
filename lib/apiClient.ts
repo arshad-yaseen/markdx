@@ -1,4 +1,3 @@
-import { CloudinaryUploadResponse } from "types"
 import { env } from "@/env.mjs"
 
 export const getRepo = async (owner: string, repo: string) => {
@@ -12,7 +11,7 @@ export const getRepo = async (owner: string, repo: string) => {
 
 export const cloudinaryUpload = async (
   file: File
-): Promise<CloudinaryUploadResponse | undefined> => {
+): Promise<string | undefined> => {
   if (!file || (!file.type.includes("image") && !file.type.includes("video"))) {
     return undefined
   }
@@ -23,6 +22,7 @@ export const cloudinaryUpload = async (
   formData.append("cloud_name", env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!)
 
   try {
+
     const res = await fetch(
       `https://api.cloudinary.com/v1_1/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}/${
         file.type.includes("image") ? "image" : "video"
@@ -34,16 +34,25 @@ export const cloudinaryUpload = async (
     )
 
     const image = await res.json()
-    const shortenedLink = await fetch(
-      `https://api.shrtco.de/v2/shorten?url=${image.secure_url}`
-    )
 
-    if (shortenedLink.ok) {
-      const responseJson = await shortenedLink.json()
-      return responseJson.result
-    } else {
+    const urlBaeRes = await fetch("/api/shorten-url",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url: image.secure_url,
+      }),
+    })
+
+    const urlBae = await urlBaeRes.json()
+
+    if(urlBae.error){
       return image.secure_url
+    } else {
+      return urlBae.shorturl
     }
+
   } catch (err) {
     console.error(err)
     return undefined

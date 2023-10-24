@@ -17,7 +17,8 @@ export const env = createEnv({
     DATABASE_URL: z.string().min(1),
     REDIS_URL: z.string().optional(),
     GOOGLE_CLIENT_ID: z.string().optional(),
-    GOOGLE_CLIENT_SECRET: z.string().optional()
+    GOOGLE_CLIENT_SECRET: z.string().optional(),
+    URLBAE_API_KEY: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().optional(),
@@ -46,6 +47,7 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     REDIS_URL: process.env.REDIS_URL,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    URLBAE_API_KEY: process.env.URLBAE_API_KEY,
   },
 })

@@ -2,9 +2,9 @@ import { RefObject } from "react"
 import { atom } from "jotai"
 import { editor } from "monaco-editor"
 
-import { editorCodeType } from "types"
+import { editorCode } from "types"
 
-export const editorCodesState = atom<editorCodeType[]>([])
+export const editorCodesState = atom<editorCode[]>([])
 
 export const editorActiveSectionState = atom(0)
 

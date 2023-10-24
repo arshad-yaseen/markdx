@@ -37,9 +37,9 @@ export const EmailSignInTemplate = ({
         <Heading style={heading}>Welcome Again to {productName}</Heading>
         <Section style={body}>
           <Text style={paragraph}>
-          <Button pY={11} pX={23} style={button} href={magicLink}>
-            Click here
-          </Button>
+            <Button pY={11} pX={23} style={button} href={magicLink}>
+              Click here
+            </Button>
           </Text>
           <Text style={paragraph}>
             If you didn&apos;t request this, please ignore this email.
@@ -86,12 +86,12 @@ const paragraph = {
   lineHeight: "26px",
 }
 const button = {
-  backgroundColor: '#000',
-  borderRadius: '3px',
-  fontWeight: '600',
-  color: '#fff',
-  fontSize: '15px',
-  textDecoration: 'none',
-  textAlign: 'center' as const,
-  display: 'block',
-};
+  backgroundColor: "#000",
+  borderRadius: "3px",
+  fontWeight: "600",
+  color: "#fff",
+  fontSize: "15px",
+  textDecoration: "none",
+  textAlign: "center" as const,
+  display: "block",
+}

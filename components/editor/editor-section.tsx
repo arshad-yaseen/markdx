@@ -5,10 +5,8 @@ import { useTheme } from "next-themes"
 
 import "@/styles/editor.css"
 import { editorSelectedContentAtom, monacoInstanceState } from "@/atoms/editor"
-import { monacoInstanceType } from "@/types"
+import { monacoInstance } from "@/types"
 import { useAtom } from "jotai"
-
-import EditorSkeleton from "./skeleton"
 
 function EditorSection({
   markdown,
@@ -24,7 +22,7 @@ function EditorSection({
 
   const [, setEditorSelectedContent] = useAtom(editorSelectedContentAtom)
 
-  const editorMount: OnMount = (editorL: monacoInstanceType) => {
+  const editorMount: OnMount = (editorL: monacoInstance) => {
     setMonacoInstance(editorL)
     // Set the selected text in the editor
     editorL.onDidChangeCursorSelection((e) => {
@@ -37,17 +35,17 @@ function EditorSection({
     onCodeChange(value || "")
   }
 
+
   return (
     <div className="relative flex h-[50%] w-full flex-1 flex-col items-center lg:h-full lg:w-[46%]">
-      {loading && <EditorSkeleton className="px-14" />}
 
       <Editor
         language="markdown"
         value={markdown}
         onMount={editorMount}
         theme={resolvedTheme === "dark" ? "vs-dark" : "vs-light"}
-        loading={<EditorSkeleton className="px-14" />}
         onChange={handleEditorChange}
+        loading="Loading..."
         options={{
           minimap: {
             enabled: false,
@@ -67,6 +65,7 @@ function EditorSection({
           folding: false,
           renderLineHighlight: "none",
           fontSize: 14,
+          readOnly: loading,
           padding: {
             top: 48,
             bottom: 650,

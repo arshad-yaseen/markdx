@@ -1,17 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { monacoInstanceState } from "@/atoms/editor"
+import { editorSelectedContentAtom, monacoInstanceState } from "@/atoms/editor"
 import { listLanguages } from "@/utils/world-languages"
 import { useAtomValue } from "jotai"
 import { toast } from "sonner"
 
 import "@/styles/mdx.css"
-import { OpenAICreateChat } from "@/utils/editor"
+import { OpenAICreateChat, editorAction } from "@/utils/editor"
+import { PopoverClose } from "@radix-ui/react-popover"
 
 import { OpenAIBody } from "types"
 import { AIConfig } from "@/config/editor"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,19 +24,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import CopyButton from "../copy-button"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import AskAI from "./ask-ai"
-import ParseMarkdown from "./parse-markdown"
 
 function AITools() {
   const [requestingToAPI, setRequestingToAPI] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [generatedText, setGeneratedText] = useState("")
-  const [windowSelection, setWindowSelection] = useState("")
   const [worldlanguages, setWorldLanguages] = useState([])
   const monacoInstance = useAtomValue(monacoInstanceState)
+  const editorSelectedContent = useAtomValue(editorSelectedContentAtom)
 
   const getLanguages = async () => {
     const languages = await listLanguages()
@@ -44,13 +40,22 @@ function AITools() {
   }
 
   useEffect(() => {
-    window.onselect = () => {
-      setWindowSelection(window.getSelection()?.toString()!)
-    }
     getLanguages()
   }, [])
 
-  const handleClick = async (options: OpenAIBody) => {
+  const handleClick = async (
+    options: OpenAIBody,
+    action: "insert" | "set" | "insert-before" = "insert"
+  ) => {
+    if (requestingToAPI) {
+      return toast.message("Please wait for current action to finish")
+    } else if (!editorSelectedContent) {
+      return toast.message("Please select a text or code")
+    }
+    const loadingToast = toast.loading("Thinking just for you...", {
+      duration: 1000000000,
+      position: "bottom-center",
+    })
     setRequestingToAPI(true)
     if (requestingToAPI) return
     const body = {
@@ -59,150 +64,134 @@ function AITools() {
     const res = await OpenAICreateChat(body)
     if (res?.err) {
       toast.error(res?.message)
+      setRequestingToAPI(false)
+      toast.dismiss(loadingToast)
       return
     }
-    const data = res.data
+
+    let stopGeneration = false
+
+    toast.dismiss(loadingToast)
+
+    // show the toast with 'Stop Generating' button
+    const stopToast = toast("Stop Generating", {
+      action: {
+        label: "Stop",
+        onClick: () => {
+          toast.dismiss(stopToast)
+          setRequestingToAPI(false)
+          stopGeneration = true
+        },
+      },
+      position: "bottom-center",
+      duration: 1000000000,
+    })
+
+    const data = res?.data
     const reader = data?.getReader()
     const decoder = new TextDecoder()
     let done = false
-    while (!done) {
+    while (!done && !stopGeneration) {
       const { value, done: doneReading } = (await reader?.read()) as any
       done = doneReading
       const chunkValue = decoder.decode(value)
-      setGeneratedText((prev) => prev + chunkValue)
+      if (action === "insert" || action === "insert-before") {
+        editorAction.insertText(chunkValue, monacoInstance!)
+      } else if (action === "set") {
+        editorAction.setText(chunkValue, monacoInstance!)
+      }
+    }
+    if (action === "insert-before") {
+      editorAction.insertText(`\n${editorSelectedContent}`, monacoInstance!)
     }
     setRequestingToAPI(false)
+    toast.dismiss(stopToast)
   }
 
   return (
     <>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="flex max-h-[700px] min-h-[300px] min-w-[650px] flex-col space-y-2 overflow-y-scroll !rounded-xl p-6">
-          <CopyButton
-            value={generatedText}
-            copyable={true}
-            isBlockHovered={true}
-            className="right-6 top-4"
-          />
-          {generatedText ? (
-            <ParseMarkdown
-              code={generatedText}
-              codeClass="leading-6 text-sm text-slate-500"
-            />
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              {requestingToAPI ? "Thinking..." : "No text generated"}
-            </p>
-          )}
-        </DialogContent>
-      </Dialog>
+      {/* <div className="w-screen bg-red-500 h-16 absolute bottom-0 left-0 flex justify-center items-center z-50">
+      <Button
+        variant={"outline"}
+        className="flex justify-center px-6"
+        >
 
-      <div className="space-y-2">
+          Stop Generating
+        </Button>
+    </div> */}
+      <div className="space-y-4">
         <Button
           onClick={() => {
-            setGeneratedText("")
-            if (requestingToAPI) {
-              toast.message("Please wait for current response to finish")
-            } else {
-              const editorSelectedCode = window.getSelection()?.toString()
-              const options = {
-                prompt: {
-                  system: AIConfig.prompts[0].system.regular || "",
-                  user: editorSelectedCode
-                    ? editorSelectedCode
-                    : monacoInstance?.getValue()!,
-                },
-                max_tokens: 10000,
-              }
-              handleClick(options)
-              setIsDialogOpen(true)
+            const editorSelectedCode = window.getSelection()?.toString()
+            console.log(editorSelectedCode || "wfwef")
+
+            const options = {
+              prompt: {
+                system: AIConfig.prompts[0].system.regular || "",
+                user: editorSelectedCode!,
+              },
+              max_tokens: 1000,
             }
+            handleClick(options)
           }}
           variant="outline"
-          className="flex h-10 w-full justify-center px-6  "
+          className="flex w-full justify-center px-6  "
         >
           Standardize
         </Button>
         <Button
           onClick={() => {
-            setGeneratedText("")
-            if (requestingToAPI) {
-              toast.message("Please wait for current response to finish")
-            } else {
-              const editorSelectedCode = window.getSelection()?.toString()
-              const options = {
-                prompt: {
-                  system: AIConfig.prompts[1].system.regular || "",
-                  user: `This is the text or markdown to make short => \`${
-                    editorSelectedCode
-                      ? editorSelectedCode
-                      : monacoInstance?.getValue()
-                  }\``,
-                },
-                max_tokens: editorSelectedCode
-                  ? editorSelectedCode.split(" ").length! * 2
-                  : monacoInstance?.getValue().split(" ").length! * 2,
-              }
-              handleClick(options)
-              setIsDialogOpen(true)
+            const editorSelectedCode = window.getSelection()?.toString()
+            console.log(editorSelectedCode || "wfwef")
+            const options = {
+              prompt: {
+                system: AIConfig.prompts[1].system.regular || "",
+                user: `This is the text or markdown to make short => \`${editorSelectedCode}\``,
+              },
+              max_tokens: editorSelectedCode?.split(" ").length! * 2,
             }
+            handleClick(options)
           }}
           variant="outline"
-          className="flex h-10 w-full justify-center px-6 "
+          className="flex w-full justify-center px-6 "
         >
           Make short
         </Button>
         <Button
           onClick={() => {
-            setGeneratedText("")
-            if (requestingToAPI) {
-              toast.message("Please wait for current response to finish")
-            } else {
-              const editorSelectedCode = window.getSelection()?.toString()
-              const options = {
-                prompt: {
-                  system: AIConfig.prompts[2].system.regular || "",
-                  user: `This is the text or markdown to explain => \`${
-                    editorSelectedCode
-                      ? editorSelectedCode
-                      : monacoInstance?.getValue()
-                  }\``,
-                },
-                max_tokens: 1000,
-              }
-              handleClick(options)
-              setIsDialogOpen(true)
+            const editorSelectedCode = window.getSelection()?.toString()
+            const options = {
+              prompt: {
+                system: AIConfig.prompts[2].system.regular || "",
+                user: `This is the text or markdown to explain => \`${editorSelectedCode}\``,
+              },
+              max_tokens: 1000,
             }
+            handleClick(options)
           }}
           variant="outline"
-          className="flex h-10 w-full justify-center px-6 "
+          className="flex w-full justify-center px-6 "
         >
           Explain
         </Button>
         <Button
           onClick={() => {
-            setGeneratedText("")
-            if (requestingToAPI) {
-              toast.message("Please wait for current response to finish")
+            const editorSelectedCode = window.getSelection()?.toString()
+            if (!editorSelectedCode) {
+              toast.message("Please select a code")
             } else {
-              const editorSelectedCode = window.getSelection()?.toString()
-              if (!editorSelectedCode) {
-                toast.error("Please select a code")
-              } else {
-                const options = {
-                  prompt: {
-                    system: `${AIConfig.prompts[3].system.detailed}. then after ${AIConfig.prompts[3].system.simple}. Must use space between devide`,
-                    user: `This is the text or markdown to document => \`${editorSelectedCode}\``,
-                  },
-                  max_tokens: editorSelectedCode?.length! * 3,
-                }
-                handleClick(options)
-                setIsDialogOpen(true)
+              const options = {
+                prompt: {
+                  system: `${AIConfig.prompts[3].system.detailed}. then after ${AIConfig.prompts[3].system.simple}. Must use space between devide`,
+                  user: `This is the text or markdown to document => \`${editorSelectedCode}\``,
+                },
+                max_tokens: editorSelectedCode?.length! * 3,
               }
+              handleClick(options, "insert-before")
             }
           }}
           variant="outline"
-          className="flex h-10 w-full justify-center px-6 "
+          className="flex w-full justify-center px-6 "
         >
           Document code
         </Button>
@@ -214,26 +203,20 @@ function AITools() {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                setGeneratedText("")
-                if (requestingToAPI) {
-                  toast.message("Please wait for current response to finish")
+                const formData = new FormData(e.target as HTMLFormElement)
+                const { to } = Object.fromEntries(formData.entries())
+                const code_for_convert = editorSelectedContent
+                if (!code_for_convert) {
+                  toast.message("Please select a code")
                 } else {
-                  const formData = new FormData(e.target as HTMLFormElement)
-                  const { to } = Object.fromEntries(formData.entries())
-                  const code_for_convert = windowSelection
-                  if (!code_for_convert) {
-                    toast.error("Please select a code")
-                  } else {
-                    const options = {
-                      prompt: {
-                        system: `Please convert the provided code ${to}`,
-                        user: `This is the code for convert => \`${code_for_convert}\``,
-                      },
-                      max_tokens: code_for_convert?.length! * 5,
-                    }
-                    handleClick(options)
-                    setIsDialogOpen(true)
+                  const options = {
+                    prompt: {
+                      system: `Please convert the provided code ${to}`,
+                      user: `This is the code for convert => \`${code_for_convert}\``,
+                    },
+                    max_tokens: code_for_convert?.length! * 5,
                   }
+                  handleClick(options)
                 }
               }}
             >
@@ -244,36 +227,28 @@ function AITools() {
                 defaultValue="To "
                 autoFocus
               />
-              <Button variant="outline" className="mt-3 w-full">
-                Convert
-              </Button>
+              <PopoverClose>
+                <Button variant="outline" className="mt-3 w-full">
+                  Convert
+                </Button>
+              </PopoverClose>
             </form>
           </PopoverContent>
         </Popover>
         <Button
           onClick={() => {
-            setGeneratedText("")
-            if (requestingToAPI) {
-              toast.message("Please wait for current response to finish")
-            } else {
-              const editorSelectedCode = window.getSelection()?.toString()
-              const options = {
-                prompt: {
-                  system: AIConfig.prompts[4].system.regular || "",
-                  user: `This is the text or markdown to correct grammar => \`${
-                    editorSelectedCode
-                      ? editorSelectedCode
-                      : monacoInstance?.getValue()
-                  }\``,
-                },
-                max_tokens: 500,
-              }
-              handleClick(options)
-              setIsDialogOpen(true)
+            const editorSelectedCode = window.getSelection()?.toString()
+            const options = {
+              prompt: {
+                system: AIConfig.prompts[4].system.regular || "",
+                user: `This is the text or markdown to correct grammar => \`${editorSelectedCode}\``,
+              },
+              max_tokens: 500,
             }
+            handleClick(options)
           }}
           variant="outline"
-          className="flex h-10 w-full justify-center px-6 "
+          className="flex w-full justify-center px-6 "
         >
           Correct grammar
         </Button>
@@ -283,7 +258,7 @@ function AITools() {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <div className="h-[400px] w-fit overflow-y-scroll">
-              {Object.values(worldlanguages).map(
+              {worldlanguages.map(
                 (
                   language: {
                     name: string
@@ -293,27 +268,20 @@ function AITools() {
                   return (
                     <DropdownMenuItem
                       onClick={() => {
-                        setGeneratedText("")
-                        if (requestingToAPI) {
-                          toast.message(
-                            "Please wait for current response to finish"
-                          )
-                        } else {
-                          const selectedText = windowSelection
-                          const options = {
-                            prompt: {
-                              system:
-                                AIConfig.prompts[5].system.regular?.replace(
-                                  "{language}",
-                                  language.name
-                                ) || "",
-                              user: selectedText,
-                            },
-                            max_tokens: selectedText?.length! * 6,
-                          }
-                          handleClick(options)
-                          setIsDialogOpen(true)
+                        const selectedText = editorSelectedContent
+                        const options = {
+                          prompt: {
+                            system:
+                              AIConfig.prompts[5].system.regular?.replace(
+                                "{language}",
+                                language.name
+                              ) || "",
+                            user: selectedText,
+                          },
+                          max_tokens: selectedText?.length! * 6,
                         }
+
+                        handleClick(options)
                       }}
                       key={index}
                     >

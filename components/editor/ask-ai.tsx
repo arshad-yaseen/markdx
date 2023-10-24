@@ -5,13 +5,21 @@ import { editorSelectedContentAtom } from "@/atoms/editor"
 import { OpenAICreateChat } from "@/utils/editor"
 import copy from "copy-to-clipboard"
 import { useAtomValue } from "jotai"
-import { MoreHorizontalIcon, SendIcon, SparklesIcon } from "lucide-react"
+import {
+  CopyCheckIcon,
+  CopyIcon,
+  MoreHorizontalIcon,
+  SendIcon,
+  SparklesIcon,
+  SquareIcon,
+} from "lucide-react"
 import { toast } from "sonner"
 
-import { ChatType, OpenAIBody } from "types"
+import { Chat, OpenAIBody } from "types"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 
+import { ChatScrollAnchor } from "../chat-scroll-anchor"
 import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -28,7 +36,7 @@ function AskAI() {
 
   const editorSelectedContent = useAtomValue(editorSelectedContentAtom)
 
-  const [chats, setChats] = useState<ChatType[]>([
+  const [chats, setChats] = useState<Chat[]>([
     {
       id: 1,
       user: "Hello, How can i help you?",
@@ -48,6 +56,8 @@ function AskAI() {
     if (editorSelectedContent) {
       editorSelectedContent = editorSelectedContent
       userPromptText += `\nThis:\n${editorSelectedContent}`
+      // ask ai to rewrite the markdown in code block
+      systemPrompt += `\nIMPORTANT:\nShould be the response markdown in markdown code and codeblock`
     }
 
     if (previousGenerations) {
@@ -62,6 +72,8 @@ function AskAI() {
       max_tokens: 1000,
     }
   }
+
+  let stopGenerating = useRef<boolean>(false)
 
   const handleChat = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -103,6 +115,7 @@ function AskAI() {
         // Handle any errors returned by the API
         if (res?.err) {
           toast.error(res?.message)
+          setRequestingToAPI(false)
           return
         }
 
@@ -115,6 +128,9 @@ function AskAI() {
 
         // Read the response data stream and update the chats state as chunks arrive
         while (!done) {
+          if (stopGenerating.current) {
+            break
+          }
           const { value, done: doneReading } = (await reader?.read()) as any
           done = doneReading
           const chunkValue = decoder.decode(value)
@@ -124,9 +140,10 @@ function AskAI() {
               chat.id === chats.length + 1 ? { ...chat, ai: aiResponse } : chat
             )
           )
-          const chat = chatWrapper.current as any
-          chat.scrollTop = chat.scrollHeight
+          // const chat = chatWrapper.current as any
+          // chat.scrollTop = chat.scrollHeight
         }
+        stopGenerating.current = false
         setRequestingToAPI(false)
         setPreviousGenerations(
           `${previousGenerations},\n\nQuestion: ${user_prompt.toString()}\nAnswer: ${aiResponse}`
@@ -145,7 +162,11 @@ function AskAI() {
     setChats([
       {
         id: 1,
-        user: "Hello, How can i help you?",
+        user: `${
+          editorSelectedContent
+            ? "How can i help you with this markdown?"
+            : "Hello, How can i help you?"
+        }`,
         ai: "",
       },
     ])
@@ -165,7 +186,6 @@ function AskAI() {
             ref={chatWrapper}
             className="no-scrollbar w-full flex-1 flex-col overflow-scroll"
           >
-            <h1 className="py-3 font-heading text-2xl">MarkGPT</h1>
             {chats.map((chat, index) => {
               return (
                 <div key={index}>
@@ -193,28 +213,49 @@ function AskAI() {
                 </div>
               )
             })}
+            <ChatScrollAnchor trackVisibility={generating} />
           </div>
           <form
             onSubmit={handleChat}
             className="absolute bottom-0 flex h-36 w-full flex-col items-center justify-center space-y-2 rounded-xl bg-background px-8"
           >
-            <Button
-              onClick={() => {
-                copy(chats[chats.length - 1].ai)
-                setCopied(true)
-                setTimeout(() => {
-                  setCopied(false)
-                }, 1000)
-              }}
-              className={cn("invisible absolute top-0 w-fit opacity-0", {
-                "visible opacity-100": !generating && previousGenerations,
-              })}
-              variant={"outline"}
-            >
-              {copied ? "Copied!" : "Copy answer"}
-            </Button>
-
             <div className="relative flex w-full items-center">
+              <Button
+                onClick={() => {
+                  copy(chats[chats.length - 1].ai)
+                  setCopied(true)
+                  setTimeout(() => {
+                    setCopied(false)
+                  }, 1000)
+                }}
+                className={cn(
+                  "invisible absolute top-[-100%] w-fit opacity-0",
+                  {
+                    "visible opacity-100": !generating && previousGenerations,
+                  }
+                )}
+                variant={"outline"}
+              >
+                {!copied ? (
+                  <CopyIcon className="mr-2 h-3.5 w-3.5" />
+                ) : (
+                  <CopyCheckIcon className="mr-2 h-3.5 w-3.5" />
+                )}
+                {copied ? "Copied!" : "Copy answer"}
+              </Button>
+              {!stopGenerating.current && generating && (
+                <Button
+                  variant={"outline"}
+                  className="absolute top-[-100%] w-fit"
+                  onClick={() => {
+                    stopGenerating.current = true
+                    setGenerating(false)
+                  }}
+                >
+                  <SquareIcon className="mr-2 h-3.5 w-3.5" />
+                  Stop Generating
+                </Button>
+              )}
               <Input
                 autoComplete="off"
                 spellCheck={false}
@@ -244,7 +285,8 @@ function AskAI() {
           "flex h-10 w-full justify-center px-6 transition-colors duration-200"
         )}
       >
-        <SparklesIcon className="mr-2 h-4 w-4" /> Chat with AI
+        <SparklesIcon className="mr-2 h-4 w-4" />{" "}
+        {editorSelectedContent ? "Ask AI" : "Chat with AI"}
       </Button>
     </div>
   )

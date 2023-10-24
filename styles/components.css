@@ -79,3 +79,63 @@
 .fancy-button:hover::after {
   transform: translateY(-100%);
 }
+
+.gradient-box {
+  box-shadow: 0px 0px 20px 0px rgba(20, 20, 20, 0.1) inset;
+  position: relative;
+  background: conic-gradient(
+    from calc(var(--r2) - 80deg) at var(--x) 20px,
+    #fff 0%,
+    #707070 20%,
+    #fff 25%
+  );
+  animation: -0.64s rotating2 2s linear infinite, -0.64s x 2s linear infinite;
+}
+
+.gradient-box::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(to right, rgba(20, 20, 20, 0.4), hsl(0 0% 14.2%)) border-box;
+  inset: 1.5px;
+  border-radius: 45px;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+@property --r {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --r2 {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes x {
+  0% {
+    --x: 20px;
+  }
+  100% {
+    --x: 20px;
+  }
+}
+
+@keyframes rotating2 {
+  0% {
+    --r2: 0deg;
+  }
+  100% {
+    --r2: 360deg;
+  }
+}

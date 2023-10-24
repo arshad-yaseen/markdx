@@ -9,13 +9,13 @@ export const defaultEditorContent = {
   section: "Introduction",
   content: `# Project Title\n\nA brief description of what this project does.`,
 }
-export const openai_model = "gpt-3.5-turbo-16k-0613"
+export const openai_model = "gpt-4"
 
 export const AIConfig: AIConfigType = {
   prompts: [
     {
       system: {
-        regular: `Your task is to revise the given markdown or text with the goal of improving its standard and professional tone, language, and style. To accomplish this, your revision should comply with best practices in grammar, syntax, punctuation, and usage, while also removing any errors, inconsistencies, or ambiguities in the original text or markdown. Furthermore, your revision must ensure that the markdown is suitable for its intended audience and purpose, and that it delivers its message clearly, effectively, and convincingly. Advanced markdown syntaxes should be used where appropriate.`,
+        regular: `Your assignment is to refine the provided markdown or text, enhancing its professionalism, language, and overall tone. In order to achieve this, your revisions should adhere to best practices in grammar, syntax, punctuation, and usage, while also rectifying any inaccuracies, inconsistencies, or ambiguities present in the initial text or markdown. Additionally, it is imperative that your revised markdown is aptly tailored to its intended audience and purpose, ensuring that the message is conveyed with clarity, efficacy, and persuasion. Employ advanced markdown syntaxes as deemed necessary.`,
       },
     },
     {
@@ -25,48 +25,44 @@ export const AIConfig: AIConfigType = {
     },
     {
       system: {
-        regular: `Your objective is to provide a comprehensive explanation of a piece of markdown or text. also include the code in document, focusing on enhancing its concision, clarity, and readability. Your aim is to create a more sophisticated, polished, and professional rendition of the text. To accomplish this, you should consider refining the language, structure, and style of the original text, in order to convey its message in a more detailed and effective manner. How can you refine the text to achieve a superior and more advanced outcome?`,
+        regular: `Your task is to furnish a detailed elucidation of the provided markdown or text, incorporating the code in the document, while prioritizing conciseness, clarity, and readability. Strive to produce a refined, polished, and professional version of the text. This entails enhancing the language, structure, and style of the original content to effectively communicate its message with greater precision. Reflect on how you can elevate the text to achieve a more sophisticated and advanced result.`,
       },
     },
     {
       system: {
-        detailed: `Please create a comprehensive technical document explaining how to use the provided code. The document should be easy to understand for advanced developers and be suitable for use in technical documentation. It should not contain any code or markdown syntax and should be limited to a maximum of 60 words.`,
-        simple: `Please write a concise and simple technical document of how to use the provided code. The document should be easily understandable by an advanced developer and should not contain any code or markdown syntax. The length of the document should not exceed 25 words.`,
+        detailed: `
+        Draft a detailed technical document elucidating the application of the given code. The document should cater to the understanding of advanced developers and be apt for integration into technical documentation. Please refrain from including any code or markdown syntax. Limit your document to a maximum of 60 words.`,
+        simple: `Draft a clear and concise guide on utilizing the given code, ensuring it's accessible for advanced developers. Omit any code or markdown syntax, and keep the document under 25 words.`,
       },
     },
     {
       system: {
-        regular: `Please write a clear and grammatically correct version of the following markdown.
-            If needed, consider correcting issues related to subject-verb agreement, pronoun usage, verb tense consistency, punctuation, and overall clarity.
-            Your goal is to create a version of the markdown that is easy to understand and free of any errors.
+        regular: `Please write a clear, grammatically correct version of the following markdown. Address potential issues related to subject-verb agreement, pronoun usage, verb tense consistency, punctuation, and overall clarity. Your objective is to produce a version that is straightforward and free from errors.
 
-            Instructions:
-
-              - Analyze and correct any grammatical errors in the following markdown.
-              - Please provide the corrected version of the markdown.
-              - The generated version should only the answer
-              
-              Guidelines for correcting the markdown:
-              
-              - Check for subject-verb agreement.
-              - Check for pronoun usage.
-              - Check for verb tense consistency.
-              - Check for punctuation errors.
-              - Ensure the sentence is clear and concise.`,
+        Instructions:
+        
+        - Review and rectify any grammatical mistakes in the given markdown.
+        - Supply the amended version of the markdown.
+        - Your response should be the corrected answer.
+        - Guidelines for revising the markdown:
+        
+        - Verify subject-verb agreement.
+        - Examine pronoun usage.
+        - Ensure verb tense consistency.
+        - Correct any punctuation errors.
+        - Aim for clarity and brevity in sentences.`,
       },
     },
     {
       system: {
-        regular: `
-          Task: Translate the provided text accurately into the {language} while maintaining the original meaning and adhering to the grammatical rules and linguistic conventions of the {language}. The translation should be readable and comprehensible to a native speaker of the {language}, and free of errors, mistranslations, or omissions that could lead to confusion or misunderstanding. Additionally, the translation should be culturally appropriate and sensitive to any nuances or subtleties that may be unique to the {language} or culture.
+        regular: `Task: Your goal is to translate the provided text into {language}, ensuring that you preserve the original meaning while adhering to the grammatical rules and linguistic conventions of {language}. Your translation should be clear, easily understood by native speakers, and free from errors, mistranslations, or omissions that could lead to confusion. Additionally, your translation should be culturally relevant and sensitive to any unique nuances or subtleties of the {language} or its associated culture.
 
-          Instructions:
-          
-          Read the provided text carefully and ensure that you understand its meaning.
-          Translate the text into the {language}, using appropriate grammar, vocabulary, and sentence structure.
-          Review your translation to ensure that it accurately conveys the original meaning, is free of errors, and adheres to the linguistic conventions of the {language}.
-          
-          Consider any cultural nuances or subtleties that may be unique to the {language} or culture, and ensure that your translation is culturally appropriate and sensitive.`,
+Instructions:
+
+- Carefully read and comprehend the meaning of the provided text.
+- Translate the text into {language}, ensuring the use of proper grammar, vocabulary, and sentence structure.
+- Review your translation to verify accuracy in conveying the original meaning, adherence to linguistic conventions, and the absence of errors.
+- Consider any cultural nuances or subtleties specific to {language} or its culture, ensuring your translation is culturally appropriate and sensitive.`,
       },
     },
   ],

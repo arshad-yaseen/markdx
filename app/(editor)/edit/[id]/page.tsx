@@ -10,7 +10,7 @@ import {
 import { handleShortCut } from "@/utils/editor"
 import { useAtom, useAtomValue } from "jotai"
 
-import { editorCodeType } from "types"
+import { editorCode } from "types"
 import { defaultEditorContent } from "@/config/editor"
 import EditorSection from "@/components/editor/editor-section"
 import PreviewSection from "@/components/editor/preview-section"
@@ -38,8 +38,8 @@ export default function page({ params }: { params: { id: string } }) {
     })
 
     if (!response?.ok) {
-      // The User dont have a access to this markdown
-      return router.push("/")
+      router.push("/markdown-not-found")
+      return
     }
 
     const markdownPost = await response.json()
@@ -48,33 +48,34 @@ export default function page({ params }: { params: { id: string } }) {
       let code = markdownPost.postCodes
       setEditorCodes(code)
       code
-        .filter((code: editorCodeType) => {
+        .filter((code: editorCode) => {
           return code.section_id === editorActiveSection
         })
-        .map((code: editorCodeType) => {
+        .map((code: editorCode) => {
           setMarkdownCode(code.content)
         })
+        setLoading(false)
     } else {
-      const defaultCode = [defaultEditorContent] as editorCodeType[]
+      const defaultCode = [defaultEditorContent] as editorCode[]
 
       defaultCode
-        .filter((code: editorCodeType) => {
+        .filter((code: editorCode) => {
           return code.section_id === editorActiveSection
         })
-        .map((code: editorCodeType) => {
+        .map((code: editorCode) => {
           setMarkdownCode(code.content)
         })
       setEditorCodes(defaultCode)
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => {
     editorCodes
-      .filter((code: editorCodeType) => {
+      .filter((code: editorCode) => {
         return code.section_id === editorActiveSection
       })
-      .map((code: editorCodeType) => {
+      .map((code: editorCode) => {
         setMarkdownCode(code.content)
       })
   }, [editorActiveSection])
@@ -110,9 +111,7 @@ export default function page({ params }: { params: { id: string } }) {
       />
       <PreviewSection
         loading={loading}
-        code={editorCodes
-          .map((code: editorCodeType) => code.content)
-          .join("\n\n")}
+        code={editorCodes.map((code: editorCode) => code.content).join("\n\n")}
       />
     </div>
   )

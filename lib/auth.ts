@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
 import EmailProvider from "next-auth/providers/email"
-import GoogleProvider from "next-auth/providers/google";
+import GoogleProvider from "next-auth/providers/google"
 
 import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID!,
-      clientSecret: env.GOOGLE_CLIENT_SECRET!
+      clientSecret: env.GOOGLE_CLIENT_SECRET!,
     }),
     EmailProvider({
       from: env.SMTP_FROM,
