@@ -1,5 +1,4 @@
 import EditorHeader from "@/components/editor/editor-header"
-import { db } from "@/lib/db"
 
 interface EditorProps {
   children?: React.ReactNode

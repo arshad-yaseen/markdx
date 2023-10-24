@@ -22,7 +22,6 @@ export const cloudinaryUpload = async (
   formData.append("cloud_name", env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!)
 
   try {
-
     const res = await fetch(
       `https://api.cloudinary.com/v1_1/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}/${
         file.type.includes("image") ? "image" : "video"
@@ -35,7 +34,7 @@ export const cloudinaryUpload = async (
 
     const image = await res.json()
 
-    const urlBaeRes = await fetch("/api/shorten-url",{
+    const urlBaeRes = await fetch("/api/shorten-url", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,12 +46,11 @@ export const cloudinaryUpload = async (
 
     const urlBae = await urlBaeRes.json()
 
-    if(urlBae.error){
+    if (urlBae.error) {
       return image.secure_url
     } else {
       return urlBae.shorturl
     }
-
   } catch (err) {
     console.error(err)
     return undefined

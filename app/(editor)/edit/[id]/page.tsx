@@ -54,7 +54,7 @@ export default function page({ params }: { params: { id: string } }) {
         .map((code: editorCode) => {
           setMarkdownCode(code.content)
         })
-        setLoading(false)
+      setLoading(false)
     } else {
       const defaultCode = [defaultEditorContent] as editorCode[]
 

@@ -43,9 +43,9 @@ export async function uploadFile(
         if (url) {
           let markdown
           if (isImage) {
-              markdown = `![${fileName}](${url})`
+            markdown = `![${fileName}](${url})`
           } else {
-              markdown = `<video controls ><source src="${url}" type="video/mp4"></video>`
+            markdown = `<video controls ><source src="${url}" type="video/mp4"></video>`
           }
 
           resolve({

@@ -4,14 +4,12 @@ import { getTitle } from "@/utils/editor"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
-import { Textarea } from "@/components/ui/textarea"
 import { DashboardInlineHeader } from "@/components/dashboard/dashboard-inline-header"
 import { EmptyPlaceholder } from "@/components/dashboard/empty-placeholder"
 import { PostCreateButton } from "@/components/dashboard/post-create-button"
 import { PostItem } from "@/components/dashboard/post-item"
 import { DashboardShell } from "@/components/dashboard/shell"
 import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
 
 async function Dashboard() {
   const user = (await getCurrentUser()) as any
@@ -69,7 +67,7 @@ async function Dashboard() {
             </EmptyPlaceholder>
           )}
         </div>
-        
+
         {/* {
           posts.length > 0 && (
             <>
@@ -100,7 +98,6 @@ async function Dashboard() {
             </>
           )
         } */}
-       
       </DashboardShell>
     </>
   )

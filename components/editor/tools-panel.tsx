@@ -128,12 +128,12 @@ function EditorLeft() {
                 {isUploadingFile ? "Uploading" : "Upload"} file
               </Button>
               <Input
-                  onChange={handleUploadFile}
-                  type="file"
-                  ref={uploadFileInputRef}
-                  className="sr-only"
-                  accept="image/*,video/*"
-                />
+                onChange={handleUploadFile}
+                type="file"
+                ref={uploadFileInputRef}
+                className="sr-only"
+                accept="image/*,video/*"
+              />
               <Dialog
                 open={unsplashDialogOpen}
                 onOpenChange={setUnsplashDialogOpen}

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SparklesIcon } from "lucide-react"
 import { Balancer } from "react-wrap-balancer"
 
 import { githubRepo } from "@/config/site"
@@ -8,15 +9,15 @@ import { githubRepo } from "@/config/site"
 import { Icons } from "./icons"
 import SiteAssets from "./site-assets"
 import { Button } from "./ui/button"
-import { SparklesIcon } from "lucide-react"
 
 function SiteHero() {
   return (
     <section className="flex w-full flex-col items-center ">
-      <div className="px-6 py-2.5 mt-4 gradient-box bg-muted rounded-full border border-slate-200 font-medium text-sm">
-      <span className="relative z-30">
-      Now featuring support for GPT-4 <SparklesIcon  className="inline-block h-4 w-4 mb-1" />
-      </span>
+      <div className="gradient-box mt-4 rounded-full border border-slate-200 bg-muted px-6 py-2.5 text-sm font-medium">
+        <span className="relative z-30">
+          Now featuring support for GPT-4{" "}
+          <SparklesIcon className="mb-1 inline-block h-4 w-4" />
+        </span>
       </div>
       <Balancer
         as="h1"

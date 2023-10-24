@@ -12,14 +12,17 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
   const [, setPreviewSectionRefState] = useAtom(previewSectionRefAtom)
   const mPos = useRef<number | null>(null)
   const previewSectionRef = useRef<HTMLDivElement>(null)
-  const [previewSectionWidth, setPreviewSectionWidth] = useLocalStorage("preview-section-width", "0px")
+  const [previewSectionWidth, setPreviewSectionWidth] = useLocalStorage(
+    "preview-section-width",
+    "0px"
+  )
 
   // Set preview section ref
   useEffect(() => {
     setPreviewSectionRefState(previewSectionRef)
   }, [previewSectionRef])
 
-  // Set preview section width  
+  // Set preview section width
   useEffect(() => {
     const panel = previewSectionRef?.current
     if (panel) {
@@ -68,14 +71,12 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
       ref={previewSectionRef}
       className="preview-section relative flex  h-full w-full flex-col overflow-scroll border-l border-t px-12 py-8 lg:w-[36%] lg:min-w-[25%]  lg:border-t-0"
     >
-      <div className="absolute left-0 top-0 h-full w-1 cursor-ew-resize hover:bg-foreground transition-colors duration-300"></div>
-     {
-      loading && (
-        <div className="absolute left-0 top-0 h-full w-full flex items-center justify-center">
-        Loading...
-    </div>
-      )
-     }
+      <div className="absolute left-0 top-0 h-full w-1 cursor-ew-resize transition-colors duration-300 hover:bg-foreground"></div>
+      {loading && (
+        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center">
+          Loading...
+        </div>
+      )}
 
       <ParseMarkdown code={code} codeCopyable className="pb-[80vh]" />
     </div>

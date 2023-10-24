@@ -132,7 +132,6 @@ function EditorSectionsPanel() {
     }
   }
 
-
   return (
     <div className="animate-opacity-in flex min-h-full w-full items-center justify-center space-x-3">
       <Select

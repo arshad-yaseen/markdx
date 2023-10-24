@@ -35,10 +35,8 @@ function EditorSection({
     onCodeChange(value || "")
   }
 
-
   return (
     <div className="relative flex h-[50%] w-full flex-1 flex-col items-center lg:h-full lg:w-[46%]">
-
       <Editor
         language="markdown"
         value={markdown}
