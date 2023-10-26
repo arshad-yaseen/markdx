@@ -24,15 +24,22 @@ import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import ParseMarkdown from "./parse-markdown"
+import OpenAI from "openai"
+import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
 
-function AskAI() {
+function AskAI({
+  isEligibleForAI
+}:{
+  isEligibleForAI: boolean
+}) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [previousGenerations, setPreviousGenerations] = useState("")
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [AIThinking, setAIThinking] = useState(false)
   const chatWrapper = useRef(null)
   const [generating, setGenerating] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [messages, setMessages] = useState<OpenAI.ChatCompletionMessageParam[]>([])
+  const [upgradeToPRODialog, setUpgradeToPRODialog] = useState(false)
 
   const editorSelectedContent = useAtomValue(editorSelectedContentAtom)
 
@@ -46,30 +53,31 @@ function AskAI() {
 
   const buildPrompt = (
     userPrompt: string,
-    editorSelectedContent?: string,
-    previousGenerations?: string
+    editorSelectedContent: string
   ): OpenAIBody => {
-    let systemPrompt = `Please provide a high-quality, professional response to the following prompt. Adhere to industry standards for quality and documentation.`
-
-    let userPromptText = `${userPrompt}`
-
-    if (editorSelectedContent) {
-      editorSelectedContent = editorSelectedContent
-      userPromptText += `\nThis:\n${editorSelectedContent}`
-      // ask ai to rewrite the markdown in code block
-      systemPrompt += `\nIMPORTANT:\nShould be the response markdown in markdown code and codeblock`
+    if(editorSelectedContent) {
+      return {
+        messages: [
+          ...messages,
+          {
+            role: "system",
+            content: userPrompt,
+          },
+          {
+            role: "user",
+            content: editorSelectedContent,
+          }
+        ],
+      }
     }
-
-    if (previousGenerations) {
-      systemPrompt += `\nFor guidance, refer to these previous answers: ${previousGenerations}`
-    }
-
     return {
-      prompt: {
-        system: systemPrompt,
-        user: userPromptText,
-      },
-      max_tokens: 1000,
+      messages: [
+        ...messages,
+        {
+          role: "user",
+          content: userPrompt,
+        }
+      ]
     }
   }
 
@@ -99,11 +107,9 @@ function AskAI() {
         },
       ])
 
-      // Create the request body for OpenAI's API
       const body = buildPrompt(
         user_prompt.toString(),
-        editorSelectedContent,
-        previousGenerations
+        editorSelectedContent
       )
 
       try {
@@ -126,7 +132,6 @@ function AskAI() {
         let done = false
         let aiResponse = ""
 
-        // Read the response data stream and update the chats state as chunks arrive
         while (!done) {
           if (stopGenerating.current) {
             break
@@ -140,17 +145,13 @@ function AskAI() {
               chat.id === chats.length + 1 ? { ...chat, ai: aiResponse } : chat
             )
           )
-          // const chat = chatWrapper.current as any
-          // chat.scrollTop = chat.scrollHeight
         }
         stopGenerating.current = false
         setRequestingToAPI(false)
-        setPreviousGenerations(
-          `${previousGenerations},\n\nQuestion: ${user_prompt.toString()}\nAnswer: ${aiResponse}`
-        )
+        // set the messages for history
+        setMessages(buildPrompt(user_prompt.toString(), editorSelectedContent).messages)
         setGenerating(false)
       } catch (error) {
-        // Handle any other errors that may occur
         console.error(error)
         setRequestingToAPI(false)
         toast.error("Something went wrong")
@@ -170,7 +171,7 @@ function AskAI() {
         ai: "",
       },
     ])
-    setPreviousGenerations("")
+    setMessages([])
   }
 
   return (
@@ -231,7 +232,7 @@ function AskAI() {
                 className={cn(
                   "invisible absolute top-[-100%] w-fit opacity-0",
                   {
-                    "visible opacity-100": !generating && previousGenerations,
+                    "visible opacity-100": !generating && messages.length > 0,
                   }
                 )}
                 variant={"outline"}
@@ -278,6 +279,10 @@ function AskAI() {
 
       <Button
         onClick={() => {
+          if(!isEligibleForAI) {
+            setUpgradeToPRODialog(true)
+            return
+          }
           setIsDialogOpen(true)
           clearChat()
         }}
@@ -288,6 +293,8 @@ function AskAI() {
         <SparklesIcon className="mr-2 h-4 w-4" />{" "}
         {editorSelectedContent ? "Ask AI" : "Chat with AI"}
       </Button>
+      {/* Upgrade to pro dialog */}
+      <UpgradeToPRODialog open={upgradeToPRODialog} setOpen={setUpgradeToPRODialog} />
     </div>
   )
 }

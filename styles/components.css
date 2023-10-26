@@ -86,7 +86,7 @@
   background: conic-gradient(
     from calc(var(--r2) - 80deg) at var(--x) 20px,
     #fff 0%,
-    #707070 20%,
+    #000 20%,
     #fff 25%
   );
   animation: -0.64s rotating2 2s linear infinite, -0.64s x 2s linear infinite;
@@ -162,5 +162,21 @@
   }
   100% {
     --r2: 360deg;
+  }
+}
+
+
+.ai-tools-section-lock{
+  animation: ai-tools-section-lock-animation 0.3s ease-in-out;
+  -webkit-animation: ai-tools-section-lock-animation 0.3s ease-in-out;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes ai-tools-section-lock-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

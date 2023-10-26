@@ -23,8 +23,19 @@ function SaveButton({ isSaving, postCodes, onSave, onSaved }: SaveButtonProps) {
     const intervalId = setInterval(() => {
       saveButtonRef.current?.click()
     }, 35000)
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey && event.key === "s") {
+        event.preventDefault()
+        saveButtonRef.current?.click()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+
     return () => {
       clearInterval(intervalId)
+      window.removeEventListener("keydown", handleKeyDown)
     }
   }, [saveButtonRef])
 

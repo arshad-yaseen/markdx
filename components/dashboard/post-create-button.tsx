@@ -21,11 +21,11 @@ export function PostCreateButton({
   variant,
   ...props
 }: PostCreateButtonProps) {
-  const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [upgradeToPRODialog, setUpgradeToPRODialog] = React.useState(false)
   const [, setEditorCodes] = useAtom(editorCodesState)
   const [, setEditorActiveSection] = useAtom(editorActiveSectionState)
+  
+  const router = useRouter()
 
   async function onClick() {
     setIsLoading(true)
@@ -52,9 +52,7 @@ export function PostCreateButton({
     setIsLoading(false)
 
     if (!response?.ok) {
-      if (response.status === 402) {
-        setUpgradeToPRODialog(true)
-      } else if (response.status === 403) {
+      if (response.status === 403) {
         toast.message("Try again")
       }
     }
@@ -69,37 +67,6 @@ export function PostCreateButton({
 
   return (
     <>
-      <Dialog open={upgradeToPRODialog} onOpenChange={setUpgradeToPRODialog}>
-        <DialogContent className="flex flex-col items-center">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
-              Upgrade to PRO
-            </DialogTitle>
-          </DialogHeader>
-          <DialogDescription className="mt-2 w-full px-8 text-center">
-            The free plan is limited to 2 markdowns. Upgrade to the PRO plan for
-            unlimited markdowns.
-          </DialogDescription>
-
-          <div className="mt-4 flex w-full space-x-4">
-            <Button
-              onClick={() => {
-                setUpgradeToPRODialog(false)
-              }}
-              variant="outline"
-              className="mt-2 w-full"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => router.push("/dashboard/billing")}
-              className="mt-2 w-full"
-            >
-              Upgrade
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
       <Button
         onClick={onClick}
         className={cn(

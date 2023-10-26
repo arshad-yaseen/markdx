@@ -5,27 +5,11 @@ import {
 } from "eventsource-parser"
 
 import { env } from "@/env.mjs"
+import OpenAI from "openai"
 
 export type ChatGPTAgent = "user" | "system"
 
-export interface ChatGPTMessage {
-  role: ChatGPTAgent
-  content: string
-}
-
-export interface OpenAIStreamPayload {
-  model: string
-  messages: ChatGPTMessage[]
-  temperature: number
-  top_p: number
-  frequency_penalty: number
-  presence_penalty: number
-  max_tokens: number
-  stream: boolean
-  n: number
-}
-
-export async function OpenAIStream(payload: OpenAIStreamPayload) {
+export async function OpenAIStream(payload: OpenAI.ChatCompletionCreateParams) {
   const encoder = new TextEncoder()
   const decoder = new TextDecoder()
 

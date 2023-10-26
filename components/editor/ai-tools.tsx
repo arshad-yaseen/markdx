@@ -10,8 +10,6 @@ import "@/styles/mdx.css"
 import { OpenAICreateChat, editorAction } from "@/utils/editor"
 import { PopoverClose } from "@radix-ui/react-popover"
 
-import { OpenAIBody } from "types"
-import { AIConfig } from "@/config/editor"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,13 +24,20 @@ import {
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import AskAI from "./ask-ai"
+import { PROMPT } from "@/config/editor"
+import { OpenAIBody } from "@/types"
+import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
 
-function AITools() {
+function AITools({
+  isEligibleForAI
+}:{
+  isEligibleForAI: boolean
+}) {
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [worldlanguages, setWorldLanguages] = useState([])
   const monacoInstance = useAtomValue(monacoInstanceState)
   const editorSelectedContent = useAtomValue(editorSelectedContentAtom)
+  const [upgradeToPRODialog, setUpgradeToPRODialog] = useState(false)
 
   const getLanguages = async () => {
     const languages = await listLanguages()
@@ -45,17 +50,18 @@ function AITools() {
 
   const handleClick = async (
     options: OpenAIBody,
-    action: "insert" | "set" | "insert-before" = "insert"
+    action: "insert" | "set" | "insert-after" = "insert"
   ) => {
+
+    if(!isEligibleForAI) {
+      return setUpgradeToPRODialog(true)
+    }
+
     if (requestingToAPI) {
       return toast.message("Please wait for current action to finish")
-    } else if (!editorSelectedContent) {
+    } else if (options.messages[1].content === "") {
       return toast.message("Please select a text or code")
     }
-    const loadingToast = toast.loading("Thinking just for you...", {
-      duration: 1000000000,
-      position: "bottom-center",
-    })
     setRequestingToAPI(true)
     if (requestingToAPI) return
     const body = {
@@ -65,13 +71,10 @@ function AITools() {
     if (res?.err) {
       toast.error(res?.message)
       setRequestingToAPI(false)
-      toast.dismiss(loadingToast)
       return
     }
 
     let stopGeneration = false
-
-    toast.dismiss(loadingToast)
 
     // show the toast with 'Stop Generating' button
     const stopToast = toast("Stop Generating", {
@@ -86,7 +89,9 @@ function AITools() {
       position: "bottom-center",
       duration: 1000000000,
     })
-
+    if (action === "insert-after") {
+      editorAction.insertText(`${editorSelectedContent}\n\n`, monacoInstance!)
+    }
     const data = res?.data
     const reader = data?.getReader()
     const decoder = new TextDecoder()
@@ -95,14 +100,11 @@ function AITools() {
       const { value, done: doneReading } = (await reader?.read()) as any
       done = doneReading
       const chunkValue = decoder.decode(value)
-      if (action === "insert" || action === "insert-before") {
+      if (action === "insert" || action === "insert-after") {
         editorAction.insertText(chunkValue, monacoInstance!)
       } else if (action === "set") {
         editorAction.setText(chunkValue, monacoInstance!)
       }
-    }
-    if (action === "insert-before") {
-      editorAction.insertText(`\n${editorSelectedContent}`, monacoInstance!)
     }
     setRequestingToAPI(false)
     toast.dismiss(stopToast)
@@ -110,90 +112,82 @@ function AITools() {
 
   return (
     <>
-      {/* <div className="w-screen bg-red-500 h-16 absolute bottom-0 left-0 flex justify-center items-center z-50">
-      <Button
-        variant={"outline"}
-        className="flex justify-center px-6"
-        >
-
-          Stop Generating
-        </Button>
-    </div> */}
-      <div className="space-y-4">
+      <div className="space-y-4 max-h-[51vh] overflow-y-scroll no-scrollbar">
         <Button
           onClick={() => {
-            const editorSelectedCode = window.getSelection()?.toString()
-            console.log(editorSelectedCode || "wfwef")
-
-            const options = {
-              prompt: {
-                system: AIConfig.prompts[0].system.regular || "",
-                user: editorSelectedCode!,
-              },
-              max_tokens: 1000,
-            }
-            handleClick(options)
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.standardize_format
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
           }}
           variant="outline"
           className="flex w-full justify-center px-6  "
         >
-          Standardize
+          Standardize format
         </Button>
         <Button
           onClick={() => {
-            const editorSelectedCode = window.getSelection()?.toString()
-            console.log(editorSelectedCode || "wfwef")
-            const options = {
-              prompt: {
-                system: AIConfig.prompts[1].system.regular || "",
-                user: `This is the text or markdown to make short => \`${editorSelectedCode}\``,
-              },
-              max_tokens: editorSelectedCode?.split(" ").length! * 2,
-            }
-            handleClick(options)
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.concise_expression
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
           }}
           variant="outline"
           className="flex w-full justify-center px-6 "
         >
-          Make short
+          Concise expression
         </Button>
         <Button
           onClick={() => {
-            const editorSelectedCode = window.getSelection()?.toString()
-            const options = {
-              prompt: {
-                system: AIConfig.prompts[2].system.regular || "",
-                user: `This is the text or markdown to explain => \`${editorSelectedCode}\``,
-              },
-              max_tokens: 1000,
-            }
-            handleClick(options)
-          }}
-          variant="outline"
-          className="flex w-full justify-center px-6 "
-        >
-          Explain
-        </Button>
-        <Button
-          onClick={() => {
-            const editorSelectedCode = window.getSelection()?.toString()
-            if (!editorSelectedCode) {
-              toast.message("Please select a code")
-            } else {
-              const options = {
-                prompt: {
-                  system: `${AIConfig.prompts[3].system.detailed}. then after ${AIConfig.prompts[3].system.simple}. Must use space between devide`,
-                  user: `This is the text or markdown to document => \`${editorSelectedCode}\``,
-                },
-                max_tokens: editorSelectedCode?.length! * 3,
-              }
-              handleClick(options, "insert-before")
-            }
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.document_code
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            }, "insert-after")
           }}
           variant="outline"
           className="flex w-full justify-center px-6 "
         >
           Document code
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.optimize_headings
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Optimize headings
         </Button>
         <Popover>
           <PopoverTrigger className="flex h-10 w-full items-center justify-center rounded-md border border-input px-6 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
@@ -205,30 +199,28 @@ function AITools() {
                 e.preventDefault()
                 const formData = new FormData(e.target as HTMLFormElement)
                 const { to } = Object.fromEntries(formData.entries())
-                const code_for_convert = editorSelectedContent
-                if (!code_for_convert) {
-                  toast.message("Please select a code")
-                } else {
-                  const options = {
-                    prompt: {
-                      system: `Please convert the provided code ${to}`,
-                      user: `This is the code for convert => \`${code_for_convert}\``,
-                    },
-                    max_tokens: code_for_convert?.length! * 5,
-                  }
-                  handleClick(options)
-                }
+                handleClick({
+                  messages: [
+                    {
+                      role: "system",
+                      content: PROMPT.convert_code.replace("{to}", to as string)
+                    }, {
+                      role: "user",
+                      content: editorSelectedContent
+                    }
+                  ],
+                })
               }}
             >
               <Input
                 spellCheck={false}
                 autoComplete="off"
                 name="to"
-                defaultValue="To "
+                placeholder="To language"
                 autoFocus
               />
               <PopoverClose>
-                <Button variant="outline" className="mt-3 w-full">
+                <Button className="mt-3 w-full">
                   Convert
                 </Button>
               </PopoverClose>
@@ -237,15 +229,17 @@ function AITools() {
         </Popover>
         <Button
           onClick={() => {
-            const editorSelectedCode = window.getSelection()?.toString()
-            const options = {
-              prompt: {
-                system: AIConfig.prompts[4].system.regular || "",
-                user: `This is the text or markdown to correct grammar => \`${editorSelectedCode}\``,
-              },
-              max_tokens: 500,
-            }
-            handleClick(options)
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.grammar_correction
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
           }}
           variant="outline"
           className="flex w-full justify-center px-6 "
@@ -257,7 +251,7 @@ function AITools() {
             Translate
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <div className="h-[400px] w-fit overflow-y-scroll">
+            <div className="max-h-[400px] w-fit overflow-y-scroll">
               {worldlanguages.map(
                 (
                   language: {
@@ -268,20 +262,17 @@ function AITools() {
                   return (
                     <DropdownMenuItem
                       onClick={() => {
-                        const selectedText = editorSelectedContent
-                        const options = {
-                          prompt: {
-                            system:
-                              AIConfig.prompts[5].system.regular?.replace(
-                                "{language}",
-                                language.name
-                              ) || "",
-                            user: selectedText,
-                          },
-                          max_tokens: selectedText?.length! * 6,
-                        }
-
-                        handleClick(options)
+                        handleClick({
+                          messages: [
+                            {
+                              role: "system",
+                              content: PROMPT.translate_text.replace("{language}", language.name)
+                            }, {
+                              role: "user",
+                              content: editorSelectedContent
+                            }
+                          ],
+                        })
                       }}
                       key={index}
                     >
@@ -293,9 +284,161 @@ function AITools() {
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        <AskAI />
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.accessibility_improvement
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Improve accessibility
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.code_formatting
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Format codes
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.bullet_point_optimization
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Optimize bullet points
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.consistency_check
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Check consistency
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.embed_media
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Embed media
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.fact_checking
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            }, "insert-after")
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Fact check
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.hyperlink_implementation
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Implement hyperlinks
+        </Button>
+        <Button
+          onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.technical_explanation
+                }, {
+                  role: "user",
+                  content: editorSelectedContent
+                }
+              ],
+            }, "insert-after")
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Explain technically
+        </Button>
       </div>
+      {/* Upgrade to pro dialog */}
+      <UpgradeToPRODialog open={upgradeToPRODialog} setOpen={setUpgradeToPRODialog} />
     </>
   )
 }

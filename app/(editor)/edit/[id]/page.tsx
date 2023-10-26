@@ -14,7 +14,8 @@ import { editorCode } from "types"
 import { defaultEditorContent } from "@/config/editor"
 import EditorSection from "@/components/editor/editor-section"
 import PreviewSection from "@/components/editor/preview-section"
-import ToolsPanel from "@/components/editor/tools-panel"
+import AIToolsSection from "@/components/editor/ai-tools-section"
+import MarkdownNotFound from "@/components/editor/markdown-not-found"
 
 type prevCodeType = {
   section: string
@@ -27,8 +28,8 @@ export default function page({ params }: { params: { id: string } }) {
   const editorActiveSection = useAtomValue(editorActiveSectionState)
   const [markdownCode, setMarkdownCode] = useState("")
   const monacoInstance = useAtomValue(monacoInstanceState)
-  const [loading, setLoading] = useState(true)
-  const router = useRouter()
+  const [markdownNotFoundDialogOpen, setMarkdownNotFoundDialogOpen] = useState(false)
+  const [isEligibleForAI, setIsEligibleForAI] = useState(true)
 
   const markdownId = params.id
 
@@ -38,11 +39,13 @@ export default function page({ params }: { params: { id: string } }) {
     })
 
     if (!response?.ok) {
-      router.push("/markdown-not-found")
+      setMarkdownNotFoundDialogOpen(true)
       return
     }
 
-    const markdownPost = await response.json()
+    const resJson = await response.json()
+    setIsEligibleForAI(resJson.isEligibleForAI)
+    const markdownPost = resJson.markdownPost
 
     if (markdownPost.postCodes.length > 0) {
       let code = markdownPost.postCodes
@@ -54,7 +57,6 @@ export default function page({ params }: { params: { id: string } }) {
         .map((code: editorCode) => {
           setMarkdownCode(code.content)
         })
-      setLoading(false)
     } else {
       const defaultCode = [defaultEditorContent] as editorCode[]
 
@@ -66,7 +68,6 @@ export default function page({ params }: { params: { id: string } }) {
           setMarkdownCode(code.content)
         })
       setEditorCodes(defaultCode)
-      setLoading(false)
     }
   }
 
@@ -91,9 +92,8 @@ export default function page({ params }: { params: { id: string } }) {
       }}
       className="flex h-[92vh] w-full flex-col lg:flex-row"
     >
-      <ToolsPanel />
+      <AIToolsSection isEligibleForAI={isEligibleForAI} />
       <EditorSection
-        loading={loading}
         markdown={markdownCode}
         onCodeChange={(code) => {
           setEditorCodes((prev) => {
@@ -110,9 +110,15 @@ export default function page({ params }: { params: { id: string } }) {
         }}
       />
       <PreviewSection
-        loading={loading}
         code={editorCodes.map((code: editorCode) => code.content).join("\n\n")}
       />
+     {
+        markdownNotFoundDialogOpen && (
+          <MarkdownNotFound
+            markdownNotFoundDialogOpen={markdownNotFoundDialogOpen}
+          />
+        )
+     }
     </div>
   )
 }

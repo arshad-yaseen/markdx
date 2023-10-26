@@ -75,12 +75,10 @@ export const OpenAICreateChat = async (body: OpenAIBody) => {
     })
 
     if (!response.ok) {
-      console.log("response not ok")
-
       console.error(response.statusText)
       return {
         err: true,
-        message: "Can't do this action. Try again!",
+        message: "Can't complete the request",
       }
     }
 
@@ -97,7 +95,7 @@ export const OpenAICreateChat = async (body: OpenAIBody) => {
 
     return {
       err: true,
-      message: "Something went wrong!",
+      message: "Error occurred while fetching from OpenAI",
     }
   }
 }

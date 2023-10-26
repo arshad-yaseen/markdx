@@ -1,5 +1,3 @@
-import { AIConfigType } from "types"
-
 export const editorConfig = {
   uploadMaxVideoSize: 30, //MB
 }
@@ -11,61 +9,23 @@ export const defaultEditorContent = {
 }
 export const openai_model = "gpt-4"
 
-export const AIConfig: AIConfigType = {
-  prompts: [
-    {
-      system: {
-        regular: `Your assignment is to refine the provided markdown or text, enhancing its professionalism, language, and overall tone. In order to achieve this, your revisions should adhere to best practices in grammar, syntax, punctuation, and usage, while also rectifying any inaccuracies, inconsistencies, or ambiguities present in the initial text or markdown. Additionally, it is imperative that your revised markdown is aptly tailored to its intended audience and purpose, ensuring that the message is conveyed with clarity, efficacy, and persuasion. Employ advanced markdown syntaxes as deemed necessary.`,
-      },
-    },
-    {
-      system: {
-        regular: `Produce a condensed version of the given text or markdown that effectively conveys the primary ideas and arguments presented while being approximately 25% of the original length. The revised version should prioritize the essential points of the text while omitting any superfluous details or information.`,
-      },
-    },
-    {
-      system: {
-        regular: `Your task is to furnish a detailed elucidation of the provided markdown or text, incorporating the code in the document, while prioritizing conciseness, clarity, and readability. Strive to produce a refined, polished, and professional version of the text. This entails enhancing the language, structure, and style of the original content to effectively communicate its message with greater precision. Reflect on how you can elevate the text to achieve a more sophisticated and advanced result.`,
-      },
-    },
-    {
-      system: {
-        detailed: `
-        Draft a detailed technical document elucidating the application of the given code. The document should cater to the understanding of advanced developers and be apt for integration into technical documentation. Please refrain from including any code or markdown syntax. Limit your document to a maximum of 60 words.`,
-        simple: `Draft a clear and concise guide on utilizing the given code, ensuring it's accessible for advanced developers. Omit any code or markdown syntax, and keep the document under 25 words.`,
-      },
-    },
-    {
-      system: {
-        regular: `Please write a clear, grammatically correct version of the following markdown. Address potential issues related to subject-verb agreement, pronoun usage, verb tense consistency, punctuation, and overall clarity. Your objective is to produce a version that is straightforward and free from errors.
-
-        Instructions:
-        
-        - Review and rectify any grammatical mistakes in the given markdown.
-        - Supply the amended version of the markdown.
-        - Your response should be the corrected answer.
-        - Guidelines for revising the markdown:
-        
-        - Verify subject-verb agreement.
-        - Examine pronoun usage.
-        - Ensure verb tense consistency.
-        - Correct any punctuation errors.
-        - Aim for clarity and brevity in sentences.`,
-      },
-    },
-    {
-      system: {
-        regular: `Task: Your goal is to translate the provided text into {language}, ensuring that you preserve the original meaning while adhering to the grammatical rules and linguistic conventions of {language}. Your translation should be clear, easily understood by native speakers, and free from errors, mistranslations, or omissions that could lead to confusion. Additionally, your translation should be culturally relevant and sensitive to any unique nuances or subtleties of the {language} or its associated culture.
-
-Instructions:
-
-- Carefully read and comprehend the meaning of the provided text.
-- Translate the text into {language}, ensuring the use of proper grammar, vocabulary, and sentence structure.
-- Review your translation to verify accuracy in conveying the original meaning, adherence to linguistic conventions, and the absence of errors.
-- Consider any cultural nuances or subtleties specific to {language} or its culture, ensuring your translation is culturally appropriate and sensitive.`,
-      },
-    },
-  ],
+export const PROMPT = {
+  standardize_format: "Standardize the format of the following markdown.",
+  summarize_content: "Provide a summary of the following markdown content.",
+  concise_expression: "Make the expression in the following markdown more concise.",
+  grammar_correction: "Correct any grammatical errors in the following markdown.",
+  consistency_check: "Ensure consistency in tone and style in the following markdown.",
+  hyperlink_implementation: "Implement or review hyperlinks in the following markdown.",
+  optimize_headings: "Optimize headings and subheadings in the following markdown.",
+  embed_media: "Embed relevant images, videos, or other media in the following markdown.",
+  code_formatting: "Format and highlight code snippets in the following markdown.",
+  bullet_point_optimization: "Optimize the use of bullet points or lists in the following markdown.",
+  translate_text: "Translate the following text into {language}",
+  convert_code: "Convert the following code into {to}",
+  document_code: "Document the following code",
+  technical_explanation: "Explain the technical aspects in the following markdown.",
+  accessibility_improvement: "Improve the accessibility of the following markdown.",
+  fact_checking: "Fact-check the information in the following markdown.",
 }
 
 export const shortcuts = {

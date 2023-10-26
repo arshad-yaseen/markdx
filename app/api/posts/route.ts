@@ -1,12 +1,10 @@
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
-import { markdownLimit } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import {
   MarkdownAlreadyExistError,
-  RequiresProPlanError,
 } from "@/lib/exceptions"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
@@ -60,11 +58,6 @@ export async function POST(req: Request) {
     // If user is on a free plan.
     // Check if user has reached limit of 3 posts.
     if (!subscriptionPlan?.isPro) {
-      const count = await db.markdownPost.count({
-        where: {
-          userId: user.id,
-        },
-      })
       const markdownCount = await db.markdownPost.count({
         where: {
           userId: user.id,
@@ -72,9 +65,7 @@ export async function POST(req: Request) {
         },
       })
 
-      if (count >= markdownLimit) {
-        throw new RequiresProPlanError()
-      } else if (markdownCount > 0) {
+      if (markdownCount > 0) {
         throw new MarkdownAlreadyExistError()
       }
     }
@@ -96,11 +87,7 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    console.error(error)
-
-    if (error instanceof RequiresProPlanError) {
-      return new Response("Requires Pro Plan", { status: 402 })
-    } else if (error instanceof MarkdownAlreadyExistError) {
+    if (error instanceof MarkdownAlreadyExistError) {
       return new Response("Markdown ID Already Exist", { status: 403 })
     }
 

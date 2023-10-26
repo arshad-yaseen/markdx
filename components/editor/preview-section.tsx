@@ -8,7 +8,7 @@ import { useLocalStorage } from "@/lib/hooks/use-localstorage"
 
 const BORDER_SIZE = 4
 
-function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
+function PreviewSection({ code }: { code: string}) {
   const [, setPreviewSectionRefState] = useAtom(previewSectionRefAtom)
   const mPos = useRef<number | null>(null)
   const previewSectionRef = useRef<HTMLDivElement>(null)
@@ -65,6 +65,8 @@ function PreviewSection({ code, loading }: { code: string; loading: boolean }) {
       document.removeEventListener("mousemove", resize)
     }
   }, [])
+
+  const loading = code === ""
 
   return (
     <div

@@ -11,11 +11,9 @@ import { useAtom } from "jotai"
 function EditorSection({
   markdown,
   onCodeChange,
-  loading,
 }: {
   markdown: string
   onCodeChange: (value: string) => void
-  loading: boolean
 }) {
   const { resolvedTheme } = useTheme()
   const [, setMonacoInstance] = useAtom(monacoInstanceState)
@@ -35,6 +33,8 @@ function EditorSection({
     onCodeChange(value || "")
   }
 
+  const loading = markdown === ""
+
   return (
     <div className="relative flex h-[50%] w-full flex-1 flex-col items-center lg:h-full lg:w-[46%]">
       <Editor
@@ -43,7 +43,6 @@ function EditorSection({
         onMount={editorMount}
         theme={resolvedTheme === "dark" ? "vs-dark" : "vs-light"}
         onChange={handleEditorChange}
-        loading="Loading..."
         options={{
           minimap: {
             enabled: false,
@@ -63,7 +62,6 @@ function EditorSection({
           folding: false,
           renderLineHighlight: "none",
           fontSize: 14,
-          readOnly: loading,
           padding: {
             top: 48,
             bottom: 650,
@@ -73,6 +71,11 @@ function EditorSection({
         }}
         className="px-14"
       />
+       {loading && (
+        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center">
+          Loading...
+        </div>
+      )}
     </div>
   )
 }

@@ -33,6 +33,7 @@ import {
 
 function EditorSectionsPanel() {
   const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
+
   const [editorActiveSection, setEditorActiveSection] = useAtom(
     editorActiveSectionState
   )
@@ -42,13 +43,6 @@ function EditorSectionsPanel() {
   const [holdTimerId, setHoldTimerId] = useState<number>()
   const [isHoldedDeleteButton, setIsHoldedDeleteButton] = useState(false)
   const previewSectionRef = useAtomValue(previewSectionRefAtom)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    if (editorCodes.length > 0) {
-      setLoading(false)
-    }
-  }, [editorCodes])
 
   const pathname = usePathname()
   const markdownId = pathname?.split("/")[2]
@@ -131,6 +125,8 @@ function EditorSectionsPanel() {
       toast.message("Hold for 1 second to delete")
     }
   }
+
+  const loading = editorCodes.length === 0 ||  editorCodes[0].section === ""
 
   return (
     <div className="animate-opacity-in flex min-h-full w-full items-center justify-center space-x-3">

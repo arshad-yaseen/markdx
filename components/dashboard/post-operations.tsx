@@ -95,7 +95,7 @@ export function PostOperations({ post }: PostOperationsProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this post?
+              Are you sure you want to delete this markdown?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone.
