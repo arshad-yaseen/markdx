@@ -55,7 +55,7 @@ function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
     if (requestingToAPI) {
       return toast.message("Please wait for current action to finish")
     } else if (options.messages[1].content === "") {
-      return toast.message("Please select a text or code")
+      return toast.message("Please select the markdown content")
     }
     setRequestingToAPI(true)
     if (requestingToAPI) return
