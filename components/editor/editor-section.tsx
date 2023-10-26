@@ -71,7 +71,7 @@ function EditorSection({
         }}
         className="px-14"
       />
-       {loading && (
+      {loading && (
         <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center">
           Loading...
         </div>

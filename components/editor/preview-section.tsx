@@ -8,7 +8,7 @@ import { useLocalStorage } from "@/lib/hooks/use-localstorage"
 
 const BORDER_SIZE = 4
 
-function PreviewSection({ code }: { code: string}) {
+function PreviewSection({ code }: { code: string }) {
   const [, setPreviewSectionRefState] = useAtom(previewSectionRefAtom)
   const mPos = useRef<number | null>(null)
   const previewSectionRef = useRef<HTMLDivElement>(null)

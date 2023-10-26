@@ -12,19 +12,29 @@ export const openai_model = "gpt-4"
 export const PROMPT = {
   standardize_format: "Standardize the format of the following markdown.",
   summarize_content: "Provide a summary of the following markdown content.",
-  concise_expression: "Make the expression in the following markdown more concise.",
-  grammar_correction: "Correct any grammatical errors in the following markdown.",
-  consistency_check: "Ensure consistency in tone and style in the following markdown.",
-  hyperlink_implementation: "Implement or review hyperlinks in the following markdown.",
-  optimize_headings: "Optimize headings and subheadings in the following markdown.",
-  embed_media: "Embed relevant images, videos, or other media in the following markdown.",
-  code_formatting: "Format and highlight code snippets in the following markdown.",
-  bullet_point_optimization: "Optimize the use of bullet points or lists in the following markdown.",
+  concise_expression:
+    "Make the expression in the following markdown more concise.",
+  grammar_correction:
+    "Correct any grammatical errors in the following markdown.",
+  consistency_check:
+    "Ensure consistency in tone and style in the following markdown.",
+  hyperlink_implementation:
+    "Implement or review hyperlinks in the following markdown.",
+  optimize_headings:
+    "Optimize headings and subheadings in the following markdown.",
+  embed_media:
+    "Embed relevant images, videos, or other media in the following markdown.",
+  code_formatting:
+    "Format and highlight code snippets in the following markdown.",
+  bullet_point_optimization:
+    "Optimize the use of bullet points or lists in the following markdown.",
   translate_text: "Translate the following text into {language}",
   convert_code: "Convert the following code into {to}",
   document_code: "Document the following code",
-  technical_explanation: "Explain the technical aspects in the following markdown.",
-  accessibility_improvement: "Improve the accessibility of the following markdown.",
+  technical_explanation:
+    "Explain the technical aspects in the following markdown.",
+  accessibility_improvement:
+    "Improve the accessibility of the following markdown.",
   fact_checking: "Fact-check the information in the following markdown.",
 }
 

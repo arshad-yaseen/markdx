@@ -1,6 +1,6 @@
 import { User } from "@prisma/client"
 import { editor } from "monaco-editor"
-import {OpenAI} from "openai"
+import { OpenAI } from "openai"
 
 export type SiteConfig = {
   name: string
@@ -52,8 +52,8 @@ export type Chat = {
   ai: string
 }
 
-export type OpenAIBody = Omit<OpenAI.ChatCompletionCreateParams, 'model'> & {
-  model?: OpenAI.ChatCompletionCreateParams['model'];
+export type OpenAIBody = Omit<OpenAI.ChatCompletionCreateParams, "model"> & {
+  model?: OpenAI.ChatCompletionCreateParams["model"]
 }
 
 export type monacoInstance = editor.IStandaloneCodeEditor

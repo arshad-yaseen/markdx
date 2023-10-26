@@ -1,6 +1,6 @@
 "use client"
 
-import React, { FormEvent, useEffect, useState } from "react"
+import React, { FormEvent, useState } from "react"
 import { usePathname } from "next/navigation"
 import {
   editorActiveSectionState,
@@ -126,7 +126,7 @@ function EditorSectionsPanel() {
     }
   }
 
-  const loading = editorCodes.length === 0 ||  editorCodes[0].section === ""
+  const loading = editorCodes.length === 0 || editorCodes[0].section === ""
 
   return (
     <div className="animate-opacity-in flex min-h-full w-full items-center justify-center space-x-3">

@@ -13,6 +13,7 @@ import {
   SparklesIcon,
   SquareIcon,
 } from "lucide-react"
+import OpenAI from "openai"
 import { toast } from "sonner"
 
 import { Chat, OpenAIBody } from "types"
@@ -24,21 +25,18 @@ import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import ParseMarkdown from "./parse-markdown"
-import OpenAI from "openai"
 import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
 
-function AskAI({
-  isEligibleForAI
-}:{
-  isEligibleForAI: boolean
-}) {
+function AskAI({ isEligibleForAI }: { isEligibleForAI: boolean }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [AIThinking, setAIThinking] = useState(false)
   const chatWrapper = useRef(null)
   const [generating, setGenerating] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [messages, setMessages] = useState<OpenAI.ChatCompletionMessageParam[]>([])
+  const [messages, setMessages] = useState<OpenAI.ChatCompletionMessageParam[]>(
+    []
+  )
   const [upgradeToPRODialog, setUpgradeToPRODialog] = useState(false)
 
   const editorSelectedContent = useAtomValue(editorSelectedContentAtom)
@@ -55,7 +53,7 @@ function AskAI({
     userPrompt: string,
     editorSelectedContent: string
   ): OpenAIBody => {
-    if(editorSelectedContent) {
+    if (editorSelectedContent) {
       return {
         messages: [
           ...messages,
@@ -66,7 +64,7 @@ function AskAI({
           {
             role: "user",
             content: editorSelectedContent,
-          }
+          },
         ],
       }
     }
@@ -76,8 +74,8 @@ function AskAI({
         {
           role: "user",
           content: userPrompt,
-        }
-      ]
+        },
+      ],
     }
   }
 
@@ -107,10 +105,7 @@ function AskAI({
         },
       ])
 
-      const body = buildPrompt(
-        user_prompt.toString(),
-        editorSelectedContent
-      )
+      const body = buildPrompt(user_prompt.toString(), editorSelectedContent)
 
       try {
         // Call the OpenAI API with the request body
@@ -149,7 +144,9 @@ function AskAI({
         stopGenerating.current = false
         setRequestingToAPI(false)
         // set the messages for history
-        setMessages(buildPrompt(user_prompt.toString(), editorSelectedContent).messages)
+        setMessages(
+          buildPrompt(user_prompt.toString(), editorSelectedContent).messages
+        )
         setGenerating(false)
       } catch (error) {
         console.error(error)
@@ -279,7 +276,7 @@ function AskAI({
 
       <Button
         onClick={() => {
-          if(!isEligibleForAI) {
+          if (!isEligibleForAI) {
             setUpgradeToPRODialog(true)
             return
           }
@@ -294,7 +291,10 @@ function AskAI({
         {editorSelectedContent ? "Ask AI" : "Chat with AI"}
       </Button>
       {/* Upgrade to pro dialog */}
-      <UpgradeToPRODialog open={upgradeToPRODialog} setOpen={setUpgradeToPRODialog} />
+      <UpgradeToPRODialog
+        open={upgradeToPRODialog}
+        setOpen={setUpgradeToPRODialog}
+      />
     </div>
   )
 }

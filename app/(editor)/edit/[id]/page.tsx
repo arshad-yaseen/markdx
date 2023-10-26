@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import {
   editorActiveSectionState,
   editorCodesState,
@@ -12,10 +11,10 @@ import { useAtom, useAtomValue } from "jotai"
 
 import { editorCode } from "types"
 import { defaultEditorContent } from "@/config/editor"
-import EditorSection from "@/components/editor/editor-section"
-import PreviewSection from "@/components/editor/preview-section"
 import AIToolsSection from "@/components/editor/ai-tools-section"
+import EditorSection from "@/components/editor/editor-section"
 import MarkdownNotFound from "@/components/editor/markdown-not-found"
+import PreviewSection from "@/components/editor/preview-section"
 
 type prevCodeType = {
   section: string
@@ -28,7 +27,8 @@ export default function page({ params }: { params: { id: string } }) {
   const editorActiveSection = useAtomValue(editorActiveSectionState)
   const [markdownCode, setMarkdownCode] = useState("")
   const monacoInstance = useAtomValue(monacoInstanceState)
-  const [markdownNotFoundDialogOpen, setMarkdownNotFoundDialogOpen] = useState(false)
+  const [markdownNotFoundDialogOpen, setMarkdownNotFoundDialogOpen] =
+    useState(false)
   const [isEligibleForAI, setIsEligibleForAI] = useState(true)
 
   const markdownId = params.id
@@ -112,13 +112,11 @@ export default function page({ params }: { params: { id: string } }) {
       <PreviewSection
         code={editorCodes.map((code: editorCode) => code.content).join("\n\n")}
       />
-     {
-        markdownNotFoundDialogOpen && (
-          <MarkdownNotFound
-            markdownNotFoundDialogOpen={markdownNotFoundDialogOpen}
-          />
-        )
-     }
+      {markdownNotFoundDialogOpen && (
+        <MarkdownNotFound
+          markdownNotFoundDialogOpen={markdownNotFoundDialogOpen}
+        />
+      )}
     </div>
   )
 }

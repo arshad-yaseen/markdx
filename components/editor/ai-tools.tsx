@@ -7,9 +7,11 @@ import { useAtomValue } from "jotai"
 import { toast } from "sonner"
 
 import "@/styles/mdx.css"
+import { OpenAIBody } from "@/types"
 import { OpenAICreateChat, editorAction } from "@/utils/editor"
 import { PopoverClose } from "@radix-ui/react-popover"
 
+import { PROMPT } from "@/config/editor"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,15 +26,9 @@ import {
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import { PROMPT } from "@/config/editor"
-import { OpenAIBody } from "@/types"
 import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
 
-function AITools({
-  isEligibleForAI
-}:{
-  isEligibleForAI: boolean
-}) {
+function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [worldlanguages, setWorldLanguages] = useState([])
   const monacoInstance = useAtomValue(monacoInstanceState)
@@ -52,8 +48,7 @@ function AITools({
     options: OpenAIBody,
     action: "insert" | "set" | "insert-after" = "insert"
   ) => {
-
-    if(!isEligibleForAI) {
+    if (!isEligibleForAI) {
       return setUpgradeToPRODialog(true)
     }
 
@@ -112,18 +107,19 @@ function AITools({
 
   return (
     <>
-      <div className="space-y-4 max-h-[51vh] overflow-y-scroll no-scrollbar">
+      <div className="no-scrollbar max-h-[51vh] space-y-4 overflow-y-scroll">
         <Button
           onClick={() => {
             handleClick({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.standardize_format
-                }, {
+                  content: PROMPT.standardize_format,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -138,11 +134,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.concise_expression
-                }, {
+                  content: PROMPT.concise_expression,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -153,17 +150,21 @@ function AITools({
         </Button>
         <Button
           onClick={() => {
-            handleClick({
-              messages: [
-                {
-                  role: "system",
-                  content: PROMPT.document_code
-                }, {
-                  role: "user",
-                  content: editorSelectedContent
-                }
-              ],
-            }, "insert-after")
+            handleClick(
+              {
+                messages: [
+                  {
+                    role: "system",
+                    content: PROMPT.document_code,
+                  },
+                  {
+                    role: "user",
+                    content: editorSelectedContent,
+                  },
+                ],
+              },
+              "insert-after"
+            )
           }}
           variant="outline"
           className="flex w-full justify-center px-6 "
@@ -176,11 +177,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.optimize_headings
-                }, {
+                  content: PROMPT.optimize_headings,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -203,11 +205,15 @@ function AITools({
                   messages: [
                     {
                       role: "system",
-                      content: PROMPT.convert_code.replace("{to}", to as string)
-                    }, {
+                      content: PROMPT.convert_code.replace(
+                        "{to}",
+                        to as string
+                      ),
+                    },
+                    {
                       role: "user",
-                      content: editorSelectedContent
-                    }
+                      content: editorSelectedContent,
+                    },
                   ],
                 })
               }}
@@ -220,9 +226,7 @@ function AITools({
                 autoFocus
               />
               <PopoverClose>
-                <Button className="mt-3 w-full">
-                  Convert
-                </Button>
+                <Button className="mt-3 w-full">Convert</Button>
               </PopoverClose>
             </form>
           </PopoverContent>
@@ -233,11 +237,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.grammar_correction
-                }, {
+                  content: PROMPT.grammar_correction,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -266,11 +271,15 @@ function AITools({
                           messages: [
                             {
                               role: "system",
-                              content: PROMPT.translate_text.replace("{language}", language.name)
-                            }, {
+                              content: PROMPT.translate_text.replace(
+                                "{language}",
+                                language.name
+                              ),
+                            },
+                            {
                               role: "user",
-                              content: editorSelectedContent
-                            }
+                              content: editorSelectedContent,
+                            },
                           ],
                         })
                       }}
@@ -290,11 +299,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.accessibility_improvement
-                }, {
+                  content: PROMPT.accessibility_improvement,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -309,11 +319,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.code_formatting
-                }, {
+                  content: PROMPT.code_formatting,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -328,11 +339,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.bullet_point_optimization
-                }, {
+                  content: PROMPT.bullet_point_optimization,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -347,11 +359,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.consistency_check
-                }, {
+                  content: PROMPT.consistency_check,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -366,11 +379,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.embed_media
-                }, {
+                  content: PROMPT.embed_media,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -381,17 +395,21 @@ function AITools({
         </Button>
         <Button
           onClick={() => {
-            handleClick({
-              messages: [
-                {
-                  role: "system",
-                  content: PROMPT.fact_checking
-                }, {
-                  role: "user",
-                  content: editorSelectedContent
-                }
-              ],
-            }, "insert-after")
+            handleClick(
+              {
+                messages: [
+                  {
+                    role: "system",
+                    content: PROMPT.fact_checking,
+                  },
+                  {
+                    role: "user",
+                    content: editorSelectedContent,
+                  },
+                ],
+              },
+              "insert-after"
+            )
           }}
           variant="outline"
           className="flex w-full justify-center px-6 "
@@ -404,11 +422,12 @@ function AITools({
               messages: [
                 {
                   role: "system",
-                  content: PROMPT.hyperlink_implementation
-                }, {
+                  content: PROMPT.hyperlink_implementation,
+                },
+                {
                   role: "user",
-                  content: editorSelectedContent
-                }
+                  content: editorSelectedContent,
+                },
               ],
             })
           }}
@@ -419,17 +438,21 @@ function AITools({
         </Button>
         <Button
           onClick={() => {
-            handleClick({
-              messages: [
-                {
-                  role: "system",
-                  content: PROMPT.technical_explanation
-                }, {
-                  role: "user",
-                  content: editorSelectedContent
-                }
-              ],
-            }, "insert-after")
+            handleClick(
+              {
+                messages: [
+                  {
+                    role: "system",
+                    content: PROMPT.technical_explanation,
+                  },
+                  {
+                    role: "user",
+                    content: editorSelectedContent,
+                  },
+                ],
+              },
+              "insert-after"
+            )
           }}
           variant="outline"
           className="flex w-full justify-center px-6 "
@@ -438,7 +461,10 @@ function AITools({
         </Button>
       </div>
       {/* Upgrade to pro dialog */}
-      <UpgradeToPRODialog open={upgradeToPRODialog} setOpen={setUpgradeToPRODialog} />
+      <UpgradeToPRODialog
+        open={upgradeToPRODialog}
+        setOpen={setUpgradeToPRODialog}
+      />
     </>
   )
 }

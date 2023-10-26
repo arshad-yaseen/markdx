@@ -3,7 +3,6 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
-import { DialogDescription } from "@radix-ui/react-dialog"
 import { useAtom } from "jotai"
 import { Loader2, PlusIcon } from "lucide-react"
 import { toast } from "sonner"
@@ -11,8 +10,6 @@ import { toast } from "sonner"
 import { defaultEditorContent } from "@/config/editor"
 import { cn, generateUniqueString } from "@/lib/utils"
 import { Button, ButtonProps } from "@/components/ui/button"
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
 
 interface PostCreateButtonProps extends ButtonProps {}
 
@@ -24,7 +21,7 @@ export function PostCreateButton({
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [, setEditorCodes] = useAtom(editorCodesState)
   const [, setEditorActiveSection] = useAtom(editorActiveSectionState)
-  
+
   const router = useRouter()
 
   async function onClick() {

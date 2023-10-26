@@ -76,20 +76,27 @@ export async function GET(
       },
     })
 
-
-    const markdownPost = markdownPosts.find((post) => post.markdownId === params.markdownId)
+    const markdownPost = markdownPosts.find(
+      (post) => post.markdownId === params.markdownId
+    )
 
     // Check if the user has access to this post.
-    if(!markdownPost) {
+    if (!markdownPost) {
       return new Response(null, { status: 403 })
     }
 
-    const isEligibleForAI = !!user?.stripeSubscriptionId ? true : markdownPosts.length < 2 ? true : false
+    const isEligibleForAI = !!user?.stripeSubscriptionId
+      ? true
+      : markdownPosts.length < 2
+      ? true
+      : false
 
-    return new Response(JSON.stringify({
-      markdownPost,
-      isEligibleForAI
-    }))
+    return new Response(
+      JSON.stringify({
+        markdownPost,
+        isEligibleForAI,
+      })
+    )
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
@@ -112,7 +119,7 @@ export async function PATCH(
     const markdown_post = postPatchSchema.parse(json)
 
     // Check if the user has access to this post.
-    if(!(await verifyCurrentUserHasAccessToPost(params.markdownId))) {
+    if (!(await verifyCurrentUserHasAccessToPost(params.markdownId))) {
       return new Response(null, { status: 403 })
     }
 
@@ -129,7 +136,7 @@ export async function PATCH(
       },
     })
 
-    const updatedData = await db.markdownPost.update({
+    await db.markdownPost.update({
       where: {
         markdownId: params.markdownId,
       },
@@ -160,7 +167,6 @@ export async function PATCH(
     return new Response(null, { status: 500 })
   }
 }
-
 
 async function verifyCurrentUserHasAccessToPost(markdownId: string) {
   const session = await getServerSession(authOptions)

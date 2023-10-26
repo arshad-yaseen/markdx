@@ -165,8 +165,7 @@
   }
 }
 
-
-.ai-tools-section-lock{
+.ai-tools-section-lock {
   animation: ai-tools-section-lock-animation 0.3s ease-in-out;
   -webkit-animation: ai-tools-section-lock-animation 0.3s ease-in-out;
   backdrop-filter: blur(5px);

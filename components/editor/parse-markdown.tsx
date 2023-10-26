@@ -172,12 +172,12 @@ function ParseMarkdown({
       <pre className={cn("mt-5 flex w-full", className)} {...props} />
     ),
     video: ({ className, ...props }: ComponentTypes) => (
-      <div className="w-full min-h-[300px]">
+      <div className="min-h-[300px] w-full">
         <video
-        className={cn("my-4 inline-flex rounded-md border", className)}
-        {...props}
-        controls
-      />
+          className={cn("my-4 inline-flex rounded-md border", className)}
+          {...props}
+          controls
+        />
       </div>
     ),
     code({ inline, className, children, ...props }: ComponentTypes) {

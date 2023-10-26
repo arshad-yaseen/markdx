@@ -21,19 +21,15 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import AITools from "./ai-tools"
-import Assets from "./assets"
 import AskAI from "./ask-ai"
+import Assets from "./assets"
 
 interface UnsplashSearchFormData {
   unsplash_image_query: string
   orientation: string
 }
 
-function AIToolsSection({
-  isEligibleForAI
-}:{
-  isEligibleForAI: boolean
-}) {
+function AIToolsSection({ isEligibleForAI }: { isEligibleForAI: boolean }) {
   const monacoInstance = useAtomValue(monacoInstanceState)
   const [isUploadingFile, setIsUploadingFile] = useState(false)
   const [isToolsPanelCollapsedStore, setIsToolsPanelCollapsedStore] =
@@ -102,7 +98,7 @@ function AIToolsSection({
   return (
     <>
       <div
-        className={`hidden h-full relative ${
+        className={`relative hidden h-full ${
           isToolsPanelCollapsed ? "invisible w-0 opacity-0" : "min-w-[18%]"
         } flex-col items-center border-r p-6 lg:flex `}
       >
@@ -116,10 +112,10 @@ function AIToolsSection({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="tools">
-            <AITools isEligibleForAI={isEligibleForAI}  />
+            <AITools isEligibleForAI={isEligibleForAI} />
             <hr className="my-4" />
             <div className="flex w-full flex-1 flex-col justify-end space-y-2 py-2">
-            <AskAI isEligibleForAI={isEligibleForAI} />
+              <AskAI isEligibleForAI={isEligibleForAI} />
               <Button
                 disabled={isUploadingFile}
                 variant="outline"

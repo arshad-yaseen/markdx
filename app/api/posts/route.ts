@@ -3,9 +3,7 @@ import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import {
-  MarkdownAlreadyExistError,
-} from "@/lib/exceptions"
+import { MarkdownAlreadyExistError } from "@/lib/exceptions"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
 const postCreateSchema = z.object({

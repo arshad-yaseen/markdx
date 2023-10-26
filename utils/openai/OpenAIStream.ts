@@ -3,9 +3,9 @@ import {
   ReconnectInterval,
   createParser,
 } from "eventsource-parser"
+import OpenAI from "openai"
 
 import { env } from "@/env.mjs"
-import OpenAI from "openai"
 
 export type ChatGPTAgent = "user" | "system"
 
