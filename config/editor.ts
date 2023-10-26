@@ -36,6 +36,7 @@ export const PROMPT = {
   accessibility_improvement:
     "Improve the accessibility of the following markdown.",
   fact_checking: "Fact-check the information in the following markdown.",
+  rephrase_text: "Rephrase the following text.",
 }
 
 export const shortcuts = {

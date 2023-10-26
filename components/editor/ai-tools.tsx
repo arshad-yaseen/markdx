@@ -150,6 +150,26 @@ function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
         </Button>
         <Button
           onClick={() => {
+            handleClick({
+              messages: [
+                {
+                  role: "system",
+                  content: PROMPT.rephrase_text,
+                },
+                {
+                  role: "user",
+                  content: editorSelectedContent,
+                },
+              ],
+            })
+          }}
+          variant="outline"
+          className="flex w-full justify-center px-6 "
+        >
+          Rephrase
+        </Button>
+        <Button
+          onClick={() => {
             handleClick(
               {
                 messages: [
