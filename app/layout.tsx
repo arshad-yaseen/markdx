@@ -5,11 +5,11 @@ import "@/styles/globals.css"
 import "@/styles/components.css"
 import { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/react"
+import { GeistSans } from "geist/font"
 import { Provider as TextBalancer } from "react-wrap-balancer"
 import { Toaster } from "sonner"
 
 import { fontHeading, fontMono } from "@/lib/fonts"
-import {GeistSans} from "geist/font"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
