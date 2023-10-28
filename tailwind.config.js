@@ -71,7 +71,7 @@ module.exports = {
         fullscreen: "var(--shadow-fullscreen)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["var(--font-geist-sans)"],
         heading: ["var(--font-heading)", ...fontFamily.sans],
         mono: ["var(--font-mono)", ...fontFamily.mono],
       },

@@ -8,7 +8,8 @@ import { Analytics } from "@vercel/analytics/react"
 import { Provider as TextBalancer } from "react-wrap-balancer"
 import { Toaster } from "sonner"
 
-import { fontHeading, fontMono, fontSans } from "@/lib/fonts"
+import { fontHeading, fontMono } from "@/lib/fonts"
+import {GeistSans} from "geist/font"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
@@ -73,7 +74,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          GeistSans.variable,
           fontHeading.variable,
           fontMono.variable
         )}
