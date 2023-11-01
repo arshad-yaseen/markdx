@@ -21,7 +21,7 @@ function SiteHero() {
       </div>
       <Balancer
         as="h1"
-        className="mt-8 px-6 text-center lg:font-heading font-sans lg:tracking-normal tracking-tight text-4xl font-bold drop-shadow-sm sm:text-5xl lg:text-6xl"
+        className="mt-8 px-6 text-center font-sans text-4xl font-bold tracking-tight drop-shadow-sm sm:text-5xl lg:font-heading lg:text-6xl lg:tracking-normal"
       >
         <p className="relative inline-block">
           <span className="z-0 bg-gradient-to-b from-foreground  to-foreground/70 bg-clip-text pb-1 text-transparent dark:from-white dark:to-white">
