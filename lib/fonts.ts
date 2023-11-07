@@ -1,4 +1,4 @@
-import { JetBrains_Mono } from "next/font/google"
+import { JetBrains_Mono, Inter } from "next/font/google"
 import localFont from "next/font/local"
 
 export const fontMono = JetBrains_Mono({
@@ -9,4 +9,9 @@ export const fontMono = JetBrains_Mono({
 export const fontHeading = localFont({
   src: "../assets/fonts/CalSans-SemiBold.woff2",
   variable: "--font-heading",
+})
+
+export const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
 })

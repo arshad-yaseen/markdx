@@ -5,11 +5,10 @@ import "@/styles/globals.css"
 import "@/styles/components.css"
 import { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/react"
-import { GeistSans } from "geist/font"
 import { Provider as TextBalancer } from "react-wrap-balancer"
 import { Toaster } from "sonner"
 
-import { fontHeading, fontMono } from "@/lib/fonts"
+import { fontHeading, fontMono, fontSans } from "@/lib/fonts"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
@@ -74,7 +73,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          GeistSans.variable,
+          fontSans.variable,
           fontHeading.variable,
           fontMono.variable
         )}
