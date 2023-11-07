@@ -7,7 +7,7 @@ export const defaultEditorContent = {
   section: "Introduction",
   content: `# Project Title\n\nA brief description of what this project does.`,
 }
-export const openai_model = "gpt-4"
+export const openai_model = "gpt-4-1106-preview"
 
 export const PROMPT = {
   standardize_format: "Standardize the format of the following markdown.",

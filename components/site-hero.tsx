@@ -15,7 +15,7 @@ function SiteHero() {
     <section className="flex w-full flex-col items-center ">
       <div className="gradient-box mt-4 rounded-full px-6 py-2.5 text-sm font-medium">
         <span className="relative z-30">
-          Now featuring support for GPT-4{" "}
+          Now featuring support for GPT-4 Turbo{" "}
           <SparklesIcon className="mb-1 inline-block h-4 w-4" />
         </span>
       </div>
