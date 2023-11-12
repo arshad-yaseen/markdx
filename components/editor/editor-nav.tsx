@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { editorCodesState } from "@/atoms/editor"
 import { markdownto } from "@/utils/editor"
 import copy from "copy-to-clipboard"
@@ -22,7 +21,6 @@ import EditorKbdShortcuts from "./editor-kbd-shortcuts"
 import SaveButton from "./save-button"
 
 function EditorNav() {
-  const [isSaving, setIsSaving] = useState(false)
   const editorCodes = useAtomValue(editorCodesState) satisfies editorCode[]
   const fullCode = editorCodes
     .map((code: editorCode) => code.content)
@@ -78,12 +76,7 @@ function EditorNav() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <SaveButton
-        isSaving={isSaving}
-        postCodes={editorCodes}
-        onSave={() => setIsSaving(true)}
-        onSaved={() => setIsSaving(false)}
-      />
+      <SaveButton postCodes={editorCodes} />
       <EditorKbdShortcuts />
       <ModeToggle />
     </>
