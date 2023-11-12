@@ -2,7 +2,7 @@
 
 Meet MarkDX, an AI-powered markdown editor for top-notch markdown writing.
 
-![MarkDX Screenshot](https://shiny.link/HQuQyZ)
+![MarkDX Screenshot](/public/og.png)
 
 ## Running Locally
 

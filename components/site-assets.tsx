@@ -33,9 +33,10 @@ function SiteAssets({
       src={`/markdx-editor-frame-${theme === "dark" ? "dark" : "light"}.png`}
       priority
       alt="hero"
-      className={cn("absolute lg:-top-24", className)}
-      width={1000}
-      height={1000}
+      className={cn("absolute lg:-top-10", className)}
+      width={900}
+      height={900}
+      loading="eager"
     />
   ) : null
 }

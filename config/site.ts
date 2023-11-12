@@ -14,6 +14,7 @@ export const siteConfig: SiteConfig = {
   creator: {
     name: "Arshad Yaseen",
     twitter: "https://twitter.com/arshadyaseeen",
+    twitterId: "@arshadyaseeen",
     github: "https://github.com/arshad-yaseen",
     website: "https://arshadd.site",
     mail: "arshadpyaseen@gmail.com",

@@ -15,6 +15,7 @@ export type SiteConfig = {
   creator: {
     name: string
     twitter: string
+    twitterId: string
     github: string
     website: string
     mail: string
