@@ -80,7 +80,7 @@ function PreviewSection({ code }: { code: string }) {
         </div>
       )}
 
-      <ParseMarkdown code={code} codeCopyable className="pb-[80vh]" />
+      <ParseMarkdown code={code} className="pb-[80vh]" />
     </div>
   )
 }

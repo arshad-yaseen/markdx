@@ -1,3 +1,4 @@
+import { ServerResponse } from "@/server/utils"
 import { getServerSession } from "next-auth/next"
 import { z } from "zod"
 
@@ -16,7 +17,7 @@ export async function GET() {
     const session = await getServerSession(authOptions)
 
     if (!session?.user) {
-      return new Response(null, { status: 403 })
+      return ServerResponse.unauthorized()
     }
 
     const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)
@@ -29,7 +30,9 @@ export async function GET() {
         return_url: billingUrl,
       })
 
-      return new Response(JSON.stringify({ url: stripeSession.url }))
+      return ServerResponse.success({
+        body: { url: stripeSession.url },
+      })
     }
 
     // The user is on the free plan.
@@ -52,14 +55,14 @@ export async function GET() {
       },
     })
 
-    return new Response(JSON.stringify({ url: stripeSession.url }))
+    return ServerResponse.success({
+      body: { url: stripeSession.url },
+    })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return ServerResponse.unprocessableEntity(error)
     }
 
-    console.log(error)
-
-    return new Response(null, { status: 500 })
+    return ServerResponse.internalServerError()
   }
 }

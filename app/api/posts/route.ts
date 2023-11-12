@@ -1,3 +1,4 @@
+import { ServerResponse } from "@/server/utils"
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
@@ -6,6 +7,7 @@ import { db } from "@/lib/db"
 import { MarkdownAlreadyExistError } from "@/lib/exceptions"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
+// Define the schema for post creation validation.
 const postCreateSchema = z.object({
   code: z.object({
     section: z.string(),
@@ -14,81 +16,78 @@ const postCreateSchema = z.object({
   markdown_id: z.string(),
 })
 
+// Handler for GET requests to retrieve markdown posts.
 export async function GET() {
   try {
     const session = await getServerSession(authOptions)
 
+    // Check if the user session exists.
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return ServerResponse.unauthorized()
     }
 
     const { user } = session
+    // Fetch posts from the database.
     const posts = await db.markdownPost.findMany({
-      select: {
-        id: true,
-        createdAt: true,
-        postCodes: true,
-      },
-      where: {
-        userId: (user as any)?.id,
-      },
+      select: { id: true, createdAt: true, postCodes: true },
+      where: { userId: user.id },
     })
 
-    return new Response(JSON.stringify(posts))
+    return ServerResponse.success({
+      body: posts,
+    })
   } catch (error) {
-    return new Response(null, { status: 500 })
+    return ServerResponse.internalServerError()
   }
 }
 
+// Handler for POST requests to create a new markdown post.
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions)
+
+    if (!session) {
+      return ServerResponse.unauthorized()
+    }
+
+    // Parse and validate the request body.
     const json = await req.json()
     const body = postCreateSchema.parse(json)
 
-    if (!session) {
-      return new Response("Unauthorized", { status: 403 })
-    }
-
     const { user } = session
+    // Retrieve the user's subscription plan.
     const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
-    // If user is on a free plan.
-    // Check if user has reached limit of 3 posts.
+    // For non-pro users, check the post count limit.
     if (!subscriptionPlan?.isPro) {
       const markdownCount = await db.markdownPost.count({
-        where: {
-          userId: user.id,
-          markdownId: body.markdown_id,
-        },
+        where: { userId: user.id, markdownId: body.markdown_id },
       })
 
-      if (markdownCount > 0) {
+      if (markdownCount >= 3) {
         throw new MarkdownAlreadyExistError()
       }
     }
 
+    // Create a new post in the database.
     const post = await db.markdownPost.create({
-      data: {
-        userId: String(session.user.id),
-        markdownId: body.markdown_id,
-      },
-      select: {
-        markdownId: true,
-      },
+      data: { userId: user.id, markdownId: body.markdown_id },
+      select: { markdownId: true },
     })
 
-    return new Response(JSON.stringify(post))
+    return ServerResponse.success({
+      body: post,
+    })
   } catch (error) {
+    console.error(error)
     if (error instanceof z.ZodError) {
-      console.error(error.issues)
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return ServerResponse.unprocessableEntity(error)
     }
 
     if (error instanceof MarkdownAlreadyExistError) {
-      return new Response("Markdown ID Already Exist", { status: 403 })
+      return ServerResponse.conflict("Markdown already exists")
     }
 
-    return new Response(null, { status: 500 })
+    return ServerResponse.internalServerError()
   }
 }

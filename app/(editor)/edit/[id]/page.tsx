@@ -44,10 +44,12 @@ export default function page({ params }: { params: { id: string } }) {
     }
 
     const resJson = await response.json()
-    setIsEligibleForAI(resJson.isEligibleForAI)
     const markdownPost = resJson.markdownPost
 
-    if (markdownPost.postCodes.length > 0) {
+    if (
+      markdownPost?.postCodes?.length > 0 &&
+      markdownPost.postCodes.length > 0
+    ) {
       let code = markdownPost.postCodes
       setEditorCodes(code)
       code
@@ -57,6 +59,13 @@ export default function page({ params }: { params: { id: string } }) {
         .map((code: editorCode) => {
           setMarkdownCode(code.content)
         })
+
+      // Check if the user is eligible for AI - make a request to the API
+      const response = await fetch(`/api/user/eligible-for-ai`, {
+        method: "GET",
+      })
+      const resJson = await response.json()
+      setIsEligibleForAI(resJson.isEligibleForAI)
     } else {
       const defaultCode = [defaultEditorContent] as editorCode[]
 

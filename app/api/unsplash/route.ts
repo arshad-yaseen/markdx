@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server"
+import { ServerResponse } from "@/server/utils"
 
 import { env } from "@/env.mjs"
 
@@ -13,15 +14,7 @@ export async function GET(req: NextRequest) {
   const orientation = searchParams.get("orientation") || "landscape"
 
   if (!accessKey) {
-    return new Response(
-      JSON.stringify({
-        error: true,
-        message: "AccessKey Missing",
-      }),
-      {
-        status: 500,
-      }
-    )
+    return ServerResponse.error("AccessKey Missing")
   }
 
   try {
@@ -35,46 +28,21 @@ export async function GET(req: NextRequest) {
     )
 
     if (!response.ok) {
-      return new Response(
-        JSON.stringify({
-          error: true,
-          message: "Network response was not ok",
-        }),
-        {
-          status: 500,
-        }
-      )
+      return ServerResponse.error("Network response was not ok")
     }
 
     const data = await response.json()
     const results = data.results.map((result: object) => result)
 
-    return new Response(JSON.stringify(results), {
-      status: 200,
-      headers: {
-        "Cache-Control": "public, max-age=60",
-      },
+    return ServerResponse.success({
+      body: results,
     })
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error)
-
-    return new Response(
-      JSON.stringify({
-        error: true,
-        message:
-          (
-            error as {
-              response: {
-                data: string
-              }
-            }
-          )?.response?.data == "Rate Limit Exceeded"
-            ? "Too many Unsplash images. Wait and try again."
-            : "Something went wrong",
-      }),
-      {
-        status: 500,
-      }
+    return ServerResponse.error(
+      (error as unknown as any).response.data == "Rate Limit Exceeded"
+        ? "Too many Unsplash images. Wait and try again."
+        : "Something went wrong"
     )
   }
 }

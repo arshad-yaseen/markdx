@@ -1,4 +1,5 @@
 import { headers } from "next/headers"
+import { ServerResponse } from "@/server/utils"
 import Stripe from "stripe"
 
 import { env } from "@/env.mjs"
@@ -20,9 +21,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.log(error)
 
-    return new Response(`Webhook Error: ${(error as any).message}`, {
-      status: 400,
-    })
+    return ServerResponse.error("Webhook Error")
   }
 
   const session = event.data.object as Stripe.Checkout.Session
@@ -71,5 +70,7 @@ export async function POST(req: Request) {
     })
   }
 
-  return new Response(null, { status: 200 })
+  return ServerResponse.success({
+    body: null,
+  })
 }

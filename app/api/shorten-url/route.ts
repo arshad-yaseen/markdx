@@ -1,5 +1,8 @@
 import { env } from "process"
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest } from "next/server"
+import { ServerResponse } from "@/server/utils"
+
+export const runtime = "edge"
 
 export async function POST(req: NextRequest) {
   const { url } = await req.json()
@@ -16,25 +19,14 @@ export async function POST(req: NextRequest) {
   })
 
   if (shortUrlRes.status !== 200) {
-    return NextResponse.json(
-      {
-        error: true,
-        message: "Network response was not ok",
-      },
-      {
-        status: 500,
-      }
-    )
+    return ServerResponse.error("Network response was not ok")
   }
 
   const shortUrlJson = await shortUrlRes.json()
-  return NextResponse.json(
-    {
+  return ServerResponse.success({
+    body: {
       shorturl: shortUrlJson.shorturl,
       error: false,
     },
-    {
-      status: 200,
-    }
-  )
+  })
 }

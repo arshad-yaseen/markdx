@@ -1,3 +1,5 @@
+import { ServerResponse } from "@/server/utils"
+import { kv } from "@vercel/kv"
 import { getServerSession } from "next-auth"
 import * as z from "zod"
 
@@ -5,177 +7,163 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { postPatchSchema } from "@/lib/validations/post"
 
+// Set the revalidation interval (currently set to 0, meaning no revalidation).
 export const revalidate = 0
 
+// Define the schema for the route context validation.
 const routeContextSchema = z.object({
   params: z.object({
     markdownId: z.string(),
   }),
 })
 
+// Function to verify if the current user has access to a specific post.
+async function verifyCurrentUserHasAccessToPost(markdownId: string) {
+  const session = await getServerSession(authOptions)
+  // Count the posts with the given markdownId and userId.
+  const count = await db.markdownPost.count({
+    where: {
+      markdownId,
+      userId: session?.user.id,
+    },
+  })
+
+  // Returns true if at least one post is found.
+  return count > 0
+}
+
+// Handler for DELETE requests to remove a markdown post.
 export async function DELETE(
   req: Request,
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
-    // Validate the route params.
     const { params } = routeContextSchema.parse(context)
 
-    // Check if the user has access to this post.
     if (!(await verifyCurrentUserHasAccessToPost(params.markdownId))) {
-      return new Response(null, { status: 403 })
+      return ServerResponse.unauthorized()
     }
 
-    // Delete the post.
+    // Delete the post with the specified markdownId.
     await db.markdownPost.delete({
-      where: {
-        markdownId: params.markdownId,
-      },
+      where: { markdownId: params.markdownId },
     })
 
-    return new Response(null, { status: 204 })
+    return ServerResponse.success({
+      body: null,
+    })
   } catch (error) {
+    console.error(error)
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      // Return a 422 Unprocessable Entity response if validation fails.
+      return ServerResponse.unprocessableEntity(error)
     }
-    console.log(error)
 
-    return new Response(null, { status: 500 })
+    // Return a 500 Internal Server Error for other errors.
+    return ServerResponse.internalServerError()
   }
 }
 
+// Handler for GET requests to fetch a markdown post.
 export async function GET(
   req: Request,
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
-    // Validate the route params.
     const { params } = routeContextSchema.parse(context)
     const session = await getServerSession(authOptions)
 
-    const user = await db.user.findUnique({
-      where: {
-        id: session?.user.id,
-      },
-      select: {
-        stripeSubscriptionId: true,
-      },
-    })
-
-    const markdownPosts = await db.markdownPost.findMany({
-      where: {
-        userId: session?.user.id,
-      },
-      select: {
-        postCodes: true,
-        createdAt: true,
-        userId: true,
-        id: true,
-        markdownId: true,
-        updatedAt: true,
-      },
-    })
-
-    const markdownPost = markdownPosts.find(
-      (post) => post.markdownId === params.markdownId
+    // Try fetching the post from KV store.
+    const markdownPostfromKv = await kv.get(
+      `${params.markdownId}_${session?.user.id}`
     )
+    let markdownPost = markdownPostfromKv
 
-    // Check if the user has access to this post.
+    // Fetch from database if not found in KV store.
     if (!markdownPost) {
-      return new Response(null, { status: 403 })
-    }
-
-    const isEligibleForAI = !!user?.stripeSubscriptionId
-      ? true
-      : markdownPosts.length < 2
-      ? true
-      : false
-
-    return new Response(
-      JSON.stringify({
-        markdownPost,
-        isEligibleForAI,
+      const markdownPosts = await db.markdownPost.findMany({
+        where: { userId: session?.user.id },
+        select: {
+          postCodes: true,
+          createdAt: true,
+          userId: true,
+          id: true,
+          markdownId: true,
+          updatedAt: true,
+        },
       })
-    )
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+
+      // Find the specific post matching the markdownId and userId.
+      markdownPost = markdownPosts.find(
+        (post) =>
+          post.markdownId === params.markdownId &&
+          post.userId === session?.user.id
+      )
+
+      if (!markdownPost) return ServerResponse.unauthorized()
+      await kv.set(
+        `${params.markdownId}_${session?.user.id}`,
+        JSON.stringify(markdownPost)
+      )
     }
 
-    return new Response(null, { status: 500 })
+    // Return the markdown post and eligibility status.
+    return ServerResponse.success({
+      body: { markdownPost },
+    })
+  } catch (error) {
+    console.error(error)
+    if (error instanceof z.ZodError) {
+      return ServerResponse.unprocessableEntity(error)
+    }
+
+    return ServerResponse.internalServerError()
   }
 }
 
+// Handler for PATCH requests to update a markdown post.
 export async function PATCH(
   req: Request,
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
-    // Validate route params.
     const { params } = routeContextSchema.parse(context)
+    const session = await getServerSession(authOptions)
 
-    // Get the request body and validate it.
+    // Parse and validate the request body.
     const json = await req.json()
     const markdown_post = postPatchSchema.parse(json)
 
-    // Check if the user has access to this post.
     if (!(await verifyCurrentUserHasAccessToPost(params.markdownId))) {
-      return new Response(null, { status: 403 })
+      return ServerResponse.unauthorized()
     }
 
-    // Update the post.
-    // TODO: Implement sanitization for content.
+    // Update the post in the database.
     await db.markdownPost.update({
-      where: {
-        markdownId: params.markdownId,
-      },
+      where: { markdownId: params.markdownId },
       data: {
         postCodes: {
-          deleteMany: {}, // Delete all existing postCodes associated with the MarkdownPost
+          deleteMany: {},
+          create: markdown_post.postCodes,
         },
       },
     })
 
-    await db.markdownPost.update({
-      where: {
-        markdownId: params.markdownId,
-      },
-      data: {
-        postCodes: {
-          create: markdown_post.postCodes, // Place new array
-        },
-      },
-      select: {
-        postCodes: true,
-        createdAt: true,
-        userId: true,
-        id: true,
-        markdownId: true,
-        updatedAt: true,
-      },
-    })
+    // Update the post in the KV store.
+    await kv.set(
+      `${params.markdownId}_${session?.user.id}`,
+      JSON.stringify(markdown_post)
+    )
 
-    return new Response(null, { status: 200 })
+    return ServerResponse.success({
+      body: null,
+    })
   } catch (error) {
+    console.error(error)
     if (error instanceof z.ZodError) {
-      console.log(error.issues)
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return ServerResponse.unprocessableEntity(error)
     }
 
-    console.log(error)
-
-    return new Response(null, { status: 500 })
+    return ServerResponse.internalServerError()
   }
-}
-
-async function verifyCurrentUserHasAccessToPost(markdownId: string) {
-  const session = await getServerSession(authOptions)
-  const count = await db.markdownPost.count({
-    where: {
-      markdownId: String(markdownId),
-      userId: session?.user.id,
-    },
-  })
-
-  return count > 0
 }
