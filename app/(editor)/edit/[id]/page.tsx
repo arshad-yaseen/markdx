@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { cache, useEffect, useState } from "react"
 import {
   editorActiveSectionState,
   editorCodesState,
@@ -63,6 +63,10 @@ export default function page({ params }: { params: { id: string } }) {
       // Check if the user is eligible for AI - make a request to the API
       const response = await fetch(`/api/user/eligible-for-ai`, {
         method: "GET",
+        next: {
+          revalidate: 0
+        },
+        cache: "no-store"
       })
       const resJson = await response.json()
       setIsEligibleForAI(resJson.isEligibleForAI)
