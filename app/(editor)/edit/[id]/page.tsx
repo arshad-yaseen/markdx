@@ -1,6 +1,6 @@
 "use client"
 
-import { cache, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   editorActiveSectionState,
   editorCodesState,
