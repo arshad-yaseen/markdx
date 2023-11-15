@@ -130,10 +130,19 @@ function ParseMarkdown({
     }: React.ImgHTMLAttributes<HTMLImageElement>) => (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        className={cn("my-2 inline-flex rounded-md  border", className)}
+        className={cn("my-2 inline-flex rounded-lg  border", className)}
         alt={alt}
         {...props}
       />
+    ),
+    iframe: ({ className, ...props }: ComponentTypes) => (
+      <iframe
+        className={cn("my-4 inline-flex max-w-full rounded-lg border", className)}
+        {...props}
+      />
+    ),
+    div: ({ className, ...props }: ComponentTypes) => (
+      <div className={cn("", className)} {...props} />
     ),
     hr: ({ ...props }: ComponentTypes) => (
       <hr className="my-4 md:my-8" {...props} />
@@ -176,7 +185,7 @@ function ParseMarkdown({
     video: ({ className, ...props }: ComponentTypes) => (
       <div className="min-h-[300px] w-full">
         <video
-          className={cn("my-4 inline-flex rounded-md border", className)}
+          className={cn("my-4 inline-flex rounded-lg border", className)}
           {...props}
           controls
         />
