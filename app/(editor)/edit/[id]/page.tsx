@@ -64,9 +64,9 @@ export default function page({ params }: { params: { id: string } }) {
       const response = await fetch(`/api/user/eligible-for-ai`, {
         method: "GET",
         next: {
-          revalidate: 0
+          revalidate: 0,
         },
-        cache: "no-store"
+        cache: "no-store",
       })
       const resJson = await response.json()
       setIsEligibleForAI(resJson.isEligibleForAI)
