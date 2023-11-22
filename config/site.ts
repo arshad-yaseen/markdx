@@ -16,9 +16,7 @@ export const siteConfig = {
     twitter: "https://twitter.com/arshadyaseeen",
     twitterId: "@arshadyaseeen",
     github: "https://github.com/arshad-yaseen",
-    website: "https://arshadd.site",
-    mail: "arshadpyaseen@gmail.com",
+    website: "https://arshadyaseen.com",
+    mail: "m@arshadpyaseen.com",
   },
 }
-
-export const githubRepo: string = "https://github.com/arshad-yaseen/markdx"
