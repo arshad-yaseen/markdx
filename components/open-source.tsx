@@ -3,10 +3,11 @@
 import React from "react"
 import Link from "next/link"
 
-import { githubRepo } from "@/config/site"
+
 import { getRepo } from "@/lib/apiClient"
 
 import { Icons } from "./icons"
+import { siteConfig } from "@/config/site"
 
 async function getStars() {
   const repo = await getRepo("arshad-yaseen", "markdx")
@@ -33,7 +34,7 @@ function OpenSource() {
             target="_blank"
             rel="noreferrer"
             className="underline underline-offset-4"
-            href={githubRepo}
+            href={siteConfig.links.github}
           >
             GitHub
           </Link>
@@ -43,7 +44,7 @@ function OpenSource() {
           target="_blank"
           rel="noreferrer"
           className="flex"
-          href={githubRepo}
+          href={siteConfig.links.github}
         >
           <div className="flex h-10 w-10 items-center justify-center space-x-2 rounded-md border border-muted bg-muted">
             <Icons.gitHub className="h-5 w-5" />
