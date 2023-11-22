@@ -3,7 +3,7 @@
 import React from "react"
 import Link from "next/link"
 
-import { githubRepo, siteConfig } from "@/config/site"
+import { siteConfig } from "@/config/site"
 import ModeToggle from "@/components/mode-toggle"
 
 import SiteAssets from "./site-assets"
@@ -44,7 +44,7 @@ function SiteFooter() {
           </Link>
           . The source code is available on{" "}
           <Link
-            href={githubRepo}
+            href={siteConfig.links.github}
             target="_blank"
             rel="noreferrer"
             className="font-medium underline underline-offset-4"

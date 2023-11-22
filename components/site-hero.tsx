@@ -4,11 +4,12 @@ import Link from "next/link"
 import { SparklesIcon } from "lucide-react"
 import { Balancer } from "react-wrap-balancer"
 
-import { githubRepo } from "@/config/site"
+
 
 import { Icons } from "./icons"
 import SiteAssets from "./site-assets"
 import { Button } from "./ui/button"
+import { siteConfig } from "@/config/site"
 
 function SiteHero() {
   return (
@@ -43,7 +44,7 @@ function SiteHero() {
             Start writing for free
           </Button>
         </Link>
-        <Link href={githubRepo} target="_blank">
+        <Link href={siteConfig.links.github} target="_blank">
           <Button variant="fancy" size="lg" className="sm:mt-12">
             <Icons.gitHub className="mr-2 h-4 w-4" /> Github
           </Button>
