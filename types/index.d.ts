@@ -2,25 +2,6 @@ import { User } from "@prisma/client"
 import { editor } from "monaco-editor"
 import { OpenAI } from "openai"
 
-export type SiteConfig = {
-  name: string
-  short_name: string
-  description: string
-  url: string
-  ogImage: string
-  links: {
-    twitter: string
-    github: string
-  }
-  creator: {
-    name: string
-    twitter: string
-    twitterId: string
-    github: string
-    website: string
-    mail: string
-  }
-}
 export type editorCode = {
   section: string
   section_id: number
