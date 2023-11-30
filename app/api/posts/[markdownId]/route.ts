@@ -1,11 +1,10 @@
 import { ServerResponse } from "@/server/utils"
 import { kv } from "@vercel/kv"
-import { getServerSession } from "next-auth"
 import * as z from "zod"
 
-import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { postPatchSchema } from "@/lib/validations/post"
+import { getCurrentUser } from "@/lib/session"
 
 // Set the revalidation interval (currently set to 0, meaning no revalidation).
 export const revalidate = 0
@@ -19,12 +18,16 @@ const routeContextSchema = z.object({
 
 // Function to verify if the current user has access to a specific post.
 async function verifyCurrentUserHasAccessToPost(markdownId: string) {
-  const session = await getServerSession(authOptions)
+  const userId = (await getCurrentUser())?.id
+
+  if(!userId) {
+    return false
+  }
   // Count the posts with the given markdownId and userId.
   const count = await db.markdownPost.count({
     where: {
       markdownId,
-      userId: session?.user.id,
+      userId: userId,
     },
   })
 
@@ -39,6 +42,11 @@ export async function DELETE(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
+    const userId = (await getCurrentUser())?.id
+
+    if(!userId) {
+      return ServerResponse.unauthorized()
+    }
 
     if (!(await verifyCurrentUserHasAccessToPost(params.markdownId))) {
       return ServerResponse.unauthorized()
@@ -71,18 +79,22 @@ export async function GET(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-    const session = await getServerSession(authOptions)
+    const userId = (await getCurrentUser())?.id
+
+    if(!userId) {
+      return ServerResponse.unauthorized()
+    }
 
     // Try fetching the post from KV store.
     const markdownPostfromKv = await kv.get(
-      `${params.markdownId}_${session?.user.id}`
+      `${params.markdownId}_${userId}`
     )
     let markdownPost = markdownPostfromKv
 
     // Fetch from database if not found in KV store.
     if (!markdownPost) {
       const markdownPosts = await db.markdownPost.findMany({
-        where: { userId: session?.user.id },
+        where: { userId: userId },
         select: {
           postCodes: true,
           createdAt: true,
@@ -97,12 +109,12 @@ export async function GET(
       markdownPost = markdownPosts.find(
         (post) =>
           post.markdownId === params.markdownId &&
-          post.userId === session?.user.id
+          post.userId === userId
       )
 
       if (!markdownPost) return ServerResponse.unauthorized()
       await kv.set(
-        `${params.markdownId}_${session?.user.id}`,
+        `${params.markdownId}_${userId}`,
         JSON.stringify(markdownPost)
       )
     }
@@ -128,7 +140,11 @@ export async function PATCH(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-    const session = await getServerSession(authOptions)
+    const userId = (await getCurrentUser())?.id
+
+    if(!userId) {
+      return ServerResponse.unauthorized()
+    }
 
     // Parse and validate the request body.
     const json = await req.json()
@@ -151,7 +167,7 @@ export async function PATCH(
 
     // Update the post in the KV store.
     await kv.set(
-      `${params.markdownId}_${session?.user.id}`,
+      `${params.markdownId}_${userId}`,
       JSON.stringify(markdown_post)
     )
 

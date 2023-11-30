@@ -8,7 +8,7 @@ import { toast } from "sonner"
 
 import "@/styles/mdx.css"
 import { OpenAIBody } from "@/types"
-import { OpenAICreateChat, editorAction } from "@/utils/editor"
+import { editorAction } from "@/utils/editor"
 import { PopoverClose } from "@radix-ui/react-popover"
 
 import { PROMPT } from "@/config/editor"
@@ -27,6 +27,7 @@ import {
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
+import { OpenAICreateChat } from "@/utils/openai/chat"
 
 function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
   const [requestingToAPI, setRequestingToAPI] = useState(false)

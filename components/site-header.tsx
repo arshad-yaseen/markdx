@@ -8,7 +8,7 @@ import SiteAssets from "./site-assets"
 import { buttonVariants } from "./ui/button"
 
 interface SiteHeaderProps {
-  user: User | undefined
+  user: User | null
 }
 
 function SiteHeader({ user }: SiteHeaderProps) {

@@ -18,8 +18,8 @@ export class ServerResponse {
     return NextResponse.json({ error: { message } }, { status: 404 })
   }
 
-  static unauthorized(message: string = "Unauthorized") {
-    return NextResponse.json({ error: { message } }, { status: 403 })
+  static unauthorized(message: string = "You are not authorized") {
+    return NextResponse.json({ error: { message } }, { status: 401 })
   }
 
   static internalServerError(message: string = "Internal server error") {

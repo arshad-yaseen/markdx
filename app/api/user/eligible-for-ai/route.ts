@@ -1,20 +1,21 @@
 import { ServerResponse } from "@/server/utils"
-import { getServerSession } from "next-auth"
 
-import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { getCurrentUser } from "@/lib/session"
 
 export const revalidate = 0
 export const dynamic = "force-dynamic"
 
 export async function GET() {
-  const session = await getServerSession(authOptions)
-  if (!session) {
-    return ServerResponse.unauthorized()
-  }
+  const userId = (await getCurrentUser())?.id
+
+    if(!userId) {
+      return ServerResponse.unauthorized()
+    }
+
   const user = await db.user.findUnique({
     where: {
-      id: session.user.id,
+      id: userId,
     },
     select: {
       stripeSubscriptionId: true,
@@ -23,7 +24,7 @@ export async function GET() {
 
   const markdownPostsCount = await db.markdownPost.count({
     where: {
-      userId: session.user.id,
+      userId: userId,
     },
   })
   if (!user || !markdownPostsCount) {

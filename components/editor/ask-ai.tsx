@@ -2,7 +2,6 @@
 
 import React, { FormEvent, useRef, useState } from "react"
 import { editorSelectedContentAtom } from "@/atoms/editor"
-import { OpenAICreateChat } from "@/utils/editor"
 import copy from "copy-to-clipboard"
 import { useAtomValue } from "jotai"
 import {
@@ -26,6 +25,7 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import ParseMarkdown from "./parse-markdown"
 import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
+import { OpenAICreateChat } from "@/utils/openai/chat"
 
 function AskAI({ isEligibleForAI }: { isEligibleForAI: boolean }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)

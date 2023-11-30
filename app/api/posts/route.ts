@@ -1,11 +1,10 @@
 import { ServerResponse } from "@/server/utils"
-import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
-import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { MarkdownAlreadyExistError } from "@/lib/exceptions"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
+import { getCurrentUser } from "@/lib/session"
 
 // Define the schema for post creation validation.
 const postCreateSchema = z.object({
@@ -19,18 +18,16 @@ const postCreateSchema = z.object({
 // Handler for GET requests to retrieve markdown posts.
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions)
+    const userId = (await getCurrentUser())?.id
 
-    // Check if the user session exists.
-    if (!session) {
+    if(!userId) {
       return ServerResponse.unauthorized()
     }
 
-    const { user } = session
     // Fetch posts from the database.
     const posts = await db.markdownPost.findMany({
       select: { id: true, createdAt: true, postCodes: true },
-      where: { userId: user.id },
+      where: { userId },
     })
 
     return ServerResponse.success({
@@ -44,9 +41,9 @@ export async function GET() {
 // Handler for POST requests to create a new markdown post.
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions)
+    const userId = (await getCurrentUser())?.id
 
-    if (!session) {
+    if(!userId) {
       return ServerResponse.unauthorized()
     }
 
@@ -54,14 +51,13 @@ export async function POST(req: Request) {
     const json = await req.json()
     const body = postCreateSchema.parse(json)
 
-    const { user } = session
     // Retrieve the user's subscription plan.
-    const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+    const subscriptionPlan = await getUserSubscriptionPlan(userId)
 
     // For non-pro users, check the post count limit.
     if (!subscriptionPlan?.isPro) {
       const markdownCount = await db.markdownPost.count({
-        where: { userId: user.id, markdownId: body.markdown_id },
+        where: { userId, markdownId: body.markdown_id },
       })
 
       if (markdownCount >= 3) {
@@ -71,7 +67,7 @@ export async function POST(req: Request) {
 
     // Create a new post in the database.
     const post = await db.markdownPost.create({
-      data: { userId: user.id, markdownId: body.markdown_id },
+      data: { userId, markdownId: body.markdown_id },
       select: { markdownId: true },
     })
 

@@ -1,12 +1,11 @@
 import { ServerResponse } from "@/server/utils"
-import { getServerSession } from "next-auth/next"
 import { z } from "zod"
 
 import { proPlan } from "@/config/subscriptions"
-import { authOptions } from "@/lib/auth"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { absoluteUrl } from "@/lib/utils"
+import { getCurrentUser } from "@/lib/session"
 
 const billingUrl = absoluteUrl("/dashboard/billing")
 
@@ -14,13 +13,13 @@ export const dynamic = "force-dynamic"
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions)
+    const user = (await getCurrentUser())
 
-    if (!session?.user) {
+    if(!user?.id) {
       return ServerResponse.unauthorized()
     }
 
-    const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)
+    const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
     // The user is on the pro plan.
     // Create a portal session to manage subscription.
@@ -42,7 +41,7 @@ export async function GET() {
       cancel_url: billingUrl,
       payment_method_types: ["card"],
       mode: "subscription",
-      customer_email: session.user.email!,
+      customer_email: user.email!,
       billing_address_collection: "auto",
       line_items: [
         {
@@ -51,7 +50,7 @@ export async function GET() {
         },
       ],
       metadata: {
-        userId: session.user.id,
+        userId: user.id,
       },
     })
 

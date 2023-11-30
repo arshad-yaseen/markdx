@@ -1,11 +1,16 @@
 import { env } from "process"
 import { NextRequest } from "next/server"
 import { ServerResponse } from "@/server/utils"
-
-export const runtime = "edge"
+import { getCurrentUser } from "@/lib/session"
 
 export async function POST(req: NextRequest) {
   const { url } = await req.json()
+
+  const userId = (await getCurrentUser())?.id
+
+    if(!userId) {
+      return ServerResponse.unauthorized()
+    }
 
   const shortUrlRes = await fetch("https://urlbae.com/api/url/add", {
     method: "POST",

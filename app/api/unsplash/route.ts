@@ -2,12 +2,17 @@ import { NextRequest } from "next/server"
 import { ServerResponse } from "@/server/utils"
 
 import { env } from "@/env.mjs"
-
-export const runtime = "edge"
+import { getCurrentUser } from "@/lib/session"
 
 export async function GET(req: NextRequest) {
   const endpoint = "https://api.unsplash.com/search/photos"
   const accessKey = env.UNSPLASH_ACCESS_KEY
+
+  const userId = (await getCurrentUser())?.id
+
+    if(!userId) {
+      return ServerResponse.unauthorized()
+    }
 
   const { searchParams } = new URL(req.url)
   const query = searchParams.get("query") || "minimal"
