@@ -8,7 +8,7 @@ interface MarketingLayoutProps {
 export default async function MarketingLayout({
   children,
 }: MarketingLayoutProps) {
-  const user = await getCurrentUser()
+  const { sessionUser: user } = await getCurrentUser()
 
   return (
     <div className="flex min-h-screen flex-col">

@@ -7,13 +7,13 @@ import {
   monacoInstanceState,
 } from "@/atoms/editor"
 import { handleShortCut } from "@/utils/editor"
+import { GET } from "@/utils/http.utils"
 import { useAtom, useAtomValue } from "jotai"
 
 import { editorCode } from "types"
 import { defaultEditorContent } from "@/config/editor"
 import AIToolsSection from "@/components/editor/ai-tools-section"
 import EditorSection from "@/components/editor/editor-section"
-import MarkdownNotFound from "@/components/editor/markdown-not-found"
 import PreviewSection from "@/components/editor/preview-section"
 
 type prevCodeType = {
@@ -22,29 +22,26 @@ type prevCodeType = {
   content: string
 }
 
+type Markdown = {
+  markdownPost: {
+    postCodes: editorCode[]
+  }
+  isEligibleForAI: boolean
+}
+
 export default function page({ params }: { params: { id: string } }) {
   const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
   const editorActiveSection = useAtomValue(editorActiveSectionState)
   const [markdownCode, setMarkdownCode] = useState("")
   const monacoInstance = useAtomValue(monacoInstanceState)
-  const [markdownNotFoundDialogOpen, setMarkdownNotFoundDialogOpen] =
-    useState(false)
   const [isEligibleForAI, setIsEligibleForAI] = useState(true)
 
   const markdownId = params.id
 
   const getMarkdownPost = async (markdownId: string) => {
-    const response = await fetch(`/api/posts/${markdownId}`, {
-      method: "GET",
-    })
+    const markdown = await GET<Markdown>(`/api/posts/${markdownId}`)
 
-    if (!response?.ok) {
-      setMarkdownNotFoundDialogOpen(true)
-      return
-    }
-
-    const resJson = await response.json()
-    const markdownPost = resJson.markdownPost
+    const markdownPost = markdown.markdownPost
 
     if (
       markdownPost?.postCodes?.length > 0 &&
@@ -60,16 +57,7 @@ export default function page({ params }: { params: { id: string } }) {
           setMarkdownCode(code.content)
         })
 
-      // Check if the user is eligible for AI - make a request to the API
-      const response = await fetch(`/api/user/eligible-for-ai`, {
-        method: "GET",
-        next: {
-          revalidate: 0,
-        },
-        cache: "no-store",
-      })
-      const resJson = await response.json()
-      setIsEligibleForAI(resJson.isEligibleForAI)
+      setIsEligibleForAI(markdown.isEligibleForAI)
     } else {
       const defaultCode = [defaultEditorContent] as editorCode[]
 
@@ -125,11 +113,6 @@ export default function page({ params }: { params: { id: string } }) {
       <PreviewSection
         code={editorCodes.map((code: editorCode) => code.content).join("\n\n")}
       />
-      {markdownNotFoundDialogOpen && (
-        <MarkdownNotFound
-          markdownNotFoundDialogOpen={markdownNotFoundDialogOpen}
-        />
-      )}
     </div>
   )
 }

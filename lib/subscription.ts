@@ -37,3 +37,16 @@ export async function getUserSubscriptionPlan(
     isPro,
   }
 }
+
+export const isPro = ({
+  stripeSubscriptionId,
+  stripePriceId,
+  stripeCurrentPeriodEnd,
+}) => {
+  const isPro =
+    stripePriceId &&
+    stripeSubscriptionId &&
+    stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
+
+  return isPro
+}

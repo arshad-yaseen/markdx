@@ -7,6 +7,9 @@
     "name": "arshad yaseen",
     "url": "https://twitter.com/arshadyaseeen"
   },
+  "browser": {
+    "crypto": false
+  },
   "scripts": {
     "dev": "next dev",
     "turbo": "next dev --turbo",
@@ -37,6 +40,7 @@
     "@react-email/button": "^0.0.10",
     "@react-email/components": "^0.0.7",
     "@react-email/html": "^0.0.4",
+    "@react-email/render": "0.0.9",
     "@t3-oss/env-nextjs": "^0.3.1",
     "@types/node": "20.1.0",
     "@types/react": "18.2.6",
@@ -62,7 +66,7 @@
     "lucide-react": "^0.214.0",
     "marked": "^5.0.2",
     "monaco-editor": "^0.38.0",
-    "next": "13.4.12",
+    "next": "^14.0.3",
     "next-auth": "^4.22.1",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.2",
@@ -71,7 +75,7 @@
     "postmark": "^3.0.18",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-email": "^1.9.4",
+    "react-email": "^1.9.5",
     "react-hook-form": "^7.43.9",
     "react-intersection-observer": "^9.5.2",
     "react-loading-skeleton": "^3.3.1",
@@ -86,7 +90,7 @@
     "remark-emoji": "^3.1.1",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.0.0",
-    "resend": "^1.1.0",
+    "resend": "^2.0.0",
     "server-only": "^0.0.1",
     "sharp": "^0.32.1",
     "shiki": "^0.14.2",
@@ -98,6 +102,9 @@
     "typescript": "5.0.4",
     "usehooks-ts": "^2.9.1",
     "zod": "^3.21.4"
+  },
+  "overrides": {
+    "@react-email/render": "0.0.9"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^3.7.2",

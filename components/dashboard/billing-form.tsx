@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { GET } from "@/utils/http.utils"
 import { Loader2 } from "lucide-react"
-import { toast } from "sonner"
 
 import { UserSubscriptionPlan } from "types"
 import { cn, formatDate } from "@/lib/utils"
@@ -35,18 +35,11 @@ export function BillingForm({
     setIsLoading(!isLoading)
 
     // Get a Stripe session URL.
-    const response = await fetch("/api/user/stripe")
-
-    if (!response?.ok) {
-      return toast.error("Something went wrong.", {
-        description: "Please refresh the page and try again.",
-      })
-    }
+    const session = await GET<{ url: string }>("/api/user/stripe")
 
     // Redirect to the Stripe session.
     // This could be a checkout page for initial upgrade.
     // Or portal to manage existing subscription.
-    const session = await response.json()
     if (session) {
       window.location.href = session.url
     }

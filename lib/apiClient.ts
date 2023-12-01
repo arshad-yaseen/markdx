@@ -1,11 +1,11 @@
+import { GET, POST } from "@/utils/http.utils"
+
 import { env } from "@/env.mjs"
 
 export const getRepo = async (owner: string, repo: string) => {
-  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-    cache: "no-store",
-  })
-  const data = await res.json()
-
+  const data = await GET<{
+    stargazers_count: number
+  }>(`https://api.github.com/repos/${owner}/${repo}`)
   return data
 }
 
@@ -32,19 +32,25 @@ export const cloudinaryUpload = async (
       }
     )
 
+    console.log("res", res)
+
     const image = await res.json()
 
-    const urlBaeRes = await fetch("/api/shorten-url", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    console.log("image", image)
+
+    const urlBae = await POST<
+      {
+        shorturl: string
+        error?: string
       },
-      body: JSON.stringify({
-        url: image.secure_url,
-      }),
+      {
+        url: string
+      }
+    >("/api/shorten-url", {
+      url: image.secure_url,
     })
 
-    const urlBae = await urlBaeRes.json()
+    console.log(urlBae)
 
     if (urlBae.error) {
       return image.secure_url

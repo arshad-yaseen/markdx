@@ -3,11 +3,10 @@
 import React from "react"
 import Link from "next/link"
 
-
+import { siteConfig } from "@/config/site"
 import { getRepo } from "@/lib/apiClient"
 
 import { Icons } from "./icons"
-import { siteConfig } from "@/config/site"
 
 async function getStars() {
   const repo = await getRepo("arshad-yaseen", "markdx")

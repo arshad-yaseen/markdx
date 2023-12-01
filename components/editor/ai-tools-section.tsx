@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from "react"
 import { monacoInstanceState } from "@/atoms/editor"
 import { editorAction, uploadFile } from "@/utils/editor"
+import { GET } from "@/utils/http.utils"
 import { useAtomValue } from "jotai"
 import { ChevronLeftIcon, ImageIcon, Loader2, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
@@ -64,16 +65,19 @@ function AIToolsSection({ isEligibleForAI }: { isEligibleForAI: boolean }) {
   }
 
   const getUnsplashImages = async (query: string, orientation: string) => {
-    let response = await fetch(
-      `/api/unsplash?query=${query}&orientation=${orientation}`
+    const images = await GET<any>(
+      `/api/unsplash?query=${query}&orientation=${orientation}`,
+      {
+        error: "Could not fetch images from Unsplash",
+        showErrorToast: true,
+      }
     )
-
-    const images = await response.json()
 
     if (images.error) {
       toast.error(images.message)
       return
     }
+
     setUnsplashImages(images)
   }
 

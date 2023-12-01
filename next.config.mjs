@@ -5,10 +5,20 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["images.unsplash.com", "avatars.githubusercontent.com"],
-  },
-  experimental: {
-    serverActions: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: '',
+        pathname: '**',
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: '',
+        pathname: '**',
+      }
+    ]
   },
 }
 

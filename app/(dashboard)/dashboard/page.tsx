@@ -12,7 +12,7 @@ import { DashboardShell } from "@/components/dashboard/shell"
 import { Icons } from "@/components/icons"
 
 async function Dashboard() {
-  const user = (await getCurrentUser()) as any
+  const { sessionUser: user } = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")

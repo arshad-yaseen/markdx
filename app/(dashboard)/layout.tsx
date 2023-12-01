@@ -13,7 +13,7 @@ export const metadata = {
 }
 
 async function DashboardLayout({ children }: DashboardLayout) {
-  const user = await getCurrentUser()
+  const { sessionUser: user } = await getCurrentUser()
 
   if (!user) {
     return notFound()

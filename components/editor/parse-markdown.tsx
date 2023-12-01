@@ -137,7 +137,10 @@ function ParseMarkdown({
     ),
     iframe: ({ className, ...props }: ComponentTypes) => (
       <iframe
-        className={cn("my-4 inline-flex max-w-full rounded-lg border", className)}
+        className={cn(
+          "my-4 inline-flex max-w-full rounded-lg border",
+          className
+        )}
         {...props}
       />
     ),

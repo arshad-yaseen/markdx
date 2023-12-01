@@ -1,5 +1,5 @@
-import crypto from "crypto"
 import { PostCodesType } from "@/types"
+import { PATCH } from "@/utils/http.utils"
 import { ClassValue, clsx } from "clsx"
 import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
@@ -23,38 +23,45 @@ export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
 }
 
-export function generateUniqueString(length: number) {
-  let uniqueString = Date.now().toString(36)
-
-  uniqueString += Math.random().toString(36).substring(2)
-
-  uniqueString = crypto.createHash("sha256").update(uniqueString).digest("hex")
-
-  uniqueString = uniqueString.substring(0, length)
-
-  return uniqueString
+export function generateRandomString(length: number) {
+  var result = ""
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+  var charactersLength = characters.length
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
+  return result
 }
 
 export async function handleSave(
   postCodes: PostCodesType[],
   markdownId: string
 ) {
-  const response = await fetch(`/api/posts/${String(markdownId)}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      postCodes,
-    }),
-  })
-
-  if (!response?.ok) {
-    console.error(response)
+  try {
+    await PATCH<
+      {
+        error?: string
+      },
+      {
+        postCodes: PostCodesType[]
+      }
+    >(
+      `/api/posts/${String(markdownId)}`,
+      {
+        postCodes,
+      },
+      {
+        error: "Something went wrong.",
+        showErrorToast: true,
+      }
+    )
+  } catch (error) {
+    console.error(error)
     toast("Something went wrong.", {
       description: "Your markdown was not saved. Please try again.",
     })
     return false
   }
+
   return true
 }

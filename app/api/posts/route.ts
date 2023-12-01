@@ -3,8 +3,8 @@ import * as z from "zod"
 
 import { db } from "@/lib/db"
 import { MarkdownAlreadyExistError } from "@/lib/exceptions"
-import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { getCurrentUser } from "@/lib/session"
+import { getUserSubscriptionPlan } from "@/lib/subscription"
 
 // Define the schema for post creation validation.
 const postCreateSchema = z.object({
@@ -18,9 +18,10 @@ const postCreateSchema = z.object({
 // Handler for GET requests to retrieve markdown posts.
 export async function GET() {
   try {
-    const userId = (await getCurrentUser())?.id
+    const { sessionUser: user } = await getCurrentUser()
+    const userId = user?.id
 
-    if(!userId) {
+    if (!userId) {
       return ServerResponse.unauthorized()
     }
 
@@ -41,9 +42,10 @@ export async function GET() {
 // Handler for POST requests to create a new markdown post.
 export async function POST(req: Request) {
   try {
-    const userId = (await getCurrentUser())?.id
+    const { sessionUser: user } = await getCurrentUser()
+    const userId = user?.id
 
-    if(!userId) {
+    if (!userId) {
       return ServerResponse.unauthorized()
     }
 

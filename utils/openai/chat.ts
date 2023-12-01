@@ -13,7 +13,6 @@ export const OpenAICreateChat = async (body: OpenAIBody) => {
     })
 
     if (!response.ok) {
-      console.error(response.statusText)
       return {
         err: true,
         message: "Can't complete the request",

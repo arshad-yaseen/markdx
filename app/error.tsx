@@ -3,10 +3,9 @@
 import Link from "next/link"
 import { TerminalIcon } from "lucide-react"
 
-
+import { siteConfig } from "@/config/site"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { siteConfig } from "@/config/site"
 
 export default function Error({
   error,
@@ -26,7 +25,9 @@ export default function Error({
       <div className="mt-5 flex items-center">
         <Button variant="outline" asChild>
           <Link
-            href={`${siteConfig.links.github}/issues/new?labels=runtime+error&title=${
+            href={`${
+              siteConfig.links.github
+            }/issues/new?labels=runtime+error&title=${
               "Runtime: " + error.name
             }&body=${error.message}`}
             target="_blank"

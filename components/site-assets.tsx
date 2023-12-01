@@ -36,7 +36,6 @@ function SiteAssets({
       className={cn("absolute lg:-top-10", className)}
       width={900}
       height={900}
-      loading="eager"
     />
   ) : null
 }

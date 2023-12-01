@@ -1,33 +1,30 @@
 import { env } from "process"
 import { NextRequest } from "next/server"
 import { ServerResponse } from "@/server/utils"
+import { POST as HTTP_POST } from "@/utils/http.utils"
+
 import { getCurrentUser } from "@/lib/session"
 
 export async function POST(req: NextRequest) {
   const { url } = await req.json()
 
-  const userId = (await getCurrentUser())?.id
+  const { sessionUser } = await getCurrentUser()
+  const userId = sessionUser?.id
 
-    if(!userId) {
-      return ServerResponse.unauthorized()
-    }
-
-  const shortUrlRes = await fetch("https://urlbae.com/api/url/add", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + env.URLBAE_API_KEY! || "",
-    },
-    body: JSON.stringify({
-      url: url,
-    }),
-  })
-
-  if (shortUrlRes.status !== 200) {
-    return ServerResponse.error("Network response was not ok")
+  if (!userId) {
+    return ServerResponse.unauthorized()
   }
 
-  const shortUrlJson = await shortUrlRes.json()
+  const shortUrlJson = await HTTP_POST<{ shorturl: string }, { url: string }>(
+    "https://urlbae.com/api/url/add",
+    { url: url },
+    {
+      headers: {
+        Authorization: "Bearer " + env.URLBAE_API_KEY! || "",
+      },
+    }
+  )
+
   return ServerResponse.success({
     body: {
       shorturl: shortUrlJson.shorturl,

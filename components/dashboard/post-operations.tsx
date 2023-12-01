@@ -4,10 +4,10 @@ import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
+import { DELETE } from "@/utils/http.utils"
 import { MarkdownPost } from "@prisma/client"
 import { useAtom } from "jotai"
 import { Loader2, MoreVerticalIcon, PenLine, TrashIcon } from "lucide-react"
-import { toast } from "sonner"
 
 import {
   AlertDialog,
@@ -30,15 +30,10 @@ import {
 import { Button } from "../ui/button"
 
 async function deletePost(markdownId: string) {
-  const response = await fetch(`/api/posts/${markdownId}`, {
-    method: "DELETE",
+  await DELETE(`/api/posts/${markdownId}`, {
+    error: "Your post was not deleted. Please try again.",
+    showErrorToast: true,
   })
-
-  if (!response?.ok) {
-    toast("Something went wrong.", {
-      description: "Your post was not deleted. Please try again.",
-    })
-  }
 
   return true
 }

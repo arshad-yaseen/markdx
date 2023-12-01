@@ -2,10 +2,10 @@ import { ServerResponse } from "@/server/utils"
 import { z } from "zod"
 
 import { proPlan } from "@/config/subscriptions"
+import { getCurrentUser } from "@/lib/session"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { absoluteUrl } from "@/lib/utils"
-import { getCurrentUser } from "@/lib/session"
 
 const billingUrl = absoluteUrl("/dashboard/billing")
 
@@ -13,9 +13,9 @@ export const dynamic = "force-dynamic"
 
 export async function GET() {
   try {
-    const user = (await getCurrentUser())
+    const { sessionUser: user } = await getCurrentUser()
 
-    if(!user?.id) {
+    if (!user?.id) {
       return ServerResponse.unauthorized()
     }
 

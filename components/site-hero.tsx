@@ -4,12 +4,11 @@ import Link from "next/link"
 import { SparklesIcon } from "lucide-react"
 import { Balancer } from "react-wrap-balancer"
 
-
+import { siteConfig } from "@/config/site"
 
 import { Icons } from "./icons"
 import SiteAssets from "./site-assets"
 import { Button } from "./ui/button"
-import { siteConfig } from "@/config/site"
 
 function SiteHero() {
   return (

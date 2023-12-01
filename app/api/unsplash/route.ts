@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server"
 import { ServerResponse } from "@/server/utils"
+import { GET as HTTP_GET } from "@/utils/http.utils"
 
 import { env } from "@/env.mjs"
 import { getCurrentUser } from "@/lib/session"
@@ -8,11 +9,12 @@ export async function GET(req: NextRequest) {
   const endpoint = "https://api.unsplash.com/search/photos"
   const accessKey = env.UNSPLASH_ACCESS_KEY
 
-  const userId = (await getCurrentUser())?.id
+  const { sessionUser } = await getCurrentUser()
+  const userId = sessionUser?.id
 
-    if(!userId) {
-      return ServerResponse.unauthorized()
-    }
+  if (!userId) {
+    return ServerResponse.unauthorized()
+  }
 
   const { searchParams } = new URL(req.url)
   const query = searchParams.get("query") || "minimal"
@@ -23,20 +25,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const response = await fetch(
-      `${endpoint}?query=${query}&per_page=30&orientation=${orientation}`,
-      {
-        headers: {
-          Authorization: `Client-ID ${accessKey}`,
-        },
-      }
-    )
+    const data = await HTTP_GET<{
+      results: object[]
+    }>(`${endpoint}?query=${query}&per_page=30&orientation=${orientation}`, {
+      headers: {
+        Authorization: `Client-ID ${accessKey}`,
+      },
+    })
 
-    if (!response.ok) {
-      return ServerResponse.error("Network response was not ok")
-    }
-
-    const data = await response.json()
     const results = data.results.map((result: object) => result)
 
     return ServerResponse.success({

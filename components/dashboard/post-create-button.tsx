@@ -3,15 +3,24 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { editorActiveSectionState, editorCodesState } from "@/atoms/editor"
+import { POST } from "@/utils/http.utils"
 import { useAtom } from "jotai"
 import { Loader2, PlusIcon } from "lucide-react"
-import { toast } from "sonner"
 
-import { defaultEditorContent } from "@/config/editor"
-import { cn, generateUniqueString } from "@/lib/utils"
+import { DefaultEditorContent, defaultEditorContent } from "@/config/editor"
+import { cn, generateRandomString } from "@/lib/utils"
 import { Button, ButtonProps } from "@/components/ui/button"
 
 interface PostCreateButtonProps extends ButtonProps {}
+
+interface PostCreateResponse {
+  markdownId: string
+}
+
+interface PostCreateBody {
+  code: DefaultEditorContent
+  markdown_id: string
+}
 
 export function PostCreateButton({
   className,
@@ -25,7 +34,6 @@ export function PostCreateButton({
   const router = useRouter()
 
   async function onClick() {
-    setIsLoading(true)
     setEditorCodes([
       {
         section: "",
@@ -34,31 +42,27 @@ export function PostCreateButton({
       },
     ])
     setEditorActiveSection(0)
+    setIsLoading(true)
 
-    const response = await fetch("/api/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const post = await POST<PostCreateResponse, PostCreateBody>(
+      "/api/posts",
+      {
         code: defaultEditorContent,
-        markdown_id: generateUniqueString(15),
-      }),
-    })
+        markdown_id: generateRandomString(15),
+      },
+      {
+        error: "Your post was not created. Please try again.",
+        showErrorToast: true,
+      }
+    )
 
     setIsLoading(false)
 
-    if (!response?.ok) {
-      if (response.status === 403) {
-        toast.message("Try again")
-      }
+    if (!post) {
+      return
     }
 
-    const post = await response.json()
-
-    // This forces a cache invalidation.
     router.refresh()
-
     router.push(`/edit/${post.markdownId}`)
   }
 

@@ -30,8 +30,8 @@ function UpgradeToPRODialog({
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="w-full px-8 text-center">
-          The free plan includes one markdown for AI features. Upgrade to the
-          PRO plan for full access.
+          The free plan includes 3 credits for AI features. Upgrade to the PRO
+          plan for unlimited AI access.
         </DialogDescription>
 
         <div className="mt-4 flex w-full space-x-4">
