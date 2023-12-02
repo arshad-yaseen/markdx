@@ -30,7 +30,7 @@ interface UnsplashSearchFormData {
   orientation: string
 }
 
-function AIToolsSection({ isEligibleForAI }: { isEligibleForAI: boolean }) {
+function AIToolsSection() {
   const monacoInstance = useAtomValue(monacoInstanceState)
   const [isUploadingFile, setIsUploadingFile] = useState(false)
   const [isToolsPanelCollapsedStore, setIsToolsPanelCollapsedStore] =
@@ -116,10 +116,10 @@ function AIToolsSection({ isEligibleForAI }: { isEligibleForAI: boolean }) {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="tools">
-            <AITools isEligibleForAI={isEligibleForAI} />
+            <AITools />
             <hr className="my-4" />
             <div className="flex w-full flex-1 flex-col justify-end space-y-2 py-2">
-              <AskAI isEligibleForAI={isEligibleForAI} />
+              <AskAI />
               <Button
                 disabled={isUploadingFile}
                 variant="outline"

@@ -4,7 +4,7 @@ import { env } from "@/env.mjs"
 export const freePlan: SubscriptionPlan = {
   name: "Free",
   description:
-    "The free plan includes 3 credits for AI features. Upgrade to the PRO plan for unlimited AI access.",
+    "The free plan includes 1 credit for AI features. Upgrade to the PRO plan for unlimited AI access.",
   stripePriceId: "",
 }
 
@@ -14,4 +14,4 @@ export const proPlan: SubscriptionPlan = {
   stripePriceId: env.STRIPE_PRO_MONTHLY_PLAN_ID || "",
 }
 
-export const free_credits = 2
+export const free_credits = 1

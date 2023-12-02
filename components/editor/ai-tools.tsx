@@ -9,7 +9,7 @@ import { toast } from "sonner"
 import "@/styles/mdx.css"
 import { OpenAIBody } from "@/types"
 import { editorAction } from "@/utils/editor"
-import { OpenAICreateChat } from "@/utils/openai/chat"
+import { createChat } from "@/utils/openai"
 import { PopoverClose } from "@radix-ui/react-popover"
 
 import { PROMPT } from "@/config/editor"
@@ -29,7 +29,7 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
 
-function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
+function AITools() {
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [worldlanguages, setWorldLanguages] = useState<any[]>([])
   const monacoInstance = useAtomValue(monacoInstanceState)
@@ -49,10 +49,6 @@ function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
     options: OpenAIBody,
     action: "insert" | "set" | "insert-after" = "insert"
   ) => {
-    if (!isEligibleForAI) {
-      return setUpgradeToPRODialog(true)
-    }
-
     if (requestingToAPI) {
       return toast.message("Please wait for current action to finish")
     } else if (options.messages[1].content === "") {
@@ -63,9 +59,15 @@ function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
     const body = {
       ...options,
     }
-    const res = await OpenAICreateChat(body)
-    if (res?.err) {
-      toast.error(res?.message)
+    const res = await createChat({
+      body,
+    })
+    if (res?.error && res?.error.statusCode === 402) {
+      setUpgradeToPRODialog(true)
+      setRequestingToAPI(false)
+      return
+    } else if (res?.error) {
+      toast.error(res?.error.message)
       setRequestingToAPI(false)
       return
     }
@@ -88,7 +90,7 @@ function AITools({ isEligibleForAI }: { isEligibleForAI: boolean }) {
     if (action === "insert-after") {
       editorAction.insertText(`${editorSelectedContent}\n\n`, monacoInstance!)
     }
-    const data = res?.data
+    const data = res?.message?.content as ReadableStream<Uint8Array>
     const reader = data?.getReader()
     const decoder = new TextDecoder()
     let done = false

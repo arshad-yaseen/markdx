@@ -26,7 +26,6 @@ type Markdown = {
   markdownPost: {
     postCodes: editorCode[]
   }
-  isEligibleForAI: boolean
 }
 
 export default function page({ params }: { params: { id: string } }) {
@@ -34,13 +33,15 @@ export default function page({ params }: { params: { id: string } }) {
   const editorActiveSection = useAtomValue(editorActiveSectionState)
   const [markdownCode, setMarkdownCode] = useState("")
   const monacoInstance = useAtomValue(monacoInstanceState)
-  const [isEligibleForAI, setIsEligibleForAI] = useState(true)
 
   const markdownId = params.id
 
   const getMarkdownPost = async (markdownId: string) => {
-    const markdown = await GET<Markdown>(`/api/posts/${markdownId}`)
-
+    const markdown = await GET<Markdown>(`/api/posts/${markdownId}`,{
+      showErrorToast: true,
+      error: "Error fetching markdown post",
+    })
+    
     const markdownPost = markdown.markdownPost
 
     if (
@@ -56,8 +57,6 @@ export default function page({ params }: { params: { id: string } }) {
         .map((code: editorCode) => {
           setMarkdownCode(code.content)
         })
-
-      setIsEligibleForAI(markdown.isEligibleForAI)
     } else {
       const defaultCode = [defaultEditorContent] as editorCode[]
 
@@ -93,7 +92,7 @@ export default function page({ params }: { params: { id: string } }) {
       }}
       className="flex h-[92vh] w-full flex-col lg:flex-row"
     >
-      <AIToolsSection isEligibleForAI={isEligibleForAI} />
+      <AIToolsSection />
       <EditorSection
         markdown={markdownCode}
         onCodeChange={(code) => {
