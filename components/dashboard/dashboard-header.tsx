@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import BringApiKey from "@/components/bring-api-key"
 
 import SiteAssets from "../site-assets"
 import { UserAvatar } from "./user-avatar"
@@ -32,6 +33,7 @@ function DashboardHeader({ user }: UserAccountNavProps) {
       </div>
 
       <div className={`flex h-full w-1/2 items-center justify-end`}>
+        <BringApiKey className="mr-6 w-fit" variant={"outline"} />
         <DropdownMenu>
           <DropdownMenuTrigger>
             <UserAvatar

@@ -1,11 +1,9 @@
 import { ServerResponse } from "@/server/utils"
 import * as z from "zod"
 
-import { free_credits } from "@/config/subscriptions"
 import { db } from "@/lib/db"
-import { kvget, kvset } from "@/lib/kv"
+import { kvdel, kvget, kvset } from "@/lib/kv"
 import { getCurrentUser } from "@/lib/session"
-import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { postPatchSchema } from "@/lib/validations/post"
 
 // Set the revalidation interval (currently set to 0, meaning no revalidation).
@@ -53,9 +51,6 @@ export async function GET(
       return ServerResponse.unauthorized()
     }
 
-    const { isPro: isUserPro } = await getUserSubscriptionPlan(userId)
-    const user_ai_run_count = await kvget(userId, "ai_run_count")
-
     // Try fetching the post from KV store.
     const markdownPostfromKv = await kvget(userId, `markdown-${markdownId}`)
     let markdownPost = markdownPostfromKv
@@ -87,11 +82,6 @@ export async function GET(
     return ServerResponse.success({
       body: {
         markdownPost,
-        // user_ai_run_count === undefined -- if user starting for first time and cookie not set
-        isEligibleForAI:
-          user_ai_run_count === undefined
-            ? true
-            : isUserPro || Number(user_ai_run_count) <= free_credits,
       },
     })
   } catch (error) {
@@ -176,6 +166,9 @@ export async function DELETE(
     await db.markdownPost.delete({
       where: { markdownId: params.markdownId },
     })
+
+    // Delete the post from the KV store.
+    await kvdel(userId, `markdown-${params.markdownId}`)
 
     return ServerResponse.success({
       body: null,

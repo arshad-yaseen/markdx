@@ -32,11 +32,7 @@ export const cloudinaryUpload = async (
       }
     )
 
-    console.log("res", res)
-
     const image = await res.json()
-
-    console.log("image", image)
 
     const urlBae = await POST<
       {
@@ -49,8 +45,6 @@ export const cloudinaryUpload = async (
     >("/api/shorten-url", {
       url: image.secure_url,
     })
-
-    console.log(urlBae)
 
     if (urlBae.error) {
       return image.secure_url

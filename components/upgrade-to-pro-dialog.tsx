@@ -3,14 +3,16 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 
-import { Button } from "../ui/button"
+import BringApiKey from "@/components/bring-api-key"
+
+import { Button } from "./ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog"
+} from "./ui/dialog"
 
 function UpgradeToPRODialog({
   open,
@@ -30,26 +32,19 @@ function UpgradeToPRODialog({
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="w-full px-8 text-center">
-          The free plan includes 3 credits for AI features. Upgrade to the PRO
+          The free plan includes 1 credit for AI features. Upgrade to the PRO
           plan for unlimited AI access.
         </DialogDescription>
 
-        <div className="mt-4 flex w-full space-x-4">
-          <Button
-            onClick={() => {
-              setOpen(false)
-            }}
-            variant="outline"
-            className="mt-2 w-full"
-          >
-            Cancel
-          </Button>
+        <div className="mt-6 flex w-full flex-col items-center space-x-2">
           <Button
             onClick={() => router.push("/dashboard/billing")}
-            className="mt-2 w-full"
+            className="w-full"
           >
             Upgrade
           </Button>
+          <span className="py-1.5">or</span>
+          <BringApiKey variant={"outline"} />
         </div>
       </DialogContent>
     </Dialog>

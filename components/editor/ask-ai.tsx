@@ -2,7 +2,7 @@
 
 import React, { FormEvent, useRef, useState } from "react"
 import { editorSelectedContentAtom } from "@/atoms/editor"
-import { OpenAICreateChat } from "@/utils/openai/chat"
+import { createChat } from "@/utils/openai"
 import copy from "copy-to-clipboard"
 import { useAtomValue } from "jotai"
 import {
@@ -24,10 +24,10 @@ import { ChatScrollAnchor } from "../chat-scroll-anchor"
 import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
+import UpgradeToPRODialog from "../upgrade-to-pro-dialog"
 import ParseMarkdown from "./parse-markdown"
-import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
 
-function AskAI({ isEligibleForAI }: { isEligibleForAI: boolean }) {
+function AskAI() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [requestingToAPI, setRequestingToAPI] = useState(false)
   const [AIThinking, setAIThinking] = useState(false)
@@ -110,18 +110,23 @@ function AskAI({ isEligibleForAI }: { isEligibleForAI: boolean }) {
       try {
         // Call the OpenAI API with the request body
         setGenerating(true)
-        const res = await OpenAICreateChat(body)
+        const res = await createChat({
+          body,
+        })
         setAIThinking(false)
 
         // Handle any errors returned by the API
-        if (res?.err) {
-          toast.error(res?.message)
-          setRequestingToAPI(false)
+        if (res?.error && res?.error.statusCode === 402) {
+          reset()
+          return
+        } else if (res?.error?.message) {
+          toast.error(res?.error.message)
+          reset()
           return
         }
 
         // Parse the response data
-        const data = res.data
+        const data = res.message?.content as ReadableStream<Uint8Array>
         const reader = data?.getReader()
         const decoder = new TextDecoder()
         let done = false
@@ -154,6 +159,25 @@ function AskAI({ isEligibleForAI }: { isEligibleForAI: boolean }) {
         toast.error("Something went wrong")
       }
     }
+  }
+
+  const reset = () => {
+    setRequestingToAPI(false)
+    setUpgradeToPRODialog(true)
+    setGenerating(false)
+    stopGenerating.current = false
+    setMessages([])
+    setChats([
+      {
+        id: 1,
+        user: `${
+          editorSelectedContent
+            ? "How can i help you with this markdown?"
+            : "Hello, How can i help you?"
+        }`,
+        ai: "",
+      },
+    ])
   }
 
   const clearChat = () => {
@@ -276,10 +300,6 @@ function AskAI({ isEligibleForAI }: { isEligibleForAI: boolean }) {
 
       <Button
         onClick={() => {
-          if (!isEligibleForAI) {
-            setUpgradeToPRODialog(true)
-            return
-          }
           setIsDialogOpen(true)
           clearChat()
         }}

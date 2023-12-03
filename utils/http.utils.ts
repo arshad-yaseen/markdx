@@ -34,7 +34,9 @@ async function request<ResponseType, BodyType = undefined>(
     if (options.showErrorToast) {
       toast.error(errorMessage)
     }
-    throw new Error(errorMessage)
+    if (!options.error) {
+      throw new Error(errorMessage)
+    }
   }
 
   return response.json() as Promise<ResponseType>
