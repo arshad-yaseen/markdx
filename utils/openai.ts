@@ -1,7 +1,7 @@
 import { OpenAIBody } from "@/types"
 import { ChatCompletionMessageParam } from "openai/resources"
 
-import { example_chat_api_messages, models } from "@/config/ai"
+import { example_chat_api_messages } from "@/config/ai"
 
 type OpenAIResponse = {
   isSuccess: boolean
@@ -105,7 +105,7 @@ export const validateApiKey = async (
 ): Promise<{
   error: boolean
   message: string | undefined
-  code: string
+  statusCode: number
 }> => {
   const body = {
     messages: example_chat_api_messages as Array<ChatCompletionMessageParam>,
@@ -121,28 +121,25 @@ export const validateApiKey = async (
     return {
       error: false,
       message: "API key is valid",
-      code: "valid_api_key",
+      statusCode: 200,
     }
   } else if (isSupportedKey.error?.statusCode === 401) {
     return {
       error: true,
       message: "API key is invalid",
-      code: "invalid_api_key",
+      statusCode: 401,
     }
-  } else if (
-    isSupportedKey.error?.statusCode === 404 &&
-    isSupportedKey.error?.message.includes(models.chat)
-  ) {
+  } else if (isSupportedKey.error?.statusCode === 404) {
     return {
       error: true,
       message: "API key is not supported",
-      code: "unsupported_api_key",
+      statusCode: 404,
     }
   } else {
     return {
       error: true,
       message: isSupportedKey.error?.message,
-      code: "server_error",
+      statusCode: isSupportedKey.error?.statusCode || 500,
     }
   }
 }

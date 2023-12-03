@@ -4,7 +4,6 @@ import Stripe from "stripe"
 
 import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
-import { kvset } from "@/lib/kv"
 import { stripe } from "@/lib/stripe"
 
 export async function POST(req: Request) {
@@ -56,13 +55,6 @@ export async function POST(req: Request) {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string
     )
-
-    // set to kv store isPro
-    try {
-      await kvset(session?.metadata?.userId!, "isPro", true)
-    } catch (error) {
-      console.error("KV set error:", error)
-    }
 
     // Update the price id and set the new period end.
     await db.user.update({

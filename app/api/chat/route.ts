@@ -28,6 +28,15 @@ export async function POST(req: Request): Promise<Response> {
 
     const { sessionUser: user } = await getCurrentUser()
 
+    if (!user?.id) {
+      return ServerResponse.unauthorized()
+    }
+
+     // Get the User provided API Key and API key compatible OpenAI model from KV store.
+     const api_key_with_model_from_kv = await kvgetdec(user.id, "api_key")
+     const api_key_from_kv = api_key_with_model_from_kv?.split("::")[0]
+     const model_from_kv = api_key_with_model_from_kv?.split("::")[1]
+
     // The count of the number of times the user has used the AI.
     const user_ai_run_count = await kvget(user?.id!, "ai_run_count")
     const { isPro } = await getUserSubscriptionPlan(user?.id!)
@@ -37,16 +46,12 @@ export async function POST(req: Request): Promise<Response> {
     if (
       user_ai_run_count !== undefined &&
       Number(user_ai_run_count) > free_credits &&
-      !isPro
+      !isPro && !api_key_from_kv && !api_key
     ) {
       return ServerResponse.error(
         "You have exceeded the free credits limit, please upgrade to pro plan to continue using the AI.",
         402
       )
-    }
-
-    if (!user?.id) {
-      return ServerResponse.unauthorized()
     }
 
     if (!openai_body) {
@@ -59,19 +64,14 @@ export async function POST(req: Request): Promise<Response> {
       return ServerResponse.unauthorized()
     }
 
-    // Get the User provided API Key and API key compatible OpenAI model from KV store.
-    const api_key_with_model_from_kv = await kvgetdec(user.id, "api_key")
-    const api_key_from_kv = api_key_with_model_from_kv?.split("::")[0]
-    const model_from_kv = api_key_with_model_from_kv?.split("::")[1]
-
     let OPENAI_API_KEY
 
-    if (api_key) {
+    if (isPro) {
+      OPENAI_API_KEY = env.OPENAI_API_KEY
+    } else if (api_key) {
       OPENAI_API_KEY = api_key
     } else if (api_key_from_kv) {
       OPENAI_API_KEY = api_key_from_kv
-    } else if (env.OPENAI_API_KEY && isPro) {
-      OPENAI_API_KEY = env.OPENAI_API_KEY
     }
 
     if (!OPENAI_API_KEY) {
@@ -81,12 +81,12 @@ export async function POST(req: Request): Promise<Response> {
     if (!isCorrectApiKey(OPENAI_API_KEY)) {
       return ServerResponse.unauthorized("Invalid OPENAI_API_KEY")
     }
-
+    
     const openai = new OpenAI({ apiKey: OPENAI_API_KEY })
 
     const payload: OpenAI.ChatCompletionCreateParams = {
       ...openai_body,
-      model: model_from_kv || type === "chat" ? models.chat : models.vision,
+      model: model_from_kv ? model_from_kv : type === "chat" ? models.chat : models.vision,
       stream: stream_response,
     }
 

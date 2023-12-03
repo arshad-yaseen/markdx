@@ -25,7 +25,7 @@ import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import ParseMarkdown from "./parse-markdown"
-import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
+import UpgradeToPRODialog from "../upgrade-to-pro-dialog"
 
 function AskAI() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)

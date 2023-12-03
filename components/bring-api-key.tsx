@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react"
 import { OPENAI_USAGE_POLICIES } from "@/constants/links"
 import { isCorrectApiKey, validateApiKey } from "@/utils/openai"
 import { ArrowTopRightIcon } from "@radix-ui/react-icons"
-import { Loader2Icon } from "lucide-react"
+import { KeyIcon, Loader2Icon, Trash2Icon } from "lucide-react"
 import { toast } from "sonner"
 
 import { models } from "@/config/ai"
-import { Button } from "@/components/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
@@ -18,12 +18,10 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils"
 
-const BringApiKey = () => {
+const BringApiKey = (props: ButtonProps) => {
   const [apiKey, setApiKey] = useState<string>("")
-  const [supportedOpenAiModel, setSupportedOpenAiModel] = useState<string>(
-    models.chat
-  )
   const [accepted, setAccepted] = useState<boolean | "indeterminate">(false)
   const [isSecureOpen, setIsSecureOpen] = useState<boolean>(false)
   const [saving, setSaving] = useState<boolean>(false)
@@ -43,26 +41,32 @@ const BringApiKey = () => {
     const isValid = await validateApiKey(apiKey)
 
     if (isValid.error) {
-      if (isValid.code === "unsupported_api_key") {
-        setSupportedOpenAiModel(models.chat_old)
-        await save()
+      if (isValid.statusCode === 404) {
+        console.log("Hello 2", models.chat_old);
+        console.log("Is valid", isValid);
+        
+        await save(models.chat_old)
       } else {
         toast.error(isValid.message)
       }
       setSaving(false)
     } else {
-      await save()
+      console.log("Hello 3", models.chat);
+      
+      await save(models.chat)
     }
   }
 
-  const save = async () => {
-    const keyToSave = `${apiKey}::${supportedOpenAiModel}`
+  const save = async (model: string) => {
+    console.log("Hello", model);
+    
+    const keyToSave = `${apiKey}::${model}`
     const res = await fetch("/api/api-key", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ keyToSave }),
+      body: JSON.stringify({ apiKey: keyToSave }),
     })
 
     setSaving(false)
@@ -100,6 +104,7 @@ const BringApiKey = () => {
     setSaving(false)
     setDeleting(false)
     setIsApiKeyFromSession(false)
+    setIsDialogOpen(false)
   }
 
   useEffect(() => {
@@ -117,18 +122,19 @@ const BringApiKey = () => {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button className="mr-2" variant={"outline"}>
+        <Button className={cn("w-full", props.className)} {...props}>
+         <KeyIcon className="inline-block h-4 w-4 mr-2" />
           {isApiKeyFromSession ? "Change" : "Bring"} OpenAI API Key
         </Button>
       </DialogTrigger>
-      <DialogContent className=" md:!rounded-xl md:p-12">
+      <DialogContent className=" md:!rounded-xl md:p-10">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-semibold">
-            OpenAI API key
+            Your own OpenAI API Key
           </DialogTitle>
           <DialogDescription>
-            <p className="text-gray-9 text-center tracking-tight">
-              You need to bring your OpenAI API key to generate code.
+            <p className="text-muted-foreground text-center tracking-tight">
+              You need to bring your OpenAI API key to use AI.
             </p>
           </DialogDescription>
         </DialogHeader>
@@ -138,7 +144,7 @@ const BringApiKey = () => {
             <Input
               type="text"
               placeholder="Enter your OpenAI API key"
-              className="h-11 w-full border-2 transition-[border] duration-300 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+              className="h-11 w-full "
               value={apiKey}
               spellCheck={false}
               onChange={(e) => {
@@ -146,7 +152,7 @@ const BringApiKey = () => {
               }}
             />
           </div>
-          <div className="flex w-full justify-between">
+          <div className="flex w-full justify-between py-1">
             <div className="flex items-center space-x-2">
               <Checkbox
                 onCheckedChange={(checked: boolean) => {
@@ -176,12 +182,10 @@ const BringApiKey = () => {
           </div>
           {isSecureOpen && (
             <div className="flex flex-col space-y-5">
-              <p className="text-gray-9 text-sm">
-                Your API key is exclusively stored in session store with
-                encrypted. guaranteeing maximum security and privacy during your
-                usage.
+              <p className="text-muted-foreground text-sm">
+              Your API key is stored exclusively in the session store and is encrypted, guaranteeing maximum security and privacy.
               </p>
-              <p className="text-gray-9 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Our website is open source. Check out the code to see how we
                 protect your API key!
               </p>
@@ -191,8 +195,8 @@ const BringApiKey = () => {
           <div className="flex w-full justify-end space-x-2">
             {isApiKeyFromSession && (
               <Button
-                className="border-error hover:bg-error-lighter rounded-full px-6 transition-colors"
-                variant={"destructive"}
+                className="px-6"
+                variant={"outline"}
                 onClick={() => handleDelete()}
                 disabled={saving || deleting}
               >
@@ -210,7 +214,7 @@ const BringApiKey = () => {
               disabled={
                 saving || deleting || !isCorrectApiKey(apiKey) || !accepted
               }
-              className="rounded-full px-6 transition-colors"
+              className="px-6"
               onClick={() => saveApiKey(apiKey)}
             >
               <Loader2Icon

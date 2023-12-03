@@ -16,6 +16,7 @@ import {
 
 import SiteAssets from "../site-assets"
 import { UserAvatar } from "./user-avatar"
+import BringApiKey from "@/components/bring-api-key"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">
@@ -32,6 +33,7 @@ function DashboardHeader({ user }: UserAccountNavProps) {
       </div>
 
       <div className={`flex h-full w-1/2 items-center justify-end`}>
+        <BringApiKey className="w-fit mr-6" variant={"outline"} />
         <DropdownMenu>
           <DropdownMenuTrigger>
             <UserAvatar

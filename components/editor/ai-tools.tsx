@@ -27,7 +27,7 @@ import {
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import UpgradeToPRODialog from "./upgrade-to-pro-dialog"
+import UpgradeToPRODialog from "../upgrade-to-pro-dialog"
 
 function AITools() {
   const [requestingToAPI, setRequestingToAPI] = useState(false)

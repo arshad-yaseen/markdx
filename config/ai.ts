@@ -25,26 +25,6 @@ export const example_vision_api_messages = [
 export const example_chat_api_messages = [
   {
     role: "user",
-    content: "Hello, I'm Arshad.",
-  },
-  {
-    role: "assistant",
-    content: "Hi, Arshad. How can I help you today?",
-  },
-  {
-    role: "user",
-    content: "I need help with writing a blog post.",
-  },
-  {
-    role: "assistant",
-    content: "Sure, I can help you with that.",
-  },
-  {
-    role: "user",
-    content: "Great, thanks!",
-  },
-  {
-    role: "assistant",
-    content: "No problem!",
-  },
+    content: "Hey",
+  }
 ]
