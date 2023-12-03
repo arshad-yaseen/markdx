@@ -87,8 +87,6 @@ export async function POST(req: Request): Promise<Response> {
       return ServerResponse.unauthorized("Invalid OPENAI_API_KEY")
     }
 
-    console.log(OPENAI_API_KEY)
-
     const openai = new OpenAI({ apiKey: OPENAI_API_KEY })
 
     const payload: OpenAI.ChatCompletionCreateParams = {
