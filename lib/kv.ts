@@ -1,5 +1,6 @@
-import { decrypt, encrypt } from "@/lib/crypto"
 import { kv } from "@vercel/kv"
+
+import { decrypt, encrypt } from "@/lib/crypto"
 
 export const kvget = async (key: string, namespace: string) => {
   const value = await kv.get(`${namespace}-${key}`)

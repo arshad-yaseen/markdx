@@ -110,7 +110,7 @@ function AITools() {
 
   return (
     <>
-      <div className="no-scrollbar max-h-[51vh] space-y-4 overflow-y-scroll">
+      <div className="no-scrollbar max-h-[51vh] space-y-4 overflow-y-scroll p-1">
         <Button
           onClick={() => {
             handleClick({

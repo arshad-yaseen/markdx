@@ -36,7 +36,7 @@ function UpgradeToPRODialog({
           plan for unlimited AI access.
         </DialogDescription>
 
-        <div className="mt-6 flex flex-col w-full items-center space-x-2">
+        <div className="mt-6 flex w-full flex-col items-center space-x-2">
           <Button
             onClick={() => router.push("/dashboard/billing")}
             className="w-full"
@@ -44,7 +44,7 @@ function UpgradeToPRODialog({
             Upgrade
           </Button>
           <span className="py-1.5">or</span>
-          <BringApiKey variant={"outline"}  />
+          <BringApiKey variant={"outline"} />
         </div>
       </DialogContent>
     </Dialog>

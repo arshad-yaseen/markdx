@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       env.STRIPE_WEBHOOK_SECRET || ""
     )
   } catch (error) {
-    console.log(error)
+    console.error(error)
 
     return ServerResponse.error("Webhook Error")
   }

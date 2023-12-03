@@ -26,5 +26,5 @@ export const example_chat_api_messages = [
   {
     role: "user",
     content: "Hey",
-  }
+  },
 ]

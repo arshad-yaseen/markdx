@@ -37,11 +37,11 @@ export default function page({ params }: { params: { id: string } }) {
   const markdownId = params.id
 
   const getMarkdownPost = async (markdownId: string) => {
-    const markdown = await GET<Markdown>(`/api/posts/${markdownId}`,{
+    const markdown = await GET<Markdown>(`/api/posts/${markdownId}`, {
       showErrorToast: true,
       error: "Error fetching markdown post",
     })
-    
+
     const markdownPost = markdown.markdownPost
 
     if (

@@ -24,8 +24,8 @@ import { ChatScrollAnchor } from "../chat-scroll-anchor"
 import CodeBlock from "../code-block"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import ParseMarkdown from "./parse-markdown"
 import UpgradeToPRODialog from "../upgrade-to-pro-dialog"
+import ParseMarkdown from "./parse-markdown"
 
 function AskAI() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -117,12 +117,11 @@ function AskAI() {
 
         // Handle any errors returned by the API
         if (res?.error && res?.error.statusCode === 402) {
-          setRequestingToAPI(false)
-          setUpgradeToPRODialog(true)
+          reset()
           return
         } else if (res?.error?.message) {
           toast.error(res?.error.message)
-          setRequestingToAPI(false)
+          reset()
           return
         }
 
@@ -160,6 +159,25 @@ function AskAI() {
         toast.error("Something went wrong")
       }
     }
+  }
+
+  const reset = () => {
+    setRequestingToAPI(false)
+    setUpgradeToPRODialog(true)
+    setGenerating(false)
+    stopGenerating.current = false
+    setMessages([])
+    setChats([
+      {
+        id: 1,
+        user: `${
+          editorSelectedContent
+            ? "How can i help you with this markdown?"
+            : "Hello, How can i help you?"
+        }`,
+        ai: "",
+      },
+    ])
   }
 
   const clearChat = () => {

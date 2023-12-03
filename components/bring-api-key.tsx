@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { OPENAI_USAGE_POLICIES } from "@/constants/links"
+import { DELETE, GET, POST } from "@/utils/http.utils"
 import { isCorrectApiKey, validateApiKey } from "@/utils/openai"
 import { ArrowTopRightIcon } from "@radix-ui/react-icons"
-import { KeyIcon, Loader2Icon, Trash2Icon } from "lucide-react"
+import { KeyIcon, Loader2Icon } from "lucide-react"
 import { toast } from "sonner"
 
 import { models } from "@/config/ai"
+import { cn } from "@/lib/utils"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -18,7 +20,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
 
 const BringApiKey = (props: ButtonProps) => {
   const [apiKey, setApiKey] = useState<string>("")
@@ -42,40 +43,29 @@ const BringApiKey = (props: ButtonProps) => {
 
     if (isValid.error) {
       if (isValid.statusCode === 404) {
-        console.log("Hello 2", models.chat_old);
-        console.log("Is valid", isValid);
-        
         await save(models.chat_old)
       } else {
         toast.error(isValid.message)
       }
       setSaving(false)
     } else {
-      console.log("Hello 3", models.chat);
-      
       await save(models.chat)
     }
   }
 
   const save = async (model: string) => {
-    console.log("Hello", model);
-    
     const keyToSave = `${apiKey}::${model}`
-    const res = await fetch("/api/api-key", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ apiKey: keyToSave }),
-    })
+
+    await POST(
+      "/api/api-key",
+      { apiKey: keyToSave },
+      {
+        error: "API key not saved",
+        showErrorToast: true,
+      }
+    )
 
     setSaving(false)
-
-    if (!res.ok) {
-      toast.error("API key not saved")
-      return
-    }
-
     toast.success("API key saved successfully")
     setIsDialogOpen(false)
     setIsApiKeyFromSession(true)
@@ -84,14 +74,13 @@ const BringApiKey = (props: ButtonProps) => {
   const handleDelete = async () => {
     if (deleting) return
     setDeleting(true)
-    const res = await fetch("/api/api-key", {
-      method: "DELETE",
+
+    await DELETE("/api/api-key", {
+      error: "API key not deleted",
+      showErrorToast: true,
     })
+
     setDeleting(false)
-    if (!res.ok) {
-      toast.error("API key not deleted")
-      return
-    }
 
     toast.success("API key deleted successfully")
     reset()
@@ -108,22 +97,25 @@ const BringApiKey = (props: ButtonProps) => {
   }
 
   useEffect(() => {
-    fetch("/api/api-key")
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.apiKey) {
-          setApiKey(res.apiKey)
-          setAccepted(true)
-          setIsApiKeyFromSession(true)
-        }
-      })
+    getApiKeyFromSession()
   }, [])
+
+  const getApiKeyFromSession = async () => {
+    const key_res = await GET<{ apiKey: string }>("/api/api-key", {
+      error: "Could not fetch API key",
+    })
+    if (key_res.apiKey) {
+      setAccepted(true)
+      setApiKey(key_res.apiKey)
+      setIsApiKeyFromSession(true)
+    }
+  }
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button className={cn("w-full", props.className)} {...props}>
-         <KeyIcon className="inline-block h-4 w-4 mr-2" />
+          <KeyIcon className="mr-2 inline-block h-4 w-4" />
           {isApiKeyFromSession ? "Change" : "Bring"} OpenAI API Key
         </Button>
       </DialogTrigger>
@@ -133,7 +125,7 @@ const BringApiKey = (props: ButtonProps) => {
             Your own OpenAI API Key
           </DialogTitle>
           <DialogDescription>
-            <p className="text-muted-foreground text-center tracking-tight">
+            <p className="text-center tracking-tight text-muted-foreground">
               You need to bring your OpenAI API key to use AI.
             </p>
           </DialogDescription>
@@ -182,10 +174,11 @@ const BringApiKey = (props: ButtonProps) => {
           </div>
           {isSecureOpen && (
             <div className="flex flex-col space-y-5">
-              <p className="text-muted-foreground text-sm">
-              Your API key is stored exclusively in the session store and is encrypted, guaranteeing maximum security and privacy.
+              <p className="text-sm text-muted-foreground">
+                Your API key is stored exclusively in the session store and is
+                encrypted, guaranteeing maximum security and privacy.
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-sm text-muted-foreground">
                 Our website is open source. Check out the code to see how we
                 protect your API key!
               </p>
