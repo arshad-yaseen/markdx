@@ -8,7 +8,7 @@ import { useAtom } from "jotai"
 import { Loader2, PlusIcon } from "lucide-react"
 
 import { DefaultEditorContent, defaultEditorContent } from "@/config/editor"
-import { cn, generateRandomString } from "@/lib/utils"
+import { cn, generateUUID } from "@/lib/utils"
 import { Button, ButtonProps } from "@/components/ui/button"
 
 interface PostCreateButtonProps extends ButtonProps {}
@@ -48,7 +48,7 @@ export function PostCreateButton({
       "/api/posts",
       {
         code: defaultEditorContent,
-        markdown_id: generateRandomString(15),
+        markdown_id: generateUUID(),
       },
       {
         error: "Your post was not created. Please try again.",
