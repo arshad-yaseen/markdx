@@ -57,7 +57,7 @@ export function BillingForm({
         <CardHeader>
           {!isPro && (
             <CardTitle className="mb-4 text-4xl">
-              $2{" "}
+              $5{" "}
               <span className="text-lg font-medium text-muted-foreground">
                 /month
               </span>

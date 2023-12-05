@@ -32,8 +32,8 @@ function UpgradeToPRODialog({
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="w-full px-8 text-center">
-          The free plan includes 1 credit for AI features. Upgrade to the PRO
-          plan for unlimited AI access.
+          Please upgrade to PRO or enter your own OpenAI API key to use all AI
+          features.
         </DialogDescription>
 
         <div className="mt-6 flex w-full flex-col items-center space-x-2">
