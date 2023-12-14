@@ -46,7 +46,7 @@ const ImageWithSkeleton = ({
           className="z-20 rounded-full  bg-foreground/50 px-2 py-1 text-xs text-background transition-all duration-200"
         >
           By <span className="hover:underline">{image.user.name}</span>{" "}
-          <ArrowTopRightIcon className="inline-block h-3 w-3 group-hover:translate-y-[-1px] delay-300 transition-transform duration-200" />
+          <ArrowTopRightIcon className="inline-block h-3 w-3 transition-transform duration-200 delay-300 group-hover:translate-y-[-1px]" />
         </Link>
       </div>
     </div>

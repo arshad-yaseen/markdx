@@ -1,11 +1,14 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react"
+import Link from "next/link"
 import { monacoInstanceState } from "@/atoms/editor"
 import { editorAction, uploadFile } from "@/utils/editor"
 import { GET } from "@/utils/http.utils"
 import { useAtomValue } from "jotai"
 import { ImageIcon, Loader2Icon, SearchIcon } from "lucide-react"
 import { toast } from "sonner"
+import { type Photos as UnsplashPhotos } from "unsplash-js/dist/methods/search/types/response"
 
+import { siteConfig } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
@@ -17,13 +20,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import ImageWithSkeleton from "@/components/image-with-skeleton"
-import {
-  type Photos as UnsplashPhotos,
-} from "unsplash-js/dist/methods/search/types/response"
-import Link from "next/link"
-import { siteConfig } from "@/config/site"
 
-export type UnsplashImageResponse = UnsplashPhotos['results'][number]
+export type UnsplashImageResponse = UnsplashPhotos["results"][number]
 
 interface UnsplashSearchFormData {
   unsplash_image_query: string
@@ -130,9 +128,10 @@ const UnsplashDialog = () => {
           <form onSubmit={handleUnsplashSearch}>
             <div className="flex">
               <Link
-              href={`https://unsplash.com/?utm_source=${siteConfig.short_name}&utm_medium=referral`}
-              target="_blank"
-              className="flex h-full w-1/2 justify-start hover:opacity-70">
+                href={`https://unsplash.com/?utm_source=${siteConfig.short_name}&utm_medium=referral`}
+                target="_blank"
+                className="flex h-full w-1/2 justify-start hover:opacity-70"
+              >
                 <h1 className="font-heading text-xl">Unsplash</h1>
               </Link>
               <div className="flex h-full w-1/2 justify-end">
