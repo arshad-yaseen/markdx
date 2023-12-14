@@ -19,6 +19,7 @@ export type UnsplashImageResponse = {
   width: number
   height: number
   alt_description: string
+  blur_hash: string
   urls: {
     raw: string
     full: string
