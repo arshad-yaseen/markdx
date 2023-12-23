@@ -8,6 +8,8 @@ import { editorSelectedContentAtom, monacoInstanceState } from "@/atoms/editor"
 import { monacoInstance } from "@/types"
 import { useAtom } from "jotai"
 
+import SectionLoading from "@/components/editor/section-loading"
+
 function EditorSection({
   markdown,
   onCodeChange,
@@ -36,7 +38,7 @@ function EditorSection({
   const loading = markdown === ""
 
   return (
-    <div className="relative flex h-[50%] w-full flex-1 flex-col items-center lg:h-full lg:w-[46%]">
+    <div className="relative flex h-[50%] w-full flex-1 flex-col items-center lg:h-full">
       <Editor
         language="markdown"
         value={markdown}
@@ -71,11 +73,7 @@ function EditorSection({
         }}
         className="px-14"
       />
-      {loading && (
-        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center">
-          Loading...
-        </div>
-      )}
+      {loading && <SectionLoading />}
     </div>
   )
 }

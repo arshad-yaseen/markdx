@@ -101,6 +101,7 @@ export function PostOperations({ post }: PostOperationsProps) {
             <AlertDialogAction asChild>
               <Button
                 disabled={isDeleteLoading}
+                variant={"destructive"}
                 onClick={async (event: any) => {
                   event.preventDefault()
                   setIsDeleteLoading(true)

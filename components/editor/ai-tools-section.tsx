@@ -52,7 +52,7 @@ function AIToolsSection() {
       <div
         className={`absolute bottom-0 ${
           isToolsPanelCollapsed ? "ml-6  w-[4%] -rotate-180" : "w-[18%] px-6"
-        } left-0 z-10 flex h-20 items-center justify-end`}
+        } left-0 z-10 flex h-20 items-center  justify-end`}
       >
         <Button
           onClick={() => {
@@ -60,7 +60,7 @@ function AIToolsSection() {
             setIsToolsPanelCollapsedStore(String(!isToolsPanelCollapsed)) // Setting to localStorage
           }}
           variant="outline"
-          className="hidden h-8 w-8 items-center justify-center px-0 lg:flex"
+          className="hidden h-8 w-8 items-center justify-center bg-background px-0 lg:flex"
         >
           <ChevronLeftIcon className="h-4 w-4" />
         </Button>

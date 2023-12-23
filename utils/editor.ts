@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from "react"
 import { marked } from "marked"
 
-import { OpenAIBody, UploadResponse, monacoInstance } from "types"
+import { UploadResponse, monacoInstance } from "types"
 import { env } from "@/env.mjs"
 import { editorConfig, shortcuts } from "@/config/editor"
 import { cloudinaryUpload } from "@/lib/apiClient"
@@ -81,36 +81,39 @@ export const editorAction = {
     monacoInstance.setValue(text)
   },
 }
-
 export const handleShortCut = (
   event: KeyboardEvent<HTMLDivElement>,
   monacoInstance: monacoInstance
 ) => {
-  if (event.metaKey && event.ctrlKey && event.key === "c") {
+  if (event.metaKey && event.ctrlKey) {
     event.preventDefault()
-    editorAction.insertText(shortcuts.codeBlock.output, monacoInstance)
-  } else if (event.metaKey && event.ctrlKey && event.key === "t") {
-    event.preventDefault()
-    editorAction.insertText(shortcuts.table.output, monacoInstance)
-  } else if (event.metaKey && event.ctrlKey && event.key === "i") {
-    event.preventDefault()
-    editorAction.insertText(shortcuts.image.output, monacoInstance)
-  } else if (event.metaKey && event.ctrlKey && event.key === "l") {
-    event.preventDefault()
-    editorAction.insertText(shortcuts.link.output, monacoInstance)
-  } else if (event.metaKey && event.ctrlKey && event.key === "n") {
-    event.preventDefault()
-    editorAction.insertText(shortcuts.linkWithImage.output, monacoInstance)
-  } else if (event.metaKey && event.ctrlKey && event.key === "v") {
-    event.preventDefault()
-    editorAction.insertText(shortcuts.video.output, monacoInstance)
-  } else if (event.metaKey && event.ctrlKey && event.key === "p") {
-    event.preventDefault()
-    editorAction.insertText(shortcuts.alignCenter.output, monacoInstance)
+    switch (event.key) {
+      case "c":
+        editorAction.insertText(shortcuts.codeBlock.output, monacoInstance)
+        break
+      case "t":
+        editorAction.insertText(shortcuts.table.output, monacoInstance)
+        break
+      case "i":
+        editorAction.insertText(shortcuts.image.output, monacoInstance)
+        break
+      case "l":
+        editorAction.insertText(shortcuts.link.output, monacoInstance)
+        break
+      case "n":
+        editorAction.insertText(shortcuts.linkWithImage.output, monacoInstance)
+        break
+      case "v":
+        editorAction.insertText(shortcuts.video.output, monacoInstance)
+        break
+      case "p":
+        editorAction.insertText(shortcuts.alignCenter.output, monacoInstance)
+        break
+    }
   }
 }
 
-export const getTitle = (markdown: string = "") => {
+export const getMarkdownTitle = (markdown: string = "") => {
   const regex = /^(#{1,6}) (.+)/m // Matches lines starting with 1 to 6 hashes followed by a space across multiple lines
 
   const match = markdown.match(regex)

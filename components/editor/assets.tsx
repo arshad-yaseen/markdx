@@ -27,7 +27,7 @@ export default function Assets() {
         />
         <SearchIcon className="absolute left-3.5 h-3.5 w-3.5 text-slate-500" />
       </div>
-      <div className="no-scrollbar w-full  space-y-4 overflow-scroll py-4">
+      <div className="no-scrollbar w-full  space-y-4 overflow-scroll px-px py-4">
         {assets
           .filter((asset) =>
             searchValue.length === 0 || asset.keywords

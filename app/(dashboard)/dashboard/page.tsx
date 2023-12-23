@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { getTitle } from "@/utils/editor"
+import { getMarkdownTitle } from "@/utils/editor"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
@@ -51,7 +51,8 @@ async function Dashboard() {
                   key={post.id}
                   post={post}
                   title={
-                    getTitle(post.postCodes[0]?.content) || "Project Title"
+                    getMarkdownTitle(post.postCodes[0]?.content) ||
+                    "Project Title"
                   }
                 />
               ))}

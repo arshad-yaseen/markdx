@@ -62,7 +62,7 @@ export const shortcuts = {
       "[![Image alt text](https://via.placeholder.com/450x250)](link-url)",
   },
   codeBlock: {
-    output: "```language\ncode\n```",
+    output: "```javascript\nconsole.log('Hello world!')\n```",
   },
   alignCenter: {
     output: `<p align="center" >This will be centered</p>`,

@@ -12,6 +12,12 @@ import { useAtom, useAtomValue } from "jotai"
 
 import { editorCode } from "types"
 import { defaultEditorContent } from "@/config/editor"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
+import { withDesktopOnly } from "@/components/HOCs/with-desktop-only"
 import AIToolsSection from "@/components/editor/ai-tools-section"
 import EditorSection from "@/components/editor/editor-section"
 import PreviewSection from "@/components/editor/preview-section"
@@ -28,7 +34,7 @@ type Markdown = {
   }
 }
 
-export default function page({ params }: { params: { id: string } }) {
+function EditorPage({ params }: { params: { id: string } }) {
   const [editorCodes, setEditorCodes] = useAtom(editorCodesState)
   const editorActiveSection = useAtomValue(editorActiveSectionState)
   const [markdownCode, setMarkdownCode] = useState("")
@@ -71,6 +77,20 @@ export default function page({ params }: { params: { id: string } }) {
     }
   }
 
+  const onEditorCodeChange = (code: string) => {
+    setEditorCodes((prev) => {
+      return prev.map((prevCode: prevCodeType) => {
+        if (prevCode.section_id === editorActiveSection) {
+          return {
+            ...prevCode,
+            content: code,
+          }
+        }
+        return prevCode
+      })
+    })
+  }
+
   useEffect(() => {
     editorCodes
       .filter((code: editorCode) => {
@@ -93,25 +113,24 @@ export default function page({ params }: { params: { id: string } }) {
       className="flex h-[92vh] w-full flex-col lg:flex-row"
     >
       <AIToolsSection />
-      <EditorSection
-        markdown={markdownCode}
-        onCodeChange={(code) => {
-          setEditorCodes((prev) => {
-            return prev.map((prevCode: prevCodeType) => {
-              if (prevCode.section_id === editorActiveSection) {
-                return {
-                  ...prevCode,
-                  content: code,
-                }
-              }
-              return prevCode
-            })
-          })
-        }}
-      />
-      <PreviewSection
-        code={editorCodes.map((code: editorCode) => code.content).join("\n\n")}
-      />
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel>
+          <EditorSection
+            markdown={markdownCode}
+            onCodeChange={onEditorCodeChange}
+          />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel minSize={30} maxSize={70}>
+          <PreviewSection
+            code={editorCodes
+              .map((code: editorCode) => code.content)
+              .join("\n\n")}
+          />
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </div>
   )
 }
+
+export default withDesktopOnly(EditorPage)
