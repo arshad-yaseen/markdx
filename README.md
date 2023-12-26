@@ -24,6 +24,8 @@ cp .env.example .env.local
 npm run dev
 ```
 
+Read more about how to contribute to this project in [contributing guide](/CONTRIBUTING.md).
+
 ## License
 
 Licensed under the [MIT license](https://github.com/arshad-yaseen/markdx/blob/main/LICENSE.md).
